@@ -1,4 +1,4 @@
-export const Colors = {
+export const DarkColors = {
   background: '#0D0D14',
   surface: '#16162A',
   surfaceHighlight: '#1E1E35',
@@ -13,6 +13,27 @@ export const Colors = {
   tabBar: '#111118',
   overlay: 'rgba(13, 13, 20, 0.85)',
 } as const;
+
+export const LightColors = {
+  background: '#F2F2F7',
+  surface: '#FFFFFF',
+  surfaceHighlight: '#E8E8EF',
+  border: '#D1D1E0',
+  accent: '#E50914',
+  accentDim: 'rgba(229, 9, 20, 0.12)',
+  gold: '#B8860B',
+  text: '#0D0D14',
+  textDim: '#44445A',
+  textMuted: '#9999A8',
+  success: '#2E7D32',
+  tabBar: '#FFFFFF',
+  overlay: 'rgba(242, 242, 247, 0.92)',
+} as const;
+
+export type ColorPalette = typeof DarkColors;
+
+// Backward-compat alias (screens migrated to useColors() don't need this)
+export const Colors = DarkColors;
 
 export const StatusColors: Record<string, string> = {
   watchlist: '#3B82F6',

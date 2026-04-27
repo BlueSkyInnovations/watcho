@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import { useColors } from '@/hooks/useColors';
 
 interface SearchBarProps {
   value: string;
@@ -9,15 +9,16 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ value, onChangeText, placeholder = 'Search movies & TV shows...' }: SearchBarProps) {
+  const colors = useColors();
   return (
-    <View style={styles.container}>
-      <Ionicons name="search" size={18} color={Colors.textDim} style={styles.icon} />
+    <View style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+      <Ionicons name="search" size={18} color={colors.textDim} style={styles.icon} />
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.text }]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={Colors.textMuted}
+        placeholderTextColor={colors.textMuted}
         returnKeyType="search"
         autoCapitalize="none"
         autoCorrect={false}
@@ -25,7 +26,7 @@ export function SearchBar({ value, onChangeText, placeholder = 'Search movies & 
       />
       {value.length > 0 && (
         <Pressable onPress={() => onChangeText('')} style={styles.clear} hitSlop={8}>
-          <Ionicons name="close-circle" size={18} color={Colors.textDim} />
+          <Ionicons name="close-circle" size={18} color={colors.textDim} />
         </Pressable>
       )}
     </View>
@@ -33,25 +34,8 @@ export function SearchBar({ value, onChangeText, placeholder = 'Search movies & 
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.surface,
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    height: 44,
-  },
-  icon: {
-    marginRight: 8,
-  },
-  input: {
-    flex: 1,
-    color: Colors.text,
-    fontSize: 15,
-  },
-  clear: {
-    marginLeft: 6,
-  },
+  container: { flexDirection: 'row', alignItems: 'center', borderRadius: 12, paddingHorizontal: 12, borderWidth: 1, height: 44 },
+  icon: { marginRight: 8 },
+  input: { flex: 1, fontSize: 15 },
+  clear: { marginLeft: 6 },
 });

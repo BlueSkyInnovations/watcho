@@ -25,15 +25,21 @@ npm run lint            # ESLint via expo lint
 
 ## Architecture
 
-**Routing** — Expo Router (file-based). All screens live under `app/`. The tab layout is `app/(tabs)/`. Detail screens are `app/movie/[id].tsx` and `app/tv/[id].tsx`.
+**Routing** — Expo Router (file-based). All screens live under `app/`. The tab layout is `app/home/` (a plain folder, not a group). `app/index.tsx` redirects to `/home`. Detail screens are `app/movie/[id].tsx` and `app/tv/[id].tsx`.
 
 **State** — `context/WatchlistContext.tsx` holds all user data in a single `useReducer`. It hydrates from AsyncStorage on mount and persists on every change. Every screen consumes this context via the `useWatchlist()` hook.
+
+**Theming** — `context/ThemeContext.tsx` stores the user's theme preference (`light` / `dark` / `system`) in AsyncStorage. The resolved color palette is accessed everywhere via `hooks/useColors.ts`. All screens and components use inline style overrides for colors (`[styles.foo, { color: colors.text }]`) rather than hardcoded values. Never import `Colors` directly from `constants/Colors` in new code — use `useColors()` instead.
 
 **TMDB integration** — `lib/tmdb.ts` is a thin fetch wrapper. `hooks/useTMDB.ts` exposes React hooks (`useSearch`, `useTrending`, `useMovieDetail`, `useTVDetail`) that call it. Search is debounced 400 ms.
 
 **Types** — `types/index.ts` defines `MediaItem` (the stored user record), `TMDBMovie`, `TMDBTVShow`, `TMDBSearchResult`, and `WatchlistStats`.
 
 **Styling** — plain `StyleSheet.create`. Color palette in `constants/Colors.ts`. No styling library.
+
+**Settings** — `app/settings.tsx` (pushed from a gear icon in the Profile tab header). Theme selection lives here.
+
+**Sort order** — Per-tab sort preference in `app/home/index.tsx`, persisted to AsyncStorage under `watcho_sort_prefs`. Triggered via a `swap-vertical-outline` icon button beside the tab row. Sort options: Date Added, Release Date, Last Updated. `MediaItem.updatedAt` is stamped on every status/rating/progress change.
 
 ## Key decisions
 

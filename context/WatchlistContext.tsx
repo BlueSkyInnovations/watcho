@@ -33,7 +33,7 @@ function reducer(state: State, action: Action): State {
         ...state,
         items: state.items.map((i) =>
           i.id === action.id && i.mediaType === action.mediaType
-            ? { ...i, status: action.status }
+            ? { ...i, status: action.status, updatedAt: new Date().toISOString() }
             : i
         ),
       };
@@ -42,7 +42,7 @@ function reducer(state: State, action: Action): State {
         ...state,
         items: state.items.map((i) =>
           i.id === action.id && i.mediaType === action.mediaType
-            ? { ...i, userRating: action.rating }
+            ? { ...i, userRating: action.rating, updatedAt: new Date().toISOString() }
             : i
         ),
       };
@@ -51,7 +51,7 @@ function reducer(state: State, action: Action): State {
         ...state,
         items: state.items.map((i) =>
           i.id === action.id && i.mediaType === 'tv'
-            ? { ...i, currentSeason: action.season, currentEpisode: action.episode }
+            ? { ...i, currentSeason: action.season, currentEpisode: action.episode, updatedAt: new Date().toISOString() }
             : i
         ),
       };
@@ -64,7 +64,7 @@ interface WatchlistContextValue {
   items: MediaItem[];
   loaded: boolean;
   getItem: (id: number, mediaType: MediaType) => MediaItem | undefined;
-  addItem: (item: Omit<MediaItem, 'addedAt'>) => void;
+  addItem: (item: Omit<MediaItem, 'addedAt' | 'updatedAt'>) => void;
   removeItem: (id: number, mediaType: MediaType) => void;
   updateStatus: (id: number, mediaType: MediaType, status: WatchStatus) => void;
   updateRating: (id: number, mediaType: MediaType, rating: number) => void;
@@ -93,8 +93,9 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
     [state.items]
   );
 
-  const addItem = useCallback((item: Omit<MediaItem, 'addedAt'>) => {
-    dispatch({ type: 'ADD', item: { ...item, addedAt: new Date().toISOString() } });
+  const addItem = useCallback((item: Omit<MediaItem, 'addedAt' | 'updatedAt'>) => {
+    const now = new Date().toISOString();
+    dispatch({ type: 'ADD', item: { ...item, addedAt: now, updatedAt: now } });
   }, []);
 
   const removeItem = useCallback((id: number, mediaType: MediaType) => {
