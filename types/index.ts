@@ -1,5 +1,6 @@
 export type WatchStatus = 'watchlist' | 'watching' | 'watched';
 export type MediaType = 'movie' | 'tv';
+export type SortOrder = 'release_date' | 'added_at' | 'updated_at';
 
 export interface MediaItem {
   id: number;
@@ -13,6 +14,7 @@ export interface MediaItem {
   genres: { id: number; name: string }[];
   status: WatchStatus;
   addedAt: string;
+  updatedAt?: string;
   userRating?: number;
   // TV only
   numberOfSeasons?: number;

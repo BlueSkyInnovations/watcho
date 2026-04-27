@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Colors, StatusColors, StatusLabels } from '@/constants/Colors';
+import { StatusColors, StatusLabels } from '@/constants/Colors';
+import { useColors } from '@/hooks/useColors';
 import { WatchStatus } from '@/types';
 
 const STATUSES: WatchStatus[] = ['watchlist', 'watching', 'watched'];
@@ -10,6 +11,7 @@ interface StatusSelectorProps {
 }
 
 export function StatusSelector({ value, onChange }: StatusSelectorProps) {
+  const colors = useColors();
   return (
     <View style={styles.row}>
       {STATUSES.map((s) => {
@@ -19,11 +21,12 @@ export function StatusSelector({ value, onChange }: StatusSelectorProps) {
             key={s}
             style={[
               styles.button,
+              { backgroundColor: colors.surface, borderColor: colors.border },
               active && { backgroundColor: StatusColors[s], borderColor: StatusColors[s] },
             ]}
             onPress={() => onChange(s)}
           >
-            <Text style={[styles.label, active && styles.labelActive]}>
+            <Text style={[styles.label, { color: colors.textDim }, active && styles.labelActive]}>
               {StatusLabels[s]}
             </Text>
           </Pressable>
@@ -34,25 +37,8 @@ export function StatusSelector({ value, onChange }: StatusSelectorProps) {
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  button: {
-    flex: 1,
-    paddingVertical: 10,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    alignItems: 'center',
-    backgroundColor: Colors.surface,
-  },
-  label: {
-    color: Colors.textDim,
-    fontSize: 13,
-    fontWeight: '600',
-  },
-  labelActive: {
-    color: '#fff',
-  },
+  row: { flexDirection: 'row', gap: 8 },
+  button: { flex: 1, paddingVertical: 10, borderRadius: 10, borderWidth: 1, alignItems: 'center' },
+  label: { fontSize: 13, fontWeight: '600' },
+  labelActive: { color: '#fff' },
 });

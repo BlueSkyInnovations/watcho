@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 18.8.1",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_TMDB_API_KEY": "3ff3fcf5a467dd0cfc8be4c3eda11473"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_TMDB_API_KEY": "3ff3fcf5a467dd0cfc8be4c3eda11473"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_TMDB_API_KEY": "3ff3fcf5a467dd0cfc8be4c3eda11473"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
