@@ -20,6 +20,7 @@ function AppStack() {
         <Stack.Screen name="movie/[id]" options={{ title: '', headerTransparent: true }} />
         <Stack.Screen name="tv/[id]" options={{ title: '', headerTransparent: true }} />
         <Stack.Screen name="settings" options={{ title: 'Settings' }} />
+        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </>
