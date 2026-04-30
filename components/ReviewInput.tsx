@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useColors } from '@/hooks/useColors';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 
 export function ReviewInput({ value, onSave }: Props) {
   const colors = useColors();
+  const { t } = useTranslation();
   const [text, setText] = useState(value);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export function ReviewInput({ value, onSave }: Props) {
       value={text}
       onChangeText={setText}
       onBlur={handleBlur}
-      placeholder="Write your thoughts..."
+      placeholder={t('detail.reviewPlaceholder')}
       placeholderTextColor={colors.textMuted}
       multiline
       textAlignVertical="top"
