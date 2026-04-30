@@ -92,6 +92,7 @@
     "langEnglish": "Englisch",
     "langGerman": "Deutsch",
     "langSpanish": "Spanisch",
+    "helpTranslate": "Bei Weblate mitübersetzen",
     "tmdbApi": "TMDB API",
     "apiKey": "API-Schlüssel",
     "changeKey": "Schlüssel ändern",

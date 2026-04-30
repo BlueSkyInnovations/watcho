@@ -1,13 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, Modal, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { useSettings } from '@/context/SettingsContext';
 import { ThemePreference, useTheme } from '@/context/ThemeContext';
 import { useColors } from '@/hooks/useColors';
-import { type LanguagePref } from '@/lib/i18n';
+import { translationCoverage, type LanguagePref, type SupportedLang } from '@/lib/i18n';
 import { clearApiKey, getStoredApiKey } from '@/lib/apiKey';
 
 interface ThemeOption {
@@ -52,6 +52,7 @@ function LanguageSheet({ visible, value, onChange, onClose }: LanguageSheetProps
           <Text style={[sheetStyles.title, { color: colors.textDim }]}>{t('settings.appLanguage')}</Text>
           {LANG_OPTIONS.map((opt, index) => {
             const active = value === opt.value;
+            const pct = opt.value !== 'system' ? translationCoverage[opt.value as SupportedLang] : null;
             return (
               <Pressable
                 key={opt.value}
@@ -65,10 +66,22 @@ function LanguageSheet({ visible, value, onChange, onClose }: LanguageSheetProps
                 <Text style={[sheetStyles.label, { color: active ? colors.accent : colors.text }]}>
                   {t(opt.labelKey)}
                 </Text>
+                {pct !== null && pct < 100 && (
+                  <Text style={[sheetStyles.pct, { color: colors.textMuted }]}>{pct}%</Text>
+                )}
                 {active && <Ionicons name="checkmark-circle" size={20} color={colors.accent} />}
               </Pressable>
             );
           })}
+          <View style={[sheetStyles.divider, { backgroundColor: colors.border }]} />
+          <Pressable
+            style={sheetStyles.weblateRow}
+            onPress={() => Linking.openURL('https://hosted.weblate.org/engage/watcho/')}
+          >
+            <Ionicons name="earth-outline" size={15} color={colors.textMuted} />
+            <Text style={[sheetStyles.weblateLabel, { color: colors.textMuted }]}>{t('settings.helpTranslate')}</Text>
+            <Ionicons name="open-outline" size={13} color={colors.textMuted} />
+          </Pressable>
         </Pressable>
       </Pressable>
     </Modal>
@@ -253,4 +266,8 @@ const sheetStyles = StyleSheet.create({
     paddingVertical: 14, paddingHorizontal: 12, borderRadius: 10,
   },
   label: { flex: 1, fontSize: 16, fontWeight: '500' },
+  pct: { fontSize: 12, marginRight: 4 },
+  divider: { height: 1, marginHorizontal: 12, marginTop: 8 },
+  weblateRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 12 },
+  weblateLabel: { flex: 1, fontSize: 13 },
 });

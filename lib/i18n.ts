@@ -7,12 +7,12 @@ import es from '../locales/es.json';
 import { setTMDBLanguage } from './tmdb';
 
 export type LanguagePref = 'system' | 'en' | 'de' | 'es';
+export type SupportedLang = Exclude<LanguagePref, 'system'>;
 
-const SUPPORTED = ['en', 'de'] as const;
-type SupportedLang = (typeof SUPPORTED)[number];
+const SUPPORTED: SupportedLang[] = ['en', 'de', 'es'];
 
 const deviceCode = Localization.getLocales()[0]?.languageCode ?? 'en';
-const deviceLang: SupportedLang = (SUPPORTED as readonly string[]).includes(deviceCode)
+const deviceLang: SupportedLang = (SUPPORTED as string[]).includes(deviceCode)
   ? (deviceCode as SupportedLang)
   : 'en';
 
@@ -30,6 +30,20 @@ i18n.use(initReactI18next).init({
 setTMDBLanguage(deviceLang);
 
 export { i18n };
+
+function countLeaves(obj: object): number {
+  return Object.values(obj).reduce<number>(
+    (sum, v) => sum + (v !== null && typeof v === 'object' ? countLeaves(v) : 1),
+    0,
+  );
+}
+
+const enTotal = countLeaves(en);
+export const translationCoverage: Record<SupportedLang, number> = {
+  en: 100,
+  de: Math.round((countLeaves(de) / enTotal) * 100),
+  es: Math.round((countLeaves(es) / enTotal) * 100),
+};
 
 export function resolveLanguage(pref: LanguagePref): SupportedLang {
   if (pref === 'system') return deviceLang;

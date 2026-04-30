@@ -92,6 +92,7 @@
     "langEnglish": "English",
     "langGerman": "German",
     "langSpanish": "Spanish",
+    "helpTranslate": "Help translate on Weblate",
     "tmdbApi": "TMDB API",
     "apiKey": "API Key",
     "changeKey": "Change Key",
