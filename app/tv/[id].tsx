@@ -2,11 +2,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
 import { RatingStars } from '@/components/RatingStars';
+import { RecommendationsRow } from '@/components/RecommendationsRow';
+import { ReviewInput } from '@/components/ReviewInput';
 import { StatusSelector } from '@/components/StatusSelector';
+import { StreamingProviders } from '@/components/StreamingProviders';
+import { TrailerModal } from '@/components/TrailerModal';
+import { useSettings } from '@/context/SettingsContext';
 import { useWatchlist } from '@/context/WatchlistContext';
 import { useColors } from '@/hooks/useColors';
-import { useTVDetail } from '@/hooks/useTMDB';
+import { useTVDetail, useRecommendations, useVideos, useWatchProviders } from '@/hooks/useTMDB';
 import { BACKDROP_URL, POSTER_URL } from '@/lib/tmdb';
 import { WatchStatus } from '@/types';
 
@@ -16,7 +22,12 @@ export default function TVDetailScreen() {
   const router = useRouter();
   const colors = useColors();
   const { show, loading, error } = useTVDetail(showId);
-  const { getItem, addItem, removeItem, updateStatus, updateRating, updateProgress } = useWatchlist();
+  const { videos } = useVideos('tv', showId);
+  const { providers, region } = useWatchProviders('tv', showId);
+  const { results: recommendations } = useRecommendations('tv', showId);
+  const { showWhereToWatch, showMoreLikeThis, showReview } = useSettings();
+  const [trailerVisible, setTrailerVisible] = useState(false);
+  const { getItem, addItem, removeItem, updateStatus, updateRating, updateProgress, updateReview } = useWatchlist();
 
   const tracked = getItem(showId, 'tv');
 
@@ -64,6 +75,7 @@ export default function TVDetailScreen() {
   }
 
   return (
+    <>
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
       <View style={styles.backdrop}>
         {backdropUri ? (
@@ -110,6 +122,25 @@ export default function TVDetailScreen() {
 
         {show.overview ? <Text style={[styles.overview, { color: colors.textDim }]}>{show.overview}</Text> : null}
 
+        {videos.length > 0 && (
+          <Pressable
+            style={[styles.trailerButton, { backgroundColor: colors.accent }]}
+            onPress={() => setTrailerVisible(true)}
+          >
+            <Ionicons name="play-circle-outline" size={20} color="#fff" />
+            <Text style={styles.trailerText}>
+              {videos.length === 1 ? 'Watch Trailer' : `Watch Trailers (${videos.length})`}
+            </Text>
+          </Pressable>
+        )}
+
+        {showWhereToWatch && providers && (
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Where to Watch</Text>
+            <StreamingProviders providers={providers} region={region} />
+          </View>
+        )}
+
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>Add to list</Text>
           <StatusSelector value={tracked?.status} onChange={handleStatusChange} />
@@ -153,14 +184,42 @@ export default function TVDetailScreen() {
           </View>
         )}
 
+        {tracked && showReview && (
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Your Review</Text>
+            <ReviewInput
+              value={tracked.review ?? ''}
+              onSave={(text) => updateReview(showId, 'tv', text)}
+            />
+          </View>
+        )}
+
         {tracked && (
           <Pressable style={[styles.removeButton, { borderColor: colors.accentDim }]} onPress={() => removeItem(showId, 'tv')}>
             <Ionicons name="trash-outline" size={16} color={colors.accent} />
             <Text style={[styles.removeText, { color: colors.accent }]}>Remove from lists</Text>
           </Pressable>
         )}
+
+        {showMoreLikeThis && recommendations.length > 0 && (
+          <View style={[styles.section, { marginTop: 24 }]}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>More like this</Text>
+            <RecommendationsRow items={recommendations} mediaType="tv" />
+          </View>
+        )}
       </View>
     </ScrollView>
+
+    <TrailerModal
+      visible={trailerVisible}
+      onClose={() => setTrailerVisible(false)}
+      title={show.name}
+      mediaType="tv"
+      mediaId={showId}
+      initialVideos={videos}
+      numberOfSeasons={show.number_of_seasons}
+    />
+    </>
   );
 }
 
@@ -200,6 +259,11 @@ const styles = StyleSheet.create({
   stepper: { flexDirection: 'row', alignItems: 'center', borderRadius: 10, borderWidth: 1, overflow: 'hidden' },
   stepBtn: { paddingHorizontal: 14, paddingVertical: 10 },
   stepValue: { fontSize: 16, fontWeight: '700', minWidth: 36, textAlign: 'center' },
+  trailerButton: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    gap: 8, paddingVertical: 13, borderRadius: 12, marginBottom: 24,
+  },
+  trailerText: { color: '#fff', fontSize: 15, fontWeight: '700' },
   removeButton: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12, borderRadius: 10, borderWidth: 1, justifyContent: 'center' },
   removeText: { fontSize: 14, fontWeight: '600' },
 });

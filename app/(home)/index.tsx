@@ -5,6 +5,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { EmptyState } from '@/components/EmptyState';
 import { MediaCard } from '@/components/MediaCard';
+import { MediaListItem } from '@/components/MediaListItem';
 import { SortSheet } from '@/components/SortSheet';
 import { StatusColors, StatusLabels } from '@/constants/Colors';
 import { useWatchlist } from '@/context/WatchlistContext';
@@ -12,7 +13,7 @@ import { useColors } from '@/hooks/useColors';
 import { MediaItem, SortOrder, WatchStatus } from '@/types';
 
 const TABS: WatchStatus[] = ['watchlist', 'watching', 'watched'];
-const SORT_PREFS_KEY = 'watcho_sort_prefs';
+const PREFS_KEY = 'watcho_tab_prefs';
 
 const EMPTY_CONFIG = {
   watchlist: { icon: 'bookmark-outline' as const, title: 'Your watchlist is empty', subtitle: 'Search for movies or TV shows and add them to your list.' },
@@ -20,8 +21,14 @@ const EMPTY_CONFIG = {
   watched: { icon: 'checkmark-circle-outline' as const, title: 'No titles watched yet', subtitle: 'After you watch something, mark it as Watched to see it here.' },
 };
 
-type SortPrefs = Record<WatchStatus, SortOrder>;
-const DEFAULT_SORT: SortPrefs = { watchlist: 'added_at', watching: 'added_at', watched: 'added_at' };
+type ViewMode = 'grid' | 'list';
+type TabPrefs = { sort: SortOrder; view: ViewMode };
+type AllTabPrefs = Record<WatchStatus, TabPrefs>;
+const DEFAULT_PREFS: AllTabPrefs = {
+  watchlist: { sort: 'added_at', view: 'grid' },
+  watching:  { sort: 'added_at', view: 'grid' },
+  watched:   { sort: 'added_at', view: 'grid' },
+};
 
 function sortItems(items: MediaItem[], order: SortOrder): MediaItem[] {
   return [...items].sort((a, b) => {
@@ -39,22 +46,40 @@ export default function MyListsScreen() {
   const { items } = useWatchlist();
   const colors = useColors();
   const [activeTab, setActiveTab] = useState<WatchStatus>('watchlist');
-  const [sortPrefs, setSortPrefs] = useState<SortPrefs>(DEFAULT_SORT);
+  const [tabPrefs, setTabPrefs] = useState<AllTabPrefs>(DEFAULT_PREFS);
   const [sheetVisible, setSheetVisible] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.getItem(SORT_PREFS_KEY).then((val) => {
-      if (val) setSortPrefs({ ...DEFAULT_SORT, ...JSON.parse(val) });
+    AsyncStorage.getItem(PREFS_KEY).then((raw) => {
+      if (!raw) return;
+      try {
+        const saved = JSON.parse(raw);
+        const merged = { ...DEFAULT_PREFS };
+        for (const tab of TABS) {
+          if (saved[tab]) merged[tab] = { ...DEFAULT_PREFS[tab], ...saved[tab] };
+        }
+        setTabPrefs(merged);
+      } catch {}
     });
   }, []);
 
-  function setSort(order: SortOrder) {
-    const next = { ...sortPrefs, [activeTab]: order };
-    setSortPrefs(next);
-    AsyncStorage.setItem(SORT_PREFS_KEY, JSON.stringify(next));
+  function savePrefs(next: AllTabPrefs) {
+    setTabPrefs(next);
+    AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next));
   }
 
-  const currentSort = sortPrefs[activeTab];
+  function setSort(order: SortOrder) {
+    savePrefs({ ...tabPrefs, [activeTab]: { ...tabPrefs[activeTab], sort: order } });
+  }
+
+  function toggleViewMode() {
+    const next: ViewMode = tabPrefs[activeTab].view === 'grid' ? 'list' : 'grid';
+    savePrefs({ ...tabPrefs, [activeTab]: { ...tabPrefs[activeTab], view: next } });
+  }
+
+  const currentPrefs = tabPrefs[activeTab];
+  const currentSort = currentPrefs.sort;
+  const isGrid = currentPrefs.view === 'grid';
   const filtered = sortItems(items.filter((i) => i.status === activeTab), currentSort);
 
   return (
@@ -85,19 +110,31 @@ export default function MyListsScreen() {
           );
         })}
 
-        <Pressable style={styles.sortButton} onPress={() => setSheetVisible(true)} hitSlop={8}>
-          <Ionicons name="swap-vertical-outline" size={20} color={colors.textDim} />
-        </Pressable>
+        <View style={styles.actions}>
+          <Pressable onPress={toggleViewMode} hitSlop={8} style={styles.actionButton}>
+            <Ionicons
+              name={isGrid ? 'list-outline' : 'grid-outline'}
+              size={20}
+              color={colors.textDim}
+            />
+          </Pressable>
+          <Pressable onPress={() => setSheetVisible(true)} hitSlop={8} style={styles.actionButton}>
+            <Ionicons name="swap-vertical-outline" size={20} color={colors.textDim} />
+          </Pressable>
+        </View>
       </View>
 
       <FlatList<MediaItem>
+        key={String(isGrid)}
         data={filtered}
-        numColumns={2}
+        numColumns={isGrid ? 2 : 1}
         keyExtractor={(item) => `${item.mediaType}-${item.id}`}
-        contentContainerStyle={styles.grid}
-        renderItem={({ item }) => (
-          <MediaCard item={item} style={styles.gridItem} />
-        )}
+        contentContainerStyle={isGrid ? styles.grid : styles.listContent}
+        renderItem={({ item }) =>
+          isGrid
+            ? <MediaCard item={item} style={styles.gridItem} />
+            : <MediaListItem item={item} />
+        }
         ListEmptyComponent={<EmptyState {...EMPTY_CONFIG[activeTab]} />}
         showsVerticalScrollIndicator={false}
       />
@@ -143,7 +180,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   countText: { color: '#fff', fontSize: 10, fontWeight: '700' },
-  sortButton: { paddingVertical: 12, paddingLeft: 8 },
+  actions: { flexDirection: 'row', alignItems: 'center', gap: 2 },
+  actionButton: { paddingVertical: 12, paddingHorizontal: 6 },
   grid: { paddingHorizontal: 10, paddingBottom: 20 },
   gridItem: { flex: 1, maxWidth: '50%' },
+  listContent: { paddingBottom: 20 },
 });

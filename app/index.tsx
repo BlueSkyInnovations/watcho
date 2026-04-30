@@ -1,19 +1,16 @@
-import { Redirect } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
 import { View } from 'react-native';
 import { getStoredApiKey } from '@/lib/apiKey';
 
 export default function Index() {
-  const [ready, setReady] = useState(false);
-  const [hasKey, setHasKey] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     getStoredApiKey().then((key) => {
-      setHasKey(key.length > 0);
-      setReady(true);
+      router.replace(key.length > 0 ? '/(home)' : '/onboarding');
     });
   }, []);
 
-  if (!ready) return <View style={{ flex: 1 }} />;
-  return <Redirect href={hasKey ? '/home' : '/onboarding'} />;
+  return <View style={{ flex: 1, backgroundColor: '#0D0D14' }} />;
 }
