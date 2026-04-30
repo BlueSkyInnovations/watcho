@@ -16,6 +16,7 @@ export interface MediaItem {
   addedAt: string;
   updatedAt?: string;
   userRating?: number;
+  review?: string;
   // TV only
   numberOfSeasons?: number;
   currentSeason?: number;
@@ -60,6 +61,20 @@ export interface TMDBSearchResult {
   release_date?: string;
   first_air_date?: string;
   vote_average: number;
+}
+
+export interface WatchProvider {
+  provider_id: number;
+  provider_name: string;
+  logo_path: string;
+  display_priority: number;
+}
+
+export interface WatchProviders {
+  link: string;
+  flatrate?: WatchProvider[];
+  rent?: WatchProvider[];
+  buy?: WatchProvider[];
 }
 
 export interface WatchlistStats {

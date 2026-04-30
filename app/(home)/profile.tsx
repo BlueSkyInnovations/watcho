@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Stack, useRouter } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusColors } from '@/constants/Colors';
 import { useWatchlist } from '@/context/WatchlistContext';
@@ -27,22 +26,12 @@ function StatCard({ label, value, color, icon }: StatCardProps) {
 export default function ProfileScreen() {
   const { stats, items } = useWatchlist();
   const colors = useColors();
-  const router = useRouter();
 
-  const movieCount = items.filter((i) => i.mediaType === 'movie' && i.status === 'watched').length;
-  const tvCount = items.filter((i) => i.mediaType === 'tv' && i.status === 'watched').length;
+  const movieCount = items.filter((i) => i.mediaType === 'movie' && (i.status === 'watched' || i.status === 'watching')).length;
+  const tvCount = items.filter((i) => i.mediaType === 'tv' && (i.status === 'watched' || i.status === 'watching')).length;
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
-      <Stack.Screen
-        options={{
-          headerRight: () => (
-            <Pressable onPress={() => router.push('/settings')} hitSlop={10} style={styles.gearButton}>
-              <Ionicons name="settings-outline" size={22} color={colors.textDim} />
-            </Pressable>
-          ),
-        }}
-      />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
         <Text style={[styles.heading, { color: colors.text }]}>Your Stats</Text>
 
@@ -52,9 +41,21 @@ export default function ProfileScreen() {
           <StatCard label="Watchlist" value={stats.totalWatchlist} color={StatusColors.watchlist} icon="bookmark" />
         </View>
 
-        {stats.totalWatched > 0 && (
+        {(stats.totalWatched > 0 || stats.totalWatching > 0) && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Breakdown</Text>
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Breakdown</Text>
+              <View style={styles.statusTags}>
+                <View style={styles.statusTag}>
+                  <View style={[styles.statusDot, { backgroundColor: StatusColors.watching }]} />
+                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>Watching</Text>
+                </View>
+                <View style={styles.statusTag}>
+                  <View style={[styles.statusDot, { backgroundColor: StatusColors.watched }]} />
+                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>Watched</Text>
+                </View>
+              </View>
+            </View>
             <View style={[styles.breakdownRow, { backgroundColor: colors.surface }]}>
               <View style={styles.breakdownItem}>
                 <Ionicons name="film" size={20} color={colors.textDim} />
@@ -83,7 +84,19 @@ export default function ProfileScreen() {
 
         {stats.topGenres.length > 0 && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Top Genres</Text>
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Top Genres</Text>
+              <View style={styles.statusTags}>
+                <View style={styles.statusTag}>
+                  <View style={[styles.statusDot, { backgroundColor: StatusColors.watching }]} />
+                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>Watching</Text>
+                </View>
+                <View style={styles.statusTag}>
+                  <View style={[styles.statusDot, { backgroundColor: StatusColors.watched }]} />
+                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>Watched</Text>
+                </View>
+              </View>
+            </View>
             {stats.topGenres.map((g, i) => (
               <View key={g.name} style={styles.genreRow}>
                 <Text style={[styles.genreRank, { color: colors.textMuted }]}>#{i + 1}</Text>
@@ -112,14 +125,18 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   scroll: { paddingHorizontal: 16, paddingBottom: 40 },
-  gearButton: { marginRight: 4 },
   heading: { fontSize: 24, fontWeight: '800', marginVertical: 16 },
   statsRow: { flexDirection: 'row', gap: 10, marginBottom: 24 },
   statCard: { flex: 1, borderRadius: 12, padding: 14, alignItems: 'center', gap: 6, borderTopWidth: 3 },
   statValue: { fontSize: 22, fontWeight: '700' },
   statLabel: { fontSize: 11, fontWeight: '500' },
   section: { marginBottom: 24 },
-  sectionTitle: { fontSize: 17, fontWeight: '700', marginBottom: 14 },
+  sectionHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 14 },
+  sectionTitle: { fontSize: 17, fontWeight: '700', marginRight: 10 },
+  statusTags: { flexDirection: 'row', gap: 10, flex: 1, justifyContent: 'flex-end' },
+  statusTag: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  statusDot: { width: 6, height: 6, borderRadius: 3 },
+  statusTagText: { fontSize: 11 },
   breakdownRow: { flexDirection: 'row', borderRadius: 12, padding: 16, alignItems: 'center' },
   breakdownItem: { flex: 1, alignItems: 'center', gap: 6 },
   breakdownValue: { fontSize: 20, fontWeight: '700' },

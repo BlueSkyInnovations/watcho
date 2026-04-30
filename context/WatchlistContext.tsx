@@ -13,7 +13,8 @@ type Action =
   | { type: 'REMOVE'; id: number; mediaType: MediaType }
   | { type: 'UPDATE_STATUS'; id: number; mediaType: MediaType; status: WatchStatus }
   | { type: 'UPDATE_RATING'; id: number; mediaType: MediaType; rating: number }
-  | { type: 'UPDATE_PROGRESS'; id: number; season: number; episode: number };
+  | { type: 'UPDATE_PROGRESS'; id: number; season: number; episode: number }
+  | { type: 'UPDATE_REVIEW'; id: number; mediaType: MediaType; review: string };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -55,6 +56,15 @@ function reducer(state: State, action: Action): State {
             : i
         ),
       };
+    case 'UPDATE_REVIEW':
+      return {
+        ...state,
+        items: state.items.map((i) =>
+          i.id === action.id && i.mediaType === action.mediaType
+            ? { ...i, review: action.review, updatedAt: new Date().toISOString() }
+            : i
+        ),
+      };
     default:
       return state;
   }
@@ -69,6 +79,7 @@ interface WatchlistContextValue {
   updateStatus: (id: number, mediaType: MediaType, status: WatchStatus) => void;
   updateRating: (id: number, mediaType: MediaType, rating: number) => void;
   updateProgress: (id: number, season: number, episode: number) => void;
+  updateReview: (id: number, mediaType: MediaType, review: string) => void;
   stats: WatchlistStats;
 }
 
@@ -114,6 +125,10 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'UPDATE_PROGRESS', id, season, episode });
   }, []);
 
+  const updateReview = useCallback((id: number, mediaType: MediaType, review: string) => {
+    dispatch({ type: 'UPDATE_REVIEW', id, mediaType, review });
+  }, []);
+
   const stats: WatchlistStats = React.useMemo(() => {
     const watched = state.items.filter((i) => i.status === 'watched');
     const watching = state.items.filter((i) => i.status === 'watching');
@@ -125,7 +140,7 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
         : 0;
 
     const genreMap = new Map<string, number>();
-    for (const item of watched) {
+    for (const item of [...watched, ...watching]) {
       for (const g of item.genres) {
         genreMap.set(g.name, (genreMap.get(g.name) ?? 0) + 1);
       }
@@ -146,7 +161,7 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <WatchlistContext.Provider
-      value={{ items: state.items, loaded: state.loaded, getItem, addItem, removeItem, updateStatus, updateRating, updateProgress, stats }}
+      value={{ items: state.items, loaded: state.loaded, getItem, addItem, removeItem, updateStatus, updateRating, updateProgress, updateReview, stats }}
     >
       {children}
     </WatchlistContext.Provider>

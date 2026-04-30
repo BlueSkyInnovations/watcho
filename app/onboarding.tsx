@@ -42,7 +42,7 @@ export default function OnboardingScreen() {
       return;
     }
     await saveApiKey(apiKey);
-    router.replace('/home');
+    router.replace('/');
   }
 
   if (step === 'intro') {

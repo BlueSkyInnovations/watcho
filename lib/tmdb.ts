@@ -1,4 +1,4 @@
-import { TMDBMovie, TMDBSearchResult, TMDBTVShow } from '@/types';
+import { TMDBMovie, TMDBSearchResult, TMDBTVShow, WatchProviders } from '@/types';
 import { getStoredApiKey } from './apiKey';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -8,6 +8,8 @@ export const POSTER_URL = (path: string | null, size: 'w185' | 'w342' | 'w500' =
 
 export const BACKDROP_URL = (path: string | null) =>
   path ? `https://image.tmdb.org/t/p/w780${path}` : null;
+
+export const LOGO_URL = (path: string) => `https://image.tmdb.org/t/p/w92${path}`;
 
 async function get<T>(endpoint: string, params: Record<string, string> = {}): Promise<T> {
   const apiKey = await getStoredApiKey();
@@ -27,6 +29,20 @@ interface PagedResult<T> {
   total_pages: number;
 }
 
+export interface TMDBVideo {
+  id: string;
+  key: string;
+  site: string;
+  type: string;
+  official: boolean;
+  name: string;
+  iso_639_1: string;
+}
+
+interface VideosResult {
+  results: TMDBVideo[];
+}
+
 export async function validateApiKey(key: string): Promise<boolean> {
   try {
     const url = new URL(`${BASE_URL}/configuration`);
@@ -37,6 +53,9 @@ export async function validateApiKey(key: string): Promise<boolean> {
     return false;
   }
 }
+
+// Pull videos in all major languages; "null" includes language-neutral entries.
+const ALL_VIDEO_LANGS = 'en,de,fr,es,it,pt,ja,ko,zh,ru,ar,tr,pl,nl,sv,da,no,fi,null';
 
 export const tmdb = {
   searchMulti: (query: string) =>
@@ -51,4 +70,18 @@ export const tmdb = {
     get<TMDBMovie>(`/movie/${id}`),
   getTVShow: (id: number) =>
     get<TMDBTVShow>(`/tv/${id}`),
+  getMovieVideos: (id: number) =>
+    get<VideosResult>(`/movie/${id}/videos`, { include_video_language: ALL_VIDEO_LANGS }),
+  getTVVideos: (id: number) =>
+    get<VideosResult>(`/tv/${id}/videos`, { include_video_language: ALL_VIDEO_LANGS }),
+  getTVSeasonVideos: (showId: number, season: number) =>
+    get<VideosResult>(`/tv/${showId}/season/${season}/videos`, { include_video_language: ALL_VIDEO_LANGS }),
+  getMovieProviders: (id: number) =>
+    get<{ results: Record<string, WatchProviders> }>(`/movie/${id}/watch/providers`),
+  getTVProviders: (id: number) =>
+    get<{ results: Record<string, WatchProviders> }>(`/tv/${id}/watch/providers`),
+  getMovieRecommendations: (id: number) =>
+    get<PagedResult<TMDBSearchResult>>(`/movie/${id}/recommendations`),
+  getTVRecommendations: (id: number) =>
+    get<PagedResult<TMDBSearchResult>>(`/tv/${id}/recommendations`),
 };

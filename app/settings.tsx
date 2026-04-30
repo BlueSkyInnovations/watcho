@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSettings } from '@/context/SettingsContext';
 import { ThemePreference, useTheme } from '@/context/ThemeContext';
 import { useColors } from '@/hooks/useColors';
 import { clearApiKey, getStoredApiKey } from '@/lib/apiKey';
@@ -22,6 +23,7 @@ const THEME_OPTIONS: ThemeOption[] = [
 export default function SettingsScreen() {
   const colors = useColors();
   const { preference, setPreference } = useTheme();
+  const { showWhereToWatch, setShowWhereToWatch, showMoreLikeThis, setShowMoreLikeThis, showReview, setShowReview } = useSettings();
   const router = useRouter();
   const [keyPreview, setKeyPreview] = useState('');
 
@@ -81,6 +83,46 @@ export default function SettingsScreen() {
               </Pressable>
             );
           })}
+        </View>
+
+        <Text style={[styles.sectionLabel, { color: colors.textMuted, marginTop: 28 }]}>DETAIL SCREENS</Text>
+        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <View style={[styles.row, { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
+            <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
+              <Ionicons name="tv-outline" size={18} color={colors.textDim} />
+            </View>
+            <Text style={[styles.rowLabel, { color: colors.text }]}>Where to Watch</Text>
+            <Switch
+              value={showWhereToWatch}
+              onValueChange={setShowWhereToWatch}
+              trackColor={{ false: colors.border, true: colors.accent }}
+              thumbColor="#fff"
+            />
+          </View>
+          <View style={[styles.row, { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
+            <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
+              <Ionicons name="albums-outline" size={18} color={colors.textDim} />
+            </View>
+            <Text style={[styles.rowLabel, { color: colors.text }]}>More like this</Text>
+            <Switch
+              value={showMoreLikeThis}
+              onValueChange={setShowMoreLikeThis}
+              trackColor={{ false: colors.border, true: colors.accent }}
+              thumbColor="#fff"
+            />
+          </View>
+          <View style={styles.row}>
+            <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
+              <Ionicons name="create-outline" size={18} color={colors.textDim} />
+            </View>
+            <Text style={[styles.rowLabel, { color: colors.text }]}>Personal Review</Text>
+            <Switch
+              value={showReview}
+              onValueChange={setShowReview}
+              trackColor={{ false: colors.border, true: colors.accent }}
+              thumbColor="#fff"
+            />
+          </View>
         </View>
 
         <Text style={[styles.sectionLabel, { color: colors.textMuted, marginTop: 28 }]}>TMDB API</Text>
