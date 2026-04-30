@@ -55,7 +55,7 @@ Light, Dark, and System (follows the device setting) themes. The accent colour i
 
 ### Internationalisation
 
-The app ships in **English** and **German**, with automatic detection of the device language on first launch. You can override it in Settings. The TMDB content language (titles, overviews) follows the same selection, so everything reads consistently. Community translations are managed on [Weblate](https://hosted.weblate.org/engage/watcho/).
+The app ships with **English** and **German** fully translated. **Spanish** is partially available, contributed via Weblate. Device language is detected automatically on first launch; you can override it in Settings. The language picker shows a completion percentage for any language that isn't fully translated yet. The TMDB content language (titles, overviews) follows the same selection. Community translations are managed on [Weblate](https://hosted.weblate.org/engage/watcho/).
 
 ### iOS Quick Actions
 
@@ -121,7 +121,7 @@ components/       Reusable UI components
 context/          WatchlistContext, SettingsContext, ThemeContext
 hooks/            useColors, useTMDB, useQuickActions
 lib/              tmdb.ts, apiKey.ts, i18n.ts, storage.ts
-locales/          en.json, de.json  (translation files)
+locales/          en.json, de.json, es.json  (translation files)
 types/            Shared TypeScript types
 ```
 
@@ -160,7 +160,10 @@ npx expo run:android
 
 ### Adding a new language
 
-Community translators can start a new language directly on [Weblate](https://hosted.weblate.org/projects/watcho/watcho/). Once the translation file is merged, add the language to `LANG_OPTIONS` in `app/settings.tsx` and `lib/i18n.ts`.
+Community translators can start a new language directly on [Weblate](https://hosted.weblate.org/projects/watcho/watcho/). Once the translation file is merged:
+1. Add the language code to `SUPPORTED` in `lib/i18n.ts` — completion percentage is computed automatically
+2. Add an entry to `LANG_OPTIONS` in `app/settings.tsx` with the display name key
+3. Add the display name string to `locales/en.json` and `locales/de.json`
 
 ### Commands
 
