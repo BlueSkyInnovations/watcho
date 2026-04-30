@@ -1,0 +1,16 @@
+{
+    "tabs": {
+        "myLists": "Mis listas",
+        "search": "Buscar",
+        "profile": "Perfil"
+    },
+    "status": {
+        "watchlist": "Lista de seguimiento",
+        "watching": "Viendo",
+        "watched": "Visto"
+    },
+    "search": {
+        "trendingToday": "Tendencias de hoy",
+        "noResults": "Sin resultados"
+    }
+}
