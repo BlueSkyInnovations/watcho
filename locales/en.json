@@ -91,6 +91,7 @@
     "langSystem": "System",
     "langEnglish": "English",
     "langGerman": "German",
+    "langSpanish": "Spanish",
     "tmdbApi": "TMDB API",
     "apiKey": "API Key",
     "changeKey": "Change Key",
