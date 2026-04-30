@@ -1,4 +1,10 @@
-version: 1
+format: "1"
+
+project:
+  name: watcho
+  slug: watcho
+  web: https://github.com/BlueSkyInnovations/watcho
+
 components:
   - name: watcho
     filemask: locales/*.json
@@ -6,3 +12,4 @@ components:
     new_base: locales/en.json
     file_format: i18next
     source_language: en
+    license: MIT
