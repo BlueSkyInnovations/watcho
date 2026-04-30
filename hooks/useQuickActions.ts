@@ -1,9 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import * as QuickActions from 'expo-quick-actions';
-import type { Action } from 'expo-quick-actions';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useWatchlist } from '@/context/WatchlistContext';
+
+// expo-quick-actions is a native module not included in Expo Go.
+// All calls are wrapped so the app loads cleanly without a dev build.
+let QuickActions: typeof import('expo-quick-actions') | null = null;
+try {
+  QuickActions = require('expo-quick-actions');
+} catch {}
+
+type Action = { id: string; params?: Record<string, unknown> };
 
 export function useQuickActions() {
   const { items, loaded, updateProgress } = useWatchlist();
@@ -22,7 +29,7 @@ export function useQuickActions() {
   }, [items]);
 
   useEffect(() => {
-    if (!loaded) return;
+    if (!loaded || !QuickActions) return;
     if (!latestShow) {
       QuickActions.setItems([]);
       return;
@@ -68,13 +75,14 @@ export function useQuickActions() {
 
   const handledInitial = useRef(false);
   useEffect(() => {
-    if (!loaded || handledInitial.current) return;
+    if (!loaded || handledInitial.current || !QuickActions) return;
     handledInitial.current = true;
-    if (QuickActions.initial) handleAction(QuickActions.initial);
+    if (QuickActions.initial) handleAction(QuickActions.initial as Action);
   }, [loaded]);
 
   useEffect(() => {
-    const sub = QuickActions.addListener(handleAction);
+    if (!QuickActions) return;
+    const sub = QuickActions.addListener(handleAction as Parameters<typeof QuickActions.addListener>[0]);
     return () => sub.remove();
   }, []);
 
