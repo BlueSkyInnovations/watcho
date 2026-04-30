@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { useColors } from '@/hooks/useColors';
 import { saveApiKey } from '@/lib/apiKey';
 import { validateApiKey } from '@/lib/tmdb';
@@ -25,6 +26,7 @@ type Step = 'intro' | 'enter-key';
 export default function OnboardingScreen() {
   const colors = useColors();
   const router = useRouter();
+  const { t } = useTranslation();
   const [step, setStep] = useState<Step>('intro');
   const [apiKey, setApiKey] = useState('');
   const [validating, setValidating] = useState(false);
@@ -32,13 +34,13 @@ export default function OnboardingScreen() {
   const inputRef = useRef<TextInput>(null);
 
   async function handleSave() {
-    if (!apiKey.trim()) { setError('Please enter your API key.'); return; }
+    if (!apiKey.trim()) { setError(t('onboarding.errorEmpty')); return; }
     setValidating(true);
     setError(null);
     const valid = await validateApiKey(apiKey);
     setValidating(false);
     if (!valid) {
-      setError('Key not recognised by TMDB. Double-check and try again.');
+      setError(t('onboarding.errorInvalid'));
       return;
     }
     await saveApiKey(apiKey);
@@ -50,17 +52,16 @@ export default function OnboardingScreen() {
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.center}>
           <Text style={[styles.logo, { color: colors.accent }]}>watcho</Text>
-          <Text style={[styles.headline, { color: colors.text }]}>One quick setup step</Text>
+          <Text style={[styles.headline, { color: colors.text }]}>{t('onboarding.headline')}</Text>
           <Text style={[styles.body, { color: colors.textDim }]}>
-            watcho uses The Movie Database (TMDB) for all movie and TV show data.
-            TMDB offers a free personal API key — you'll need one to use this app.
+            {t('onboarding.body')}
           </Text>
 
           <View style={[styles.stepsCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
             {[
-              { n: '1', text: 'Create a free account at themoviedb.org' },
-              { n: '2', text: 'Go to Settings → API and request an API key (choose "Personal use")' },
-              { n: '3', text: 'Copy the key labelled API Key (v3 auth) and paste it here' },
+              { n: '1', text: t('onboarding.step1') },
+              { n: '2', text: t('onboarding.step2') },
+              { n: '3', text: t('onboarding.step3') },
             ].map((s) => (
               <View key={s.n} style={styles.stepRow}>
                 <View style={[styles.stepNumber, { backgroundColor: colors.accentDim }]}>
@@ -76,7 +77,7 @@ export default function OnboardingScreen() {
             onPress={() => Linking.openURL(TMDB_SIGNUP_URL)}
           >
             <Ionicons name="open-outline" size={16} color="#fff" />
-            <Text style={styles.primaryButtonText}>Create TMDB Account</Text>
+            <Text style={styles.primaryButtonText}>{t('onboarding.createAccount')}</Text>
           </Pressable>
 
           <Pressable
@@ -84,14 +85,14 @@ export default function OnboardingScreen() {
             onPress={() => Linking.openURL(TMDB_API_URL)}
           >
             <Ionicons name="key-outline" size={16} color="#fff" />
-            <Text style={styles.primaryButtonText}>Go to TMDB API Settings</Text>
+            <Text style={styles.primaryButtonText}>{t('onboarding.goToApi')}</Text>
           </Pressable>
 
           <Pressable
             style={[styles.secondaryButton, { borderColor: colors.border }]}
             onPress={() => { setStep('enter-key'); setTimeout(() => inputRef.current?.focus(), 100); }}
           >
-            <Text style={[styles.secondaryButtonText, { color: colors.text }]}>I already have a key →</Text>
+            <Text style={[styles.secondaryButtonText, { color: colors.text }]}>{t('onboarding.haveKey')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -103,20 +104,20 @@ export default function OnboardingScreen() {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.center}>
         <Pressable style={styles.backRow} onPress={() => setStep('intro')}>
           <Ionicons name="chevron-back" size={18} color={colors.textDim} />
-          <Text style={[styles.backText, { color: colors.textDim }]}>Back</Text>
+          <Text style={[styles.backText, { color: colors.textDim }]}>{t('onboarding.back')}</Text>
         </Pressable>
 
-        <Text style={[styles.headline, { color: colors.text }]}>Enter your API key</Text>
+        <Text style={[styles.headline, { color: colors.text }]}>{t('onboarding.enterKey')}</Text>
         <Text style={[styles.body, { color: colors.textDim }]}>
-          Paste the API Key (v3 auth) from your TMDB account settings.
+          {t('onboarding.enterKeyBody')}
         </Text>
 
         <TextInput
           ref={inputRef}
           style={[styles.input, { backgroundColor: colors.surface, borderColor: error ? colors.accent : colors.border, color: colors.text }]}
           value={apiKey}
-          onChangeText={(t) => { setApiKey(t); setError(null); }}
-          placeholder="e.g. a1b2c3d4e5f6..."
+          onChangeText={(text) => { setApiKey(text); setError(null); }}
+          placeholder={t('onboarding.keyPlaceholder')}
           placeholderTextColor={colors.textMuted}
           autoCapitalize="none"
           autoCorrect={false}
@@ -138,7 +139,7 @@ export default function OnboardingScreen() {
         >
           {validating
             ? <ActivityIndicator size="small" color="#fff" />
-            : <Text style={styles.primaryButtonText}>Verify &amp; Continue</Text>}
+            : <Text style={styles.primaryButtonText}>{t('onboarding.verifyContinue')}</Text>}
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>

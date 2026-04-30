@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RatingStars } from '@/components/RatingStars';
 import { RecommendationsRow } from '@/components/RecommendationsRow';
 import { ReviewInput } from '@/components/ReviewInput';
@@ -21,6 +22,7 @@ export default function MovieDetailScreen() {
   const movieId = Number(id);
   const router = useRouter();
   const colors = useColors();
+  const { t } = useTranslation();
   const { movie, loading, error } = useMovieDetail(movieId);
   const { videos } = useVideos('movie', movieId);
   const { providers, region } = useWatchProviders('movie', movieId);
@@ -42,7 +44,7 @@ export default function MovieDetailScreen() {
   if (error || !movie) {
     return (
       <View style={[styles.centered, { backgroundColor: colors.background }]}>
-        <Text style={[styles.errorText, { color: colors.accent }]}>{error ?? 'Failed to load'}</Text>
+        <Text style={[styles.errorText, { color: colors.accent }]}>{error ?? t('detail.failedToLoad')}</Text>
       </View>
     );
   }
@@ -123,33 +125,33 @@ export default function MovieDetailScreen() {
           >
             <Ionicons name="play-circle-outline" size={20} color="#fff" />
             <Text style={styles.trailerText}>
-              {videos.length === 1 ? 'Watch Trailer' : `Watch Trailers (${videos.length})`}
+              {videos.length === 1 ? t('detail.watchTrailer') : t('detail.watchTrailers', { count: videos.length })}
             </Text>
           </Pressable>
         )}
 
         {showWhereToWatch && providers && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Where to Watch</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.whereToWatch')}</Text>
             <StreamingProviders providers={providers} region={region} />
           </View>
         )}
 
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Add to list</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.addToList')}</Text>
           <StatusSelector value={tracked?.status} onChange={handleStatusChange} />
         </View>
 
         {tracked && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Your rating</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.yourRating')}</Text>
             <RatingStars value={tracked.userRating ?? 0} onChange={(r) => updateRating(movieId, 'movie', r)} />
           </View>
         )}
 
         {tracked && showReview && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Your Review</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.yourReview')}</Text>
             <ReviewInput
               value={tracked.review ?? ''}
               onSave={(text) => updateReview(movieId, 'movie', text)}
@@ -160,13 +162,13 @@ export default function MovieDetailScreen() {
         {tracked && (
           <Pressable style={[styles.removeButton, { borderColor: colors.accentDim }]} onPress={() => removeItem(movieId, 'movie')}>
             <Ionicons name="trash-outline" size={16} color={colors.accent} />
-            <Text style={[styles.removeText, { color: colors.accent }]}>Remove from lists</Text>
+            <Text style={[styles.removeText, { color: colors.accent }]}>{t('detail.removeFromLists')}</Text>
           </Pressable>
         )}
 
         {showMoreLikeThis && recommendations.length > 0 && (
           <View style={[styles.section, { marginTop: 24 }]}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>More like this</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.moreLikeThis')}</Text>
             <RecommendationsRow items={recommendations} mediaType="movie" />
           </View>
         )}

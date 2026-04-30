@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { StatusColors, StatusLabels } from '@/constants/Colors';
+import { useTranslation } from 'react-i18next';
+import { StatusColors } from '@/constants/Colors';
 import { useColors } from '@/hooks/useColors';
 import { WatchStatus } from '@/types';
 
@@ -12,6 +13,7 @@ interface StatusSelectorProps {
 
 export function StatusSelector({ value, onChange }: StatusSelectorProps) {
   const colors = useColors();
+  const { t } = useTranslation();
   return (
     <View style={styles.row}>
       {STATUSES.map((s) => {
@@ -27,7 +29,7 @@ export function StatusSelector({ value, onChange }: StatusSelectorProps) {
             onPress={() => onChange(s)}
           >
             <Text style={[styles.label, { color: colors.textDim }, active && styles.labelActive]}>
-              {StatusLabels[s]}
+              {t(`status.${s}`)}
             </Text>
           </Pressable>
         );

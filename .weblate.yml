@@ -1,0 +1,8 @@
+version: 1
+components:
+  - name: watcho
+    filemask: locales/*.json
+    template: locales/en.json
+    new_base: locales/en.json
+    file_format: i18next
+    source_language: en

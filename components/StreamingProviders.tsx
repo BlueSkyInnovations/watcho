@@ -1,4 +1,5 @@
 import { Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useColors } from '@/hooks/useColors';
 import { LOGO_URL } from '@/lib/tmdb';
 import type { WatchProvider, WatchProviders } from '@/types';
@@ -29,6 +30,7 @@ function ProviderRow({ label, items }: { label: string; items: WatchProvider[] }
 
 export function StreamingProviders({ providers, region }: Props) {
   const colors = useColors();
+  const { t } = useTranslation();
   const hasContent =
     (providers.flatrate?.length ?? 0) > 0 ||
     (providers.rent?.length ?? 0) > 0 ||
@@ -43,16 +45,16 @@ export function StreamingProviders({ providers, region }: Props) {
   return (
     <Pressable onPress={openLink} style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       {(providers.flatrate?.length ?? 0) > 0 && (
-        <ProviderRow label="Stream" items={providers.flatrate!} />
+        <ProviderRow label={t('providers.stream')} items={providers.flatrate!} />
       )}
       {(providers.rent?.length ?? 0) > 0 && (
-        <ProviderRow label="Rent" items={providers.rent!} />
+        <ProviderRow label={t('providers.rent')} items={providers.rent!} />
       )}
       {(providers.buy?.length ?? 0) > 0 && (
-        <ProviderRow label="Buy" items={providers.buy!} />
+        <ProviderRow label={t('providers.buy')} items={providers.buy!} />
       )}
       <Text style={[styles.attribution, { color: colors.textMuted }]}>
-        Data by JustWatch · {region}
+        {t('providers.attribution', { region })}
       </Text>
     </Pressable>
   );

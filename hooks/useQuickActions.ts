@@ -2,17 +2,17 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as QuickActions from 'expo-quick-actions';
 import type { Action } from 'expo-quick-actions';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useWatchlist } from '@/context/WatchlistContext';
 
 export function useQuickActions() {
   const { items, loaded, updateProgress } = useWatchlist();
+  const { t } = useTranslation();
   const [toast, setToast] = useState<string | null>(null);
 
-  // Keep a ref so the listener always reads fresh items without re-registering
   const itemsRef = useRef(items);
   useEffect(() => { itemsRef.current = items; }, [items]);
 
-  // Most recently updated TV show in 'watching' status
   const latestShow = useMemo(() => {
     return [...items]
       .filter((i) => i.mediaType === 'tv' && i.status === 'watching')
@@ -21,7 +21,6 @@ export function useQuickActions() {
       )[0] ?? null;
   }, [items]);
 
-  // Keep the quick action subtitle in sync with current episode
   useEffect(() => {
     if (!loaded) return;
     if (!latestShow) {
@@ -33,20 +32,20 @@ export function useQuickActions() {
     QuickActions.setItems([
       {
         id: 'next-episode',
-        title: '+1 Episode',
+        title: t('quickActions.nextEpisode'),
         subtitle: `${latestShow.title} · S${s} E${e}`,
         icon: 'symbol:play.fill',
         params: { showId: latestShow.id },
       },
       {
         id: 'open-show',
-        title: 'Continue Watching',
+        title: t('quickActions.continueWatching'),
         subtitle: latestShow.title,
         icon: 'symbol:tv.fill',
         params: { showId: latestShow.id },
       },
     ]);
-  }, [latestShow, loaded]);
+  }, [latestShow, loaded, t]);
 
   function handleAction(action: Action) {
     const showId = Number(action.params?.showId);
@@ -63,11 +62,10 @@ export function useQuickActions() {
       const season = show.currentSeason ?? 1;
       const nextEp = (show.currentEpisode ?? 1) + 1;
       updateProgress(showId, season, nextEp);
-      setToast(`${show.title} · S${season} E${nextEp} marked`);
+      setToast(t('quickActions.markedToast', { title: show.title, season, episode: nextEp }));
     }
   }
 
-  // Cold start: app was launched via the quick action
   const handledInitial = useRef(false);
   useEffect(() => {
     if (!loaded || handledInitial.current) return;
@@ -75,7 +73,6 @@ export function useQuickActions() {
     if (QuickActions.initial) handleAction(QuickActions.initial);
   }, [loaded]);
 
-  // Foreground: quick action while app is already running
   useEffect(() => {
     const sub = QuickActions.addListener(handleAction);
     return () => sub.remove();

@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useColors } from '@/hooks/useColors';
 
 interface SearchBarProps {
@@ -8,8 +9,9 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export function SearchBar({ value, onChangeText, placeholder = 'Search movies & TV shows...' }: SearchBarProps) {
+export function SearchBar({ value, onChangeText, placeholder }: SearchBarProps) {
   const colors = useColors();
+  const { t } = useTranslation();
   return (
     <View style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       <Ionicons name="search" size={18} color={colors.textDim} style={styles.icon} />
@@ -17,7 +19,7 @@ export function SearchBar({ value, onChangeText, placeholder = 'Search movies & 
         style={[styles.input, { color: colors.text }]}
         value={value}
         onChangeText={onChangeText}
-        placeholder={placeholder}
+        placeholder={placeholder ?? t('search.placeholder')}
         placeholderTextColor={colors.textMuted}
         returnKeyType="search"
         autoCapitalize="none"

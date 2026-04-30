@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RatingStars } from '@/components/RatingStars';
 import { RecommendationsRow } from '@/components/RecommendationsRow';
 import { ReviewInput } from '@/components/ReviewInput';
@@ -21,6 +22,7 @@ export default function TVDetailScreen() {
   const showId = Number(id);
   const router = useRouter();
   const colors = useColors();
+  const { t } = useTranslation();
   const { show, loading, error } = useTVDetail(showId);
   const { videos } = useVideos('tv', showId);
   const { providers, region } = useWatchProviders('tv', showId);
@@ -42,7 +44,7 @@ export default function TVDetailScreen() {
   if (error || !show) {
     return (
       <View style={[styles.centered, { backgroundColor: colors.background }]}>
-        <Text style={[styles.errorText, { color: colors.accent }]}>{error ?? 'Failed to load'}</Text>
+        <Text style={[styles.errorText, { color: colors.accent }]}>{error ?? t('detail.failedToLoad')}</Text>
       </View>
     );
   }
@@ -94,12 +96,12 @@ export default function TVDetailScreen() {
           {posterUri && <Image source={{ uri: posterUri }} style={styles.poster} resizeMode="cover" />}
           <View style={styles.titleBlock}>
             <View style={[styles.tvBadge, { backgroundColor: colors.accentDim }]}>
-              <Text style={[styles.tvBadgeText, { color: colors.accent }]}>TV SHOW</Text>
+              <Text style={[styles.tvBadgeText, { color: colors.accent }]}>{t('detail.tvShow')}</Text>
             </View>
             <Text style={[styles.title, { color: colors.text }]}>{show.name}</Text>
             <View style={styles.metaRow}>
               {year && <Text style={[styles.meta, { color: colors.textDim }]}>{year}</Text>}
-              {seasons && <Text style={[styles.meta, { color: colors.textDim }]}>{seasons} season{seasons !== 1 ? 's' : ''}</Text>}
+              {seasons && <Text style={[styles.meta, { color: colors.textDim }]}>{t('detail.seasons', { count: seasons })}</Text>}
             </View>
             {show.vote_average > 0 && (
               <View style={styles.tmdbRating}>
@@ -129,38 +131,39 @@ export default function TVDetailScreen() {
           >
             <Ionicons name="play-circle-outline" size={20} color="#fff" />
             <Text style={styles.trailerText}>
-              {videos.length === 1 ? 'Watch Trailer' : `Watch Trailers (${videos.length})`}
+              {videos.length === 1 ? t('detail.watchTrailer') : t('detail.watchTrailers', { count: videos.length })}
             </Text>
           </Pressable>
         )}
 
         {showWhereToWatch && providers && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Where to Watch</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.whereToWatch')}</Text>
             <StreamingProviders providers={providers} region={region} />
           </View>
         )}
 
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Add to list</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.addToList')}</Text>
           <StatusSelector value={tracked?.status} onChange={handleStatusChange} />
         </View>
 
         {tracked?.status === 'watching' && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Progress</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.progress')}</Text>
             <View style={styles.progressRow}>
-              {(['Season', 'Episode'] as const).map((label) => {
-                const val = label === 'Season' ? currentSeason : currentEpisode;
-                const dec = label === 'Season'
+              {(['season', 'episode'] as const).map((key) => {
+                const isSeason = key === 'season';
+                const val = isSeason ? currentSeason : currentEpisode;
+                const dec = isSeason
                   ? () => updateProgress(showId, Math.max(1, currentSeason - 1), currentEpisode)
                   : () => updateProgress(showId, currentSeason, Math.max(1, currentEpisode - 1));
-                const inc = label === 'Season'
+                const inc = isSeason
                   ? () => updateProgress(showId, Math.min(seasons ?? 99, currentSeason + 1), currentEpisode)
                   : () => updateProgress(showId, currentSeason, currentEpisode + 1);
                 return (
-                  <View key={label} style={styles.progressControl}>
-                    <Text style={[styles.progressLabel, { color: colors.textDim }]}>{label}</Text>
+                  <View key={key} style={styles.progressControl}>
+                    <Text style={[styles.progressLabel, { color: colors.textDim }]}>{t(`detail.${key}`)}</Text>
                     <View style={[styles.stepper, { backgroundColor: colors.surface, borderColor: colors.border }]}>
                       <Pressable style={styles.stepBtn} onPress={dec}>
                         <Ionicons name="remove" size={18} color={colors.text} />
@@ -179,14 +182,14 @@ export default function TVDetailScreen() {
 
         {tracked && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Your rating</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.yourRating')}</Text>
             <RatingStars value={tracked.userRating ?? 0} onChange={(r) => updateRating(showId, 'tv', r)} />
           </View>
         )}
 
         {tracked && showReview && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Your Review</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.yourReview')}</Text>
             <ReviewInput
               value={tracked.review ?? ''}
               onSave={(text) => updateReview(showId, 'tv', text)}
@@ -197,13 +200,13 @@ export default function TVDetailScreen() {
         {tracked && (
           <Pressable style={[styles.removeButton, { borderColor: colors.accentDim }]} onPress={() => removeItem(showId, 'tv')}>
             <Ionicons name="trash-outline" size={16} color={colors.accent} />
-            <Text style={[styles.removeText, { color: colors.accent }]}>Remove from lists</Text>
+            <Text style={[styles.removeText, { color: colors.accent }]}>{t('detail.removeFromLists')}</Text>
           </Pressable>
         )}
 
         {showMoreLikeThis && recommendations.length > 0 && (
           <View style={[styles.section, { marginTop: 24 }]}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>More like this</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.moreLikeThis')}</Text>
             <RecommendationsRow items={recommendations} mediaType="tv" />
           </View>
         )}
