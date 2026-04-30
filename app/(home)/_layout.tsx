@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
+import { Pressable } from 'react-native';
 import { useColors } from '@/hooks/useColors';
 
 type IoniconsName = keyof typeof Ionicons.glyphMap;
@@ -16,10 +17,12 @@ function TabIcon({ name, focused, color }: { name: IoniconsName; focused: boolea
 
 export default function TabLayout() {
   const colors = useColors();
+  const router = useRouter();
 
   return (
     <Tabs
       screenOptions={{
+        lazy: false,
         tabBarStyle: {
           backgroundColor: colors.tabBar,
           borderTopColor: colors.border,
@@ -51,6 +54,11 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ focused, color }) => <TabIcon name="stats-chart" focused={focused} color={color} />,
+          headerRight: () => (
+            <Pressable onPress={() => router.push('/settings')} hitSlop={10} style={{ marginRight: 4 }}>
+              <Ionicons name="settings-outline" size={22} color={colors.textDim} />
+            </Pressable>
+          ),
         }}
       />
     </Tabs>
