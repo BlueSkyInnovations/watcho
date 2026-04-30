@@ -1,5 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSettings } from '@/context/SettingsContext';
+import { resolveLanguage } from '@/lib/i18n';
 import {
   Animated,
   ActivityIndicator,
@@ -124,6 +127,8 @@ export function TrailerModal({
   visible, onClose, title, mediaType, mediaId, initialVideos, numberOfSeasons,
 }: Props) {
   const colors = useColors();
+  const { t } = useTranslation();
+  const { language } = useSettings();
   const { width } = useWindowDimensions();
   const playerRef = useRef<YoutubeIframeRef>(null);
   const [durations, setDurations] = useState<Record<string, number>>({});
@@ -141,7 +146,8 @@ export function TrailerModal({
     if (!visible) return;
     setActiveSeason('show');
     setSeasonVideos([]);
-    setLangFilter(null);
+    const lang = resolveLanguage(language);
+    setLangFilter(lang !== 'en' ? lang : null);
     setSelectedKey(pickBest(initialVideos)?.key ?? null);
   }, [visible]);
 
@@ -200,7 +206,7 @@ export function TrailerModal({
             >
               {(['show', ...seasons] as SeasonKey[]).map((s) => {
                 const active = activeSeason === s;
-                const label = s === 'show' ? 'Show' : `S${s}`;
+                const label = s === 'show' ? t('trailer.show') : `S${s}`;
                 return (
                   <Pressable
                     key={String(s)}
@@ -266,7 +272,7 @@ export function TrailerModal({
             >
               {([null, ...availableLangs] as (string | null)[]).map((lang) => {
                 const active = langFilter === lang;
-                const label = lang ? lang.toUpperCase() : 'All';
+                const label = lang ? lang.toUpperCase() : t('trailer.all');
                 return (
                   <Pressable
                     key={label}
@@ -291,7 +297,7 @@ export function TrailerModal({
           <ScrollView style={styles.list} showsVerticalScrollIndicator={false}>
             {filteredVideos.length === 0 && !loadingSeason ? (
               <Text style={[styles.emptyText, { color: colors.textMuted }]}>
-                No videos available for this selection.
+                {t('trailer.noVideos')}
               </Text>
             ) : (
               filteredVideos.map((video) => {
@@ -325,7 +331,7 @@ export function TrailerModal({
                           </Text>
                         ) : null}
                         {video.official && (
-                          <Text style={[styles.officialLabel, { color: colors.textMuted }]}>Official</Text>
+                          <Text style={[styles.officialLabel, { color: colors.textMuted }]}>{t('trailer.official')}</Text>
                         )}
                       </View>
                     </View>

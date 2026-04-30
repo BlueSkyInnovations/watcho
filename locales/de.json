@@ -1,0 +1,129 @@
+{
+  "tabs": {
+    "myLists": "Meine Listen",
+    "search": "Suche",
+    "profile": "Profil"
+  },
+  "status": {
+    "watchlist": "Merkliste",
+    "watching": "Am Schauen",
+    "watched": "Gesehen"
+  },
+  "sort": {
+    "title": "Sortieren nach",
+    "dateAdded": "Hinzugefügt am",
+    "releaseDate": "Erscheinungsdatum",
+    "lastUpdated": "Zuletzt aktualisiert"
+  },
+  "myLists": {
+    "empty": {
+      "watchlist": {
+        "title": "Deine Merkliste ist leer",
+        "subtitle": "Suche nach Filmen oder Serien und füge sie deiner Liste hinzu."
+      },
+      "watching": {
+        "title": "Du schaust gerade nichts",
+        "subtitle": "Markiere etwas als \"Am Schauen\", um deinen Fortschritt hier zu verfolgen."
+      },
+      "watched": {
+        "title": "Noch keine Titel gesehen",
+        "subtitle": "Wenn du etwas siehst, markiere es als Gesehen, damit es hier erscheint."
+      }
+    }
+  },
+  "search": {
+    "placeholder": "Filme & Serien suchen...",
+    "trendingToday": "Heute im Trend",
+    "noResults": "Keine Ergebnisse",
+    "nothingFound": "Nichts gefunden für \"{{query}}\""
+  },
+  "profile": {
+    "yourStats": "Deine Statistiken",
+    "breakdown": "Übersicht",
+    "movies": "Filme",
+    "tvShows": "Serien",
+    "avgRating": "Ø Bewertung",
+    "topGenres": "Top-Genres",
+    "emptyHint": "Füge Filme und Serien hinzu, um hier deine Statistiken zu sehen."
+  },
+  "detail": {
+    "failedToLoad": "Laden fehlgeschlagen",
+    "watchTrailer": "Trailer ansehen",
+    "watchTrailers": "Trailer ansehen ({{count}})",
+    "whereToWatch": "Wo schauen",
+    "addToList": "Zur Liste hinzufügen",
+    "yourRating": "Deine Bewertung",
+    "yourReview": "Deine Rezension",
+    "reviewPlaceholder": "Schreibe deine Gedanken...",
+    "removeFromLists": "Aus Listen entfernen",
+    "moreLikeThis": "Ähnliche Titel",
+    "progress": "Fortschritt",
+    "season": "Staffel",
+    "episode": "Folge",
+    "tvShow": "SERIE",
+    "seasons_one": "{{count}} Staffel",
+    "seasons_other": "{{count}} Staffeln"
+  },
+  "trailer": {
+    "show": "Serie",
+    "all": "Alle",
+    "noVideos": "Keine Videos für diese Auswahl verfügbar.",
+    "official": "Offiziell"
+  },
+  "providers": {
+    "stream": "Streamen",
+    "rent": "Leihen",
+    "buy": "Kaufen",
+    "attribution": "Daten von JustWatch · {{region}}"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "appearance": "ERSCHEINUNGSBILD",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "deviceSetting": "Geräteeinstellung",
+    "detailScreens": "DETAILANSICHTEN",
+    "whereToWatch": "Wo schauen",
+    "moreLikeThis": "Ähnliche Titel",
+    "personalReview": "Persönliche Rezension",
+    "language": "SPRACHE",
+    "appLanguage": "App-Sprache",
+    "langSystem": "System",
+    "langEnglish": "Englisch",
+    "langGerman": "Deutsch",
+    "tmdbApi": "TMDB API",
+    "apiKey": "API-Schlüssel",
+    "changeKey": "Schlüssel ändern",
+    "removeKey": "Schlüssel entfernen",
+    "notSet": "Nicht gesetzt",
+    "hint": "Jeder Nutzer verwendet seinen eigenen kostenlosen TMDB API-Schlüssel.\nHol dir einen unter themoviedb.org → Einstellungen → API.",
+    "removeAlert": {
+      "title": "API-Schlüssel entfernen",
+      "message": "Du benötigst einen neuen Schlüssel, um die App zu nutzen.",
+      "cancel": "Abbrechen",
+      "remove": "Entfernen"
+    }
+  },
+  "onboarding": {
+    "headline": "Kurze Einrichtung",
+    "body": "watcho verwendet The Movie Database (TMDB) für alle Film- und Seriendaten. TMDB bietet einen kostenlosen persönlichen API-Schlüssel an – du benötigst einen, um diese App zu nutzen.",
+    "step1": "Erstelle ein kostenloses Konto auf themoviedb.org",
+    "step2": "Gehe zu Einstellungen → API und fordere einen API-Schlüssel an (wähle \"Persönliche Nutzung\")",
+    "step3": "Kopiere den Schlüssel mit der Bezeichnung API Key (v3 auth) und füge ihn hier ein",
+    "createAccount": "TMDB-Konto erstellen",
+    "goToApi": "Zu TMDB API-Einstellungen",
+    "haveKey": "Ich habe bereits einen Schlüssel →",
+    "back": "Zurück",
+    "enterKey": "API-Schlüssel eingeben",
+    "enterKeyBody": "Füge den API Key (v3 auth) aus deinen TMDB-Kontoeinstellungen ein.",
+    "keyPlaceholder": "z. B. a1b2c3d4e5f6...",
+    "verifyContinue": "Prüfen & Weiter",
+    "errorEmpty": "Bitte gib deinen API-Schlüssel ein.",
+    "errorInvalid": "Schlüssel von TMDB nicht erkannt. Überprüfe ihn und versuche es erneut."
+  },
+  "quickActions": {
+    "nextEpisode": "+1 Folge",
+    "continueWatching": "Weiter schauen",
+    "markedToast": "{{title}} · S{{season}} F{{episode}} markiert"
+  }
+}

@@ -3,6 +3,9 @@ import { getStoredApiKey } from './apiKey';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
 
+let _language = 'en';
+export function setTMDBLanguage(lang: string) { _language = lang; }
+
 export const POSTER_URL = (path: string | null, size: 'w185' | 'w342' | 'w500' = 'w342') =>
   path ? `https://image.tmdb.org/t/p/${size}${path}` : null;
 
@@ -15,6 +18,7 @@ async function get<T>(endpoint: string, params: Record<string, string> = {}): Pr
   const apiKey = await getStoredApiKey();
   const url = new URL(`${BASE_URL}${endpoint}`);
   url.searchParams.set('api_key', apiKey);
+  url.searchParams.set('language', _language);
   for (const [k, v] of Object.entries(params)) {
     url.searchParams.set(k, v);
   }

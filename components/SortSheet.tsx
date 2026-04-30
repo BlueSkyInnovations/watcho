@@ -1,18 +1,19 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useColors } from '@/hooks/useColors';
 import { SortOrder } from '@/types';
 
 interface SortOption {
   value: SortOrder;
-  label: string;
+  labelKey: string;
   icon: keyof typeof Ionicons.glyphMap;
 }
 
 const SORT_OPTIONS: SortOption[] = [
-  { value: 'added_at', label: 'Date Added', icon: 'add-circle-outline' },
-  { value: 'release_date', label: 'Release Date', icon: 'calendar-outline' },
-  { value: 'updated_at', label: 'Last Updated', icon: 'time-outline' },
+  { value: 'added_at', labelKey: 'sort.dateAdded', icon: 'add-circle-outline' },
+  { value: 'release_date', labelKey: 'sort.releaseDate', icon: 'calendar-outline' },
+  { value: 'updated_at', labelKey: 'sort.lastUpdated', icon: 'time-outline' },
 ];
 
 interface SortSheetProps {
@@ -24,13 +25,14 @@ interface SortSheetProps {
 
 export function SortSheet({ visible, value, onChange, onClose }: SortSheetProps) {
   const colors = useColors();
+  const { t } = useTranslation();
 
   return (
     <Modal transparent animationType="fade" visible={visible} onRequestClose={onClose}>
       <Pressable style={styles.overlay} onPress={onClose}>
         <Pressable style={[styles.sheet, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <View style={[styles.handle, { backgroundColor: colors.border }]} />
-          <Text style={[styles.title, { color: colors.textDim }]}>Sort by</Text>
+          <Text style={[styles.title, { color: colors.textDim }]}>{t('sort.title')}</Text>
 
           {SORT_OPTIONS.map((opt, index) => {
             const active = value === opt.value;
@@ -46,7 +48,7 @@ export function SortSheet({ visible, value, onChange, onClose }: SortSheetProps)
               >
                 <Ionicons name={opt.icon} size={20} color={active ? colors.accent : colors.textDim} />
                 <Text style={[styles.label, { color: active ? colors.accent : colors.text }]}>
-                  {opt.label}
+                  {t(opt.labelKey)}
                 </Text>
                 {active && <Ionicons name="checkmark-circle" size={20} color={colors.accent} />}
               </Pressable>

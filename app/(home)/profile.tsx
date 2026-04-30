@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { StatusColors } from '@/constants/Colors';
 import { useWatchlist } from '@/context/WatchlistContext';
 import { useColors } from '@/hooks/useColors';
@@ -26,6 +27,7 @@ function StatCard({ label, value, color, icon }: StatCardProps) {
 export default function ProfileScreen() {
   const { stats, items } = useWatchlist();
   const colors = useColors();
+  const { t } = useTranslation();
 
   const movieCount = items.filter((i) => i.mediaType === 'movie' && (i.status === 'watched' || i.status === 'watching')).length;
   const tvCount = items.filter((i) => i.mediaType === 'tv' && (i.status === 'watched' || i.status === 'watching')).length;
@@ -33,26 +35,26 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
-        <Text style={[styles.heading, { color: colors.text }]}>Your Stats</Text>
+        <Text style={[styles.heading, { color: colors.text }]}>{t('profile.yourStats')}</Text>
 
         <View style={styles.statsRow}>
-          <StatCard label="Watched" value={stats.totalWatched} color={colors.success} icon="checkmark-circle" />
-          <StatCard label="Watching" value={stats.totalWatching} color={StatusColors.watching} icon="play-circle" />
-          <StatCard label="Watchlist" value={stats.totalWatchlist} color={StatusColors.watchlist} icon="bookmark" />
+          <StatCard label={t('status.watched')} value={stats.totalWatched} color={colors.success} icon="checkmark-circle" />
+          <StatCard label={t('status.watching')} value={stats.totalWatching} color={StatusColors.watching} icon="play-circle" />
+          <StatCard label={t('status.watchlist')} value={stats.totalWatchlist} color={StatusColors.watchlist} icon="bookmark" />
         </View>
 
         {(stats.totalWatched > 0 || stats.totalWatching > 0) && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Breakdown</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('profile.breakdown')}</Text>
               <View style={styles.statusTags}>
                 <View style={styles.statusTag}>
                   <View style={[styles.statusDot, { backgroundColor: StatusColors.watching }]} />
-                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>Watching</Text>
+                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>{t('status.watching')}</Text>
                 </View>
                 <View style={styles.statusTag}>
                   <View style={[styles.statusDot, { backgroundColor: StatusColors.watched }]} />
-                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>Watched</Text>
+                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>{t('status.watched')}</Text>
                 </View>
               </View>
             </View>
@@ -60,13 +62,13 @@ export default function ProfileScreen() {
               <View style={styles.breakdownItem}>
                 <Ionicons name="film" size={20} color={colors.textDim} />
                 <Text style={[styles.breakdownValue, { color: colors.text }]}>{movieCount}</Text>
-                <Text style={[styles.breakdownLabel, { color: colors.textDim }]}>Movies</Text>
+                <Text style={[styles.breakdownLabel, { color: colors.textDim }]}>{t('profile.movies')}</Text>
               </View>
               <View style={[styles.breakdownDivider, { backgroundColor: colors.border }]} />
               <View style={styles.breakdownItem}>
                 <Ionicons name="tv" size={20} color={colors.textDim} />
                 <Text style={[styles.breakdownValue, { color: colors.text }]}>{tvCount}</Text>
-                <Text style={[styles.breakdownLabel, { color: colors.textDim }]}>TV Shows</Text>
+                <Text style={[styles.breakdownLabel, { color: colors.textDim }]}>{t('profile.tvShows')}</Text>
               </View>
               {stats.averageRating > 0 && (
                 <>
@@ -74,7 +76,7 @@ export default function ProfileScreen() {
                   <View style={styles.breakdownItem}>
                     <Ionicons name="star" size={20} color={colors.gold} />
                     <Text style={[styles.breakdownValue, { color: colors.text }]}>{stats.averageRating}</Text>
-                    <Text style={[styles.breakdownLabel, { color: colors.textDim }]}>Avg Rating</Text>
+                    <Text style={[styles.breakdownLabel, { color: colors.textDim }]}>{t('profile.avgRating')}</Text>
                   </View>
                 </>
               )}
@@ -85,15 +87,15 @@ export default function ProfileScreen() {
         {stats.topGenres.length > 0 && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Top Genres</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('profile.topGenres')}</Text>
               <View style={styles.statusTags}>
                 <View style={styles.statusTag}>
                   <View style={[styles.statusDot, { backgroundColor: StatusColors.watching }]} />
-                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>Watching</Text>
+                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>{t('status.watching')}</Text>
                 </View>
                 <View style={styles.statusTag}>
                   <View style={[styles.statusDot, { backgroundColor: StatusColors.watched }]} />
-                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>Watched</Text>
+                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>{t('status.watched')}</Text>
                 </View>
               </View>
             </View>
@@ -113,7 +115,7 @@ export default function ProfileScreen() {
         {items.length === 0 && (
           <View style={styles.emptyHint}>
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>
-              Start adding movies and TV shows to see your stats here.
+              {t('profile.emptyHint')}
             </Text>
           </View>
         )}

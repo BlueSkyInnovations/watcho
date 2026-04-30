@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { EmptyState } from '@/components/EmptyState';
 import { MediaCard } from '@/components/MediaCard';
 import { SearchBar } from '@/components/SearchBar';
@@ -10,11 +11,12 @@ import { TMDBSearchResult } from '@/types';
 
 function TrendingSection() {
   const colors = useColors();
+  const { t } = useTranslation();
   const { results, loading } = useTrending();
   if (loading) return <ActivityIndicator color={colors.accent} style={{ marginTop: 40 }} />;
   return (
     <>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Trending Today</Text>
+      <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('search.trendingToday')}</Text>
       <FlatList<TMDBSearchResult>
         data={results}
         numColumns={2}
@@ -32,6 +34,7 @@ export default function SearchScreen() {
   const [query, setQuery] = useState('');
   const { results, loading, error } = useSearch(query);
   const colors = useColors();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
@@ -49,7 +52,7 @@ export default function SearchScreen() {
         ListHeaderComponent={query.trim() === '' ? <TrendingSection /> : null}
         ListEmptyComponent={
           query.trim() && !loading
-            ? <EmptyState icon="search-outline" title="No results" subtitle={`Nothing found for "${query}"`} />
+            ? <EmptyState icon="search-outline" title={t('search.noResults')} subtitle={t('search.nothingFound', { query })} />
             : loading
             ? <ActivityIndicator color={colors.accent} style={{ marginTop: 40 }} />
             : null

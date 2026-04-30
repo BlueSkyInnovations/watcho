@@ -3,23 +3,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { EmptyState } from '@/components/EmptyState';
 import { MediaCard } from '@/components/MediaCard';
 import { MediaListItem } from '@/components/MediaListItem';
 import { SortSheet } from '@/components/SortSheet';
-import { StatusColors, StatusLabels } from '@/constants/Colors';
+import { StatusColors } from '@/constants/Colors';
 import { useWatchlist } from '@/context/WatchlistContext';
 import { useColors } from '@/hooks/useColors';
 import { MediaItem, SortOrder, WatchStatus } from '@/types';
 
 const TABS: WatchStatus[] = ['watchlist', 'watching', 'watched'];
 const PREFS_KEY = 'watcho_tab_prefs';
-
-const EMPTY_CONFIG = {
-  watchlist: { icon: 'bookmark-outline' as const, title: 'Your watchlist is empty', subtitle: 'Search for movies or TV shows and add them to your list.' },
-  watching: { icon: 'play-circle-outline' as const, title: "You're not watching anything", subtitle: 'Mark something as "Watching" to track your progress here.' },
-  watched: { icon: 'checkmark-circle-outline' as const, title: 'No titles watched yet', subtitle: 'After you watch something, mark it as Watched to see it here.' },
-};
 
 type ViewMode = 'grid' | 'list';
 type TabPrefs = { sort: SortOrder; view: ViewMode };
@@ -45,6 +40,7 @@ function sortItems(items: MediaItem[], order: SortOrder): MediaItem[] {
 export default function MyListsScreen() {
   const { items } = useWatchlist();
   const colors = useColors();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<WatchStatus>('watchlist');
   const [tabPrefs, setTabPrefs] = useState<AllTabPrefs>(DEFAULT_PREFS);
   const [sheetVisible, setSheetVisible] = useState(false);
@@ -77,6 +73,12 @@ export default function MyListsScreen() {
     savePrefs({ ...tabPrefs, [activeTab]: { ...tabPrefs[activeTab], view: next } });
   }
 
+  const emptyConfig = {
+    watchlist: { icon: 'bookmark-outline' as const, title: t('myLists.empty.watchlist.title'), subtitle: t('myLists.empty.watchlist.subtitle') },
+    watching:  { icon: 'play-circle-outline' as const, title: t('myLists.empty.watching.title'), subtitle: t('myLists.empty.watching.subtitle') },
+    watched:   { icon: 'checkmark-circle-outline' as const, title: t('myLists.empty.watched.title'), subtitle: t('myLists.empty.watched.subtitle') },
+  };
+
   const currentPrefs = tabPrefs[activeTab];
   const currentSort = currentPrefs.sort;
   const isGrid = currentPrefs.view === 'grid';
@@ -99,7 +101,7 @@ export default function MyListsScreen() {
               onPress={() => setActiveTab(tab)}
             >
               <Text style={[styles.tabLabel, { color: active ? colors.text : colors.textMuted }]}>
-                {StatusLabels[tab]}
+                {t(`status.${tab}`)}
               </Text>
               {count > 0 && (
                 <View style={[styles.count, { backgroundColor: active ? StatusColors[tab] : colors.surfaceHighlight }]}>
@@ -135,7 +137,7 @@ export default function MyListsScreen() {
             ? <MediaCard item={item} style={styles.gridItem} />
             : <MediaListItem item={item} />
         }
-        ListEmptyComponent={<EmptyState {...EMPTY_CONFIG[activeTab]} />}
+        ListEmptyComponent={<EmptyState {...emptyConfig[activeTab]} />}
         showsVerticalScrollIndicator={false}
       />
 

@@ -1,16 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { type LanguagePref, setAppLanguage } from '@/lib/i18n';
 
 interface AppSettings {
   showWhereToWatch: boolean;
   showMoreLikeThis: boolean;
   showReview: boolean;
+  language: LanguagePref;
 }
 
 interface SettingsContextValue extends AppSettings {
   setShowWhereToWatch: (v: boolean) => void;
   setShowMoreLikeThis: (v: boolean) => void;
   setShowReview: (v: boolean) => void;
+  setLanguage: (v: LanguagePref) => void;
 }
 
 const STORAGE_KEY = 'watcho_settings';
@@ -19,6 +22,7 @@ const defaults: AppSettings = {
   showWhereToWatch: true,
   showMoreLikeThis: true,
   showReview: true,
+  language: 'system',
 };
 
 const SettingsContext = createContext<SettingsContextValue>({
@@ -26,6 +30,7 @@ const SettingsContext = createContext<SettingsContextValue>({
   setShowWhereToWatch: () => {},
   setShowMoreLikeThis: () => {},
   setShowReview: () => {},
+  setLanguage: () => {},
 });
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
@@ -33,7 +38,11 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY).then((json) => {
-      if (json) setSettings({ ...defaults, ...JSON.parse(json) });
+      if (json) {
+        const saved = { ...defaults, ...JSON.parse(json) };
+        setSettings(saved);
+        setAppLanguage(saved.language);
+      }
     });
   }, []);
 
@@ -41,6 +50,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setSettings((prev) => {
       const next = { ...prev, ...patch };
       AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      if (patch.language !== undefined) setAppLanguage(next.language);
       return next;
     });
   }
@@ -51,6 +61,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       setShowWhereToWatch: (v) => update({ showWhereToWatch: v }),
       setShowMoreLikeThis: (v) => update({ showMoreLikeThis: v }),
       setShowReview: (v) => update({ showReview: v }),
+      setLanguage: (v) => update({ language: v }),
     }}>
       {children}
     </SettingsContext.Provider>

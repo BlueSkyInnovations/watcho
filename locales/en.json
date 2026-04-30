@@ -1,0 +1,129 @@
+{
+  "tabs": {
+    "myLists": "My Lists",
+    "search": "Search",
+    "profile": "Profile"
+  },
+  "status": {
+    "watchlist": "Watchlist",
+    "watching": "Watching",
+    "watched": "Watched"
+  },
+  "sort": {
+    "title": "Sort by",
+    "dateAdded": "Date Added",
+    "releaseDate": "Release Date",
+    "lastUpdated": "Last Updated"
+  },
+  "myLists": {
+    "empty": {
+      "watchlist": {
+        "title": "Your watchlist is empty",
+        "subtitle": "Search for movies or TV shows and add them to your list."
+      },
+      "watching": {
+        "title": "You're not watching anything",
+        "subtitle": "Mark something as \"Watching\" to track your progress here."
+      },
+      "watched": {
+        "title": "No titles watched yet",
+        "subtitle": "After you watch something, mark it as Watched to see it here."
+      }
+    }
+  },
+  "search": {
+    "placeholder": "Search movies & TV shows...",
+    "trendingToday": "Trending Today",
+    "noResults": "No results",
+    "nothingFound": "Nothing found for \"{{query}}\""
+  },
+  "profile": {
+    "yourStats": "Your Stats",
+    "breakdown": "Breakdown",
+    "movies": "Movies",
+    "tvShows": "TV Shows",
+    "avgRating": "Avg Rating",
+    "topGenres": "Top Genres",
+    "emptyHint": "Start adding movies and TV shows to see your stats here."
+  },
+  "detail": {
+    "failedToLoad": "Failed to load",
+    "watchTrailer": "Watch Trailer",
+    "watchTrailers": "Watch Trailers ({{count}})",
+    "whereToWatch": "Where to Watch",
+    "addToList": "Add to list",
+    "yourRating": "Your rating",
+    "yourReview": "Your Review",
+    "reviewPlaceholder": "Write your thoughts...",
+    "removeFromLists": "Remove from lists",
+    "moreLikeThis": "More like this",
+    "progress": "Progress",
+    "season": "Season",
+    "episode": "Episode",
+    "tvShow": "TV SHOW",
+    "seasons_one": "{{count}} season",
+    "seasons_other": "{{count}} seasons"
+  },
+  "trailer": {
+    "show": "Show",
+    "all": "All",
+    "noVideos": "No videos available for this selection.",
+    "official": "Official"
+  },
+  "providers": {
+    "stream": "Stream",
+    "rent": "Rent",
+    "buy": "Buy",
+    "attribution": "Data by JustWatch · {{region}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "APPEARANCE",
+    "light": "Light",
+    "dark": "Dark",
+    "deviceSetting": "Use Device Setting",
+    "detailScreens": "DETAIL SCREENS",
+    "whereToWatch": "Where to Watch",
+    "moreLikeThis": "More like this",
+    "personalReview": "Personal Review",
+    "language": "LANGUAGE",
+    "appLanguage": "App Language",
+    "langSystem": "System",
+    "langEnglish": "English",
+    "langGerman": "German",
+    "tmdbApi": "TMDB API",
+    "apiKey": "API Key",
+    "changeKey": "Change Key",
+    "removeKey": "Remove Key",
+    "notSet": "Not set",
+    "hint": "Each user provides their own free TMDB API key.\nGet one at themoviedb.org → Settings → API.",
+    "removeAlert": {
+      "title": "Remove API Key",
+      "message": "You will need to enter a new key to use the app.",
+      "cancel": "Cancel",
+      "remove": "Remove"
+    }
+  },
+  "onboarding": {
+    "headline": "One quick setup step",
+    "body": "watcho uses The Movie Database (TMDB) for all movie and TV show data. TMDB offers a free personal API key — you'll need one to use this app.",
+    "step1": "Create a free account at themoviedb.org",
+    "step2": "Go to Settings → API and request an API key (choose \"Personal use\")",
+    "step3": "Copy the key labelled API Key (v3 auth) and paste it here",
+    "createAccount": "Create TMDB Account",
+    "goToApi": "Go to TMDB API Settings",
+    "haveKey": "I already have a key →",
+    "back": "Back",
+    "enterKey": "Enter your API key",
+    "enterKeyBody": "Paste the API Key (v3 auth) from your TMDB account settings.",
+    "keyPlaceholder": "e.g. a1b2c3d4e5f6...",
+    "verifyContinue": "Verify & Continue",
+    "errorEmpty": "Please enter your API key.",
+    "errorInvalid": "Key not recognised by TMDB. Double-check and try again."
+  },
+  "quickActions": {
+    "nextEpisode": "+1 Episode",
+    "continueWatching": "Continue Watching",
+    "markedToast": "{{title}} · S{{season}} E{{episode}} marked"
+  }
+}
