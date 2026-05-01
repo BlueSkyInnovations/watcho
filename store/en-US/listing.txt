@@ -1,0 +1,113 @@
+APP STORE LISTING — English (en-US)
+====================================
+All fields are ready to paste directly into App Store Connect.
+Character counts are noted where limits apply.
+
+
+NAME  [6 / 30 chars]
+-----
+watcho
+
+
+SUBTITLE  [30 / 30 chars]
+---------
+Movies & TV, privately tracked
+
+
+PROMOTIONAL TEXT  [109 / 170 chars]
+-----------------
+No account. No ads. No subscription. Your personal movie and TV show tracker — everything stays on your device.
+
+(This field can be updated at any time without submitting a new app version.)
+
+
+KEYWORDS  [97 / 100 chars]
+---------
+movie tracker,tv show,watchlist,film diary,watch log,series tracker,what to watch,streaming guide
+
+Rules: comma-separated, no spaces after commas (saves characters), no repetition of the app name,
+no competitor names. These 97 characters leave 3 chars of headroom.
+
+
+DESCRIPTION  [~1 900 / 4 000 chars]
+-----------
+watcho is a personal movie and TV show tracker that lives entirely on your device. No account required. No ads. No subscription.
+
+Keep track of everything you want to watch, what you are currently watching, and every title you have already seen — across both movies and TV shows.
+
+THREE SIMPLE LISTS
+• Watchlist — titles you plan to watch
+• Watching — what you are in the middle of right now
+• Watched — everything you have already seen
+
+Moving a title between lists is a single tap.
+
+RICH DETAIL SCREENS
+Open any movie or TV show to see its backdrop, poster, genres, overview, and TMDB community rating — all fetched in your chosen language. Add your own personal star rating and a private text review alongside.
+
+WATCH TRAILERS
+Play trailers directly in the app. watcho filters by language and lets you browse by season for TV shows.
+
+WHERE TO WATCH
+See streaming, rental, and purchase options for your region, powered by JustWatch data via TMDB.
+
+PROGRESS TRACKING
+Follow TV shows season by season, episode by episode. Advance your counter with a single tap.
+
+DISCOVER MORE
+Every title page includes a row of recommendations. Search any movie or TV show by name — results appear as you type.
+
+YOUR STATS
+The Profile tab shows your total watched count, a movie vs. TV show breakdown, your average star rating, and your top genres.
+
+CUSTOMISE YOUR EXPERIENCE
+• Light, Dark, or System theme
+• App language: English, German, Spanish, and more via community translation
+• Toggle individual detail screen sections on or off
+• Sort each list by Date Added, Release Date, or Last Updated
+• Switch between grid and list view
+
+IOS QUICK ACTIONS
+Long-press the app icon to jump to your current show or advance its episode counter — without even opening the app.
+
+PRIVATE BY DESIGN
+Everything stays on your device. No server, no sync, no cloud. Your lists, ratings, and reviews are stored locally and never leave your phone.
+
+Content data is provided by The Movie Database (TMDB), a free community-maintained database. A free personal TMDB API key is required — the app walks you through getting one on first launch.
+
+
+WHAT'S NEW  (v1.0)
+----------
+Welcome to watcho — your personal movie and TV show tracker. No account, no ads, no subscription. Everything stays on your device.
+
+
+SUPPORT URL
+-----------
+https://github.com/BlueSkyInnovations/watcho/issues
+
+
+MARKETING URL  (optional)
+-------------
+https://github.com/BlueSkyInnovations/watcho
+
+
+PRIVACY POLICY URL
+------------------
+https://blueskyinnovations.github.io/watcho/privacy-policy.html
+
+(See setup instructions in store/checklist.md — requires enabling GitHub Pages on the repo.)
+
+
+COPYRIGHT
+---------
+© 2026 Blue Sky Innovations GmbH
+
+
+PRIMARY CATEGORY
+----------------
+Entertainment
+
+
+SECONDARY CATEGORY  (optional)
+------------------
+Productivity

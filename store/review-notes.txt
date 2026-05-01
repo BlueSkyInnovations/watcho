@@ -1,0 +1,40 @@
+APPLE APP REVIEW NOTES
+======================
+Copy this text into the "Notes" field under App Review Information in App Store Connect.
+
+
+--- NOTES FOR REVIEWER ---
+
+watcho requires a free TMDB (The Movie Database) API key to function. The app prompts for this key on first launch via an onboarding screen.
+
+To test the app, please use the following API key:
+
+  [INSERT YOUR TMDB API KEY HERE]
+
+Steps to get past the onboarding screen:
+1. Launch the app — the onboarding screen appears automatically
+2. Paste the API key above into the text field
+3. Tap "Verify & Continue"
+4. The app will confirm the key and proceed to the main screen
+
+All app content (movie/TV show data, posters, trailers) is fetched live from TMDB using this key. No account or login is required beyond providing the key.
+
+The app stores all user data (watchlist, ratings, reviews) locally on the device using AsyncStorage. No data is transmitted to any developer server.
+
+--- CONTACT ---
+
+Name:    Christian Jacob
+Phone:   [INSERT YOUR PHONE NUMBER]
+Email:   cjacob@blueskyinnovations.de
+
+--- DEMO ACCOUNT ---
+
+No demo account is needed. The app has no login system.
+
+
+INSTRUCTIONS FOR FILLING IN REVIEW CONTACT FIELDS
+--------------------------------------------------
+First Name:   Christian
+Last Name:    Jacob
+Phone Number: [INSERT YOUR PHONE NUMBER]
+Email:        cjacob@blueskyinnovations.de

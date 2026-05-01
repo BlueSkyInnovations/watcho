@@ -1,0 +1,35 @@
+AGE RATING QUESTIONNAIRE
+========================
+App Store Connect → App Information → Age Rating
+Answer each question as follows:
+
+
+VIOLENCE
+  Cartoon or Fantasy Violence:               NONE
+  Realistic Violence:                        NONE
+  Prolonged Graphic or Sadistic Violence:    NONE
+
+SEXUAL CONTENT
+  Sexual Content or Nudity:                  NONE
+  Graphic Sexual Content and Nudity:         NONE
+
+OTHER
+  Profanity or Crude Humor:                  NONE
+  Mature / Suggestive Themes:                NONE
+  Horror / Fear Themes:                      NONE
+  Medical / Treatment Information:           NONE
+  Alcohol, Tobacco, or Drug Use:             NONE
+  Simulated Gambling:                        NONE
+  Unrestricted Web Access:                   NO
+  Made for Kids (COPPA):                     NO
+
+EXPECTED RESULT: 4+ (lowest possible rating)
+
+RATIONALE
+---------
+watcho is a personal tracker app. It contains no user-generated content, no
+social features, and no objectionable content of its own. Movie/TV show
+metadata and trailer thumbnails are fetched from TMDB; trailers are played
+via an embedded YouTube WebView. The app does not allow users to browse
+arbitrary URLs. The "Unrestricted Web Access" question refers to in-app
+browsers, which watcho does not provide.

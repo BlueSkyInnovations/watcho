@@ -1,0 +1,97 @@
+APP STORE LISTING — Deutsch (de-DE)
+====================================
+Alle Felder sind bereit zum direkten Einfügen in App Store Connect.
+
+
+NAME  [6 / 30 Zeichen]
+-----
+watcho
+
+
+SUBTITLE  [30 / 30 Zeichen]
+---------
+Privater Film & Serien Tracker
+
+
+WERBETEXTE  [113 / 170 Zeichen]
+----------
+Kein Konto. Keine Werbung. Kein Abo. Dein persönlicher Film- und Serien-Tracker – alles bleibt auf deinem Gerät.
+
+(Dieses Feld kann jederzeit aktualisiert werden, ohne eine neue App-Version einzureichen.)
+
+
+KEYWORDS  [89 / 100 Zeichen]
+---------
+Film Tracker,Serien,Merkliste,Watchlist,Film Tagebuch,was schauen,Streaming,Serien Tracker
+
+
+BESCHREIBUNG
+-----------
+watcho ist ein persönlicher Film- und Serien-Tracker, der vollständig auf deinem Gerät läuft. Kein Konto erforderlich. Keine Werbung. Kein Abo.
+
+Behalte den Überblick über alles, was du sehen möchtest, was du gerade schaust und was du bereits gesehen hast – sowohl für Filme als auch für Serien.
+
+DREI EINFACHE LISTEN
+• Merkliste — Titel, die du sehen möchtest
+• Am Schauen — was du gerade schaust
+• Gesehen — alles, was du bereits gesehen hast
+
+Einen Titel zwischen Listen zu verschieben geht mit einem Tipp.
+
+DETAILANSICHTEN
+Öffne einen Film oder eine Serie und sieh Hintergrundbild, Poster, Genres, Überblick und TMDB-Bewertung – in deiner gewählten Sprache. Füge deine eigene Sternebewertung und eine private Rezension hinzu.
+
+TRAILER ANSEHEN
+Spiele Trailer direkt in der App ab. watcho filtert nach Sprache und bietet staffelweises Durchsuchen für Serien.
+
+WO KANN ICH ES SCHAUEN
+Sieh Streaming-, Leihe- und Kaufoptionen für deine Region, basierend auf JustWatch-Daten über TMDB.
+
+FORTSCHRITT VERFOLGEN
+Verfolge Serien Staffel für Staffel, Folge für Folge. Mit einem Tipp den Episodenzähler weiterschaltern.
+
+MEHR ENTDECKEN
+Jede Detailseite zeigt ähnliche Empfehlungen. Suche jeden Film oder jede Serie nach Name – Ergebnisse erscheinen beim Tippen.
+
+DEINE STATISTIKEN
+Der Profil-Tab zeigt deine Gesamtzahl gesehener Titel, eine Film/Serien-Aufteilung, deine durchschnittliche Bewertung und deine Top-Genres.
+
+ANPASSEN
+• Helles, dunkles oder Systemthema
+• App-Sprache: Englisch, Deutsch, Spanisch und mehr per Community-Übersetzung
+• Detailansichts-Bereiche einzeln ein-/ausblenden
+• Jede Liste sortieren nach: Hinzugefügt am, Erscheinungsdatum, Zuletzt aktualisiert
+• Zwischen Raster- und Listenansicht wechseln
+
+IOS SCHNELLAKTIONEN
+Halte das App-Symbol gedrückt, um direkt zur aktuellen Serie zu springen oder den Episodenzähler weiterzuschalten – ohne die App zu öffnen.
+
+PRIVATSPHÄRE ZUERST
+Alles bleibt auf deinem Gerät. Kein Server, keine Synchronisation, keine Cloud. Deine Listen, Bewertungen und Rezensionen werden lokal gespeichert und verlassen dein Gerät nie.
+
+Inhaltsdaten werden von The Movie Database (TMDB) bereitgestellt, einer kostenlosen, community-gepflegten Datenbank. Ein kostenloser persönlicher TMDB API-Schlüssel ist erforderlich – die App führt dich beim ersten Start durch die Einrichtung.
+
+
+NEUE FUNKTIONEN  (v1.0)
+---------------
+Willkommen bei watcho – deinem persönlichen Film- und Serien-Tracker. Kein Konto, keine Werbung, kein Abo. Alles bleibt auf deinem Gerät.
+
+
+SUPPORT-URL
+-----------
+https://github.com/BlueSkyInnovations/watcho/issues
+
+
+MARKETING-URL  (optional)
+-------------
+https://github.com/BlueSkyInnovations/watcho
+
+
+DATENSCHUTZRICHTLINIE-URL
+-------------------------
+https://blueskyinnovations.github.io/watcho/privacy-policy.html
+
+
+URHEBERRECHT
+-----------
+© 2026 Blue Sky Innovations GmbH
