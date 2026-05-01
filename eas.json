@@ -11,11 +11,39 @@
     "preview": {
       "distribution": "internal"
     },
+    "alpha": {
+      "distribution": "store"
+    },
+    "beta": {
+      "distribution": "store",
+      "autoIncrement": true
+    },
     "production": {
+      "distribution": "store",
       "autoIncrement": true
     }
   },
   "submit": {
-    "production": {}
+    "alpha": {
+      "ios": {
+        "ascApiKeyPath": "$ASC_API_KEY_PATH",
+        "ascApiKeyIssuerId": "$ASC_ISSUER_ID",
+        "ascApiKeyId": "$ASC_KEY_ID"
+      }
+    },
+    "beta": {
+      "ios": {
+        "ascApiKeyPath": "$ASC_API_KEY_PATH",
+        "ascApiKeyIssuerId": "$ASC_ISSUER_ID",
+        "ascApiKeyId": "$ASC_KEY_ID"
+      }
+    },
+    "production": {
+      "ios": {
+        "ascApiKeyPath": "$ASC_API_KEY_PATH",
+        "ascApiKeyIssuerId": "$ASC_ISSUER_ID",
+        "ascApiKeyId": "$ASC_KEY_ID"
+      }
+    }
   }
 }
