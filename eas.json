@@ -12,7 +12,8 @@
       "distribution": "internal"
     },
     "alpha": {
-      "distribution": "store"
+      "distribution": "store",
+      "autoIncrement": true
     },
     "beta": {
       "distribution": "store",
