@@ -28,21 +28,24 @@
       "ios": {
         "ascApiKeyPath": "$ASC_API_KEY_PATH",
         "ascApiKeyIssuerId": "$ASC_ISSUER_ID",
-        "ascApiKeyId": "$ASC_KEY_ID"
+        "ascApiKeyId": "$ASC_KEY_ID",
+        "ascAppId": "6765511332"
       }
     },
     "beta": {
       "ios": {
         "ascApiKeyPath": "$ASC_API_KEY_PATH",
         "ascApiKeyIssuerId": "$ASC_ISSUER_ID",
-        "ascApiKeyId": "$ASC_KEY_ID"
+        "ascApiKeyId": "$ASC_KEY_ID",
+        "ascAppId": "6765511332"
       }
     },
     "production": {
       "ios": {
         "ascApiKeyPath": "$ASC_API_KEY_PATH",
         "ascApiKeyIssuerId": "$ASC_ISSUER_ID",
-        "ascApiKeyId": "$ASC_KEY_ID"
+        "ascApiKeyId": "$ASC_KEY_ID",
+        "ascAppId": "6765511332"
       }
     }
   }
