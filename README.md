@@ -57,7 +57,7 @@ Light, Dark, and System (follows the device setting) themes. The accent colour i
 
 ### Internationalisation
 
-The app ships with **English** and **German** fully translated. **Spanish** is partially available, contributed via Weblate. Device language is detected automatically on first launch; you can override it in Settings. The language picker shows a completion percentage for any language that isn't fully translated yet. The TMDB content language (titles, overviews) follows the same selection. Community translations are managed on [Weblate](https://hosted.weblate.org/engage/watcho/).
+The app ships with **English** and **German** fully translated. **Estonian** and **Spanish** are partially available, contributed via Weblate. Device language is detected automatically on first launch; you can override it in Settings. The language picker shows a completion percentage for any language that isn't fully translated yet. The TMDB content language (titles, overviews) follows the same selection. Community translations are managed on [Weblate](https://hosted.weblate.org/engage/watcho/).
 
 ### iOS Quick Actions
 

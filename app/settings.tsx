@@ -33,6 +33,7 @@ const LANG_OPTIONS: LangOption[] = [
   { value: 'en', labelKey: 'settings.langEnglish' },
   { value: 'de', labelKey: 'settings.langGerman' },
   { value: 'es', labelKey: 'settings.langSpanish' },
+  { value: 'et', labelKey: 'settings.langEstonian' },
 ];
 
 interface LanguageSheetProps {
