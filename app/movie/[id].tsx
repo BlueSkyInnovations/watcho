@@ -13,7 +13,7 @@ import { TrailerModal } from '@/components/TrailerModal';
 import { useSettings } from '@/context/SettingsContext';
 import { useWatchlist } from '@/context/WatchlistContext';
 import { useColors } from '@/hooks/useColors';
-import { useMovieDetail, useRecommendations, useVideos, useWatchProviders } from '@/hooks/useTMDB';
+import { useContentRating, useMovieDetail, useRecommendations, useVideos, useWatchProviders } from '@/hooks/useTMDB';
 import { BACKDROP_URL, POSTER_URL } from '@/lib/tmdb';
 import { WatchStatus } from '@/types';
 
@@ -27,6 +27,7 @@ export default function MovieDetailScreen() {
   const { videos } = useVideos('movie', movieId);
   const { providers, region } = useWatchProviders('movie', movieId);
   const { results: recommendations } = useRecommendations('movie', movieId);
+  const certification = useContentRating('movie', movieId);
   const { showWhereToWatch, showMoreLikeThis, showReview } = useSettings();
   const [trailerVisible, setTrailerVisible] = useState(false);
   const { getItem, addItem, removeItem, updateStatus, updateRating, updateReview } = useWatchlist();
@@ -96,6 +97,11 @@ export default function MovieDetailScreen() {
             <View style={styles.metaRow}>
               {year && <Text style={[styles.meta, { color: colors.textDim }]}>{year}</Text>}
               {runtime && <Text style={[styles.meta, { color: colors.textDim }]}>{runtime}</Text>}
+              {certification && (
+                <View style={[styles.ratingBadge, { borderColor: colors.textDim }]}>
+                  <Text style={[styles.ratingText, { color: colors.textDim }]}>{certification}</Text>
+                </View>
+              )}
             </View>
             {movie.vote_average > 0 && (
               <View style={styles.tmdbRating}>
@@ -225,4 +231,6 @@ const styles = StyleSheet.create({
     padding: 12, borderRadius: 10, borderWidth: 1, justifyContent: 'center',
   },
   removeText: { fontSize: 14, fontWeight: '600' },
+  ratingBadge: { borderWidth: 1, borderRadius: 3, paddingHorizontal: 4, paddingVertical: 1 },
+  ratingText: { fontSize: 11, fontWeight: '600', letterSpacing: 0.3 },
 });

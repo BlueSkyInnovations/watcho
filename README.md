@@ -26,6 +26,7 @@ Moving something between lists is a single tap. Everything is stored locally on 
 Open any movie or TV show and you get:
 
 - **Backdrop, poster, genres, overview** — pulled live from TMDB in your language
+- **Age rating** — certification badge (e.g. PG-13, TV-MA) for your region, sourced from TMDB; falls back to US if your region has no entry
 - **TMDB rating** alongside your own **personal star rating**
 - **Watch Trailer** button — plays YouTube trailers directly in the app, with a language filter and per-season browsing for TV shows
 - **Where to Watch** — streaming, rental and purchase availability for your region, sourced from JustWatch via TMDB

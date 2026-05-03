@@ -141,6 +141,37 @@ export function useTVDetail(id: number) {
   return { show, loading, error };
 }
 
+export function useContentRating(mediaType: MediaType, id: number) {
+  const [rating, setRating] = useState<string | null>(null);
+
+  useEffect(() => {
+    const region = getDeviceRegion();
+
+    if (mediaType === 'movie') {
+      tmdb.getMovieReleaseDates(id)
+        .then((data) => {
+          const entry = data.results.find((r) => r.iso_3166_1 === region)
+            ?? data.results.find((r) => r.iso_3166_1 === 'US');
+          if (!entry) return;
+          const cert = entry.release_dates.find((d) => d.type === 3 && d.certification)
+            ?? entry.release_dates.find((d) => d.certification);
+          if (cert?.certification) setRating(cert.certification);
+        })
+        .catch(() => {});
+    } else {
+      tmdb.getTVContentRatings(id)
+        .then((data) => {
+          const entry = data.results.find((r) => r.iso_3166_1 === region)
+            ?? data.results.find((r) => r.iso_3166_1 === 'US');
+          if (entry?.rating) setRating(entry.rating);
+        })
+        .catch(() => {});
+    }
+  }, [mediaType, id]);
+
+  return rating;
+}
+
 export function useTVSeason(showId: number, season: number) {
   const [data, setData] = useState<TMDBSeason | null>(null);
   const [loading, setLoading] = useState(false);

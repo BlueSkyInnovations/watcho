@@ -94,6 +94,20 @@ export interface TMDBSeason {
   episodes: TMDBEpisode[];
 }
 
+export interface TMDBReleaseDateEntry {
+  certification: string;
+  release_date: string;
+  type: number; // 3 = theatrical
+}
+
+export interface TMDBReleaseDates {
+  results: { iso_3166_1: string; release_dates: TMDBReleaseDateEntry[] }[];
+}
+
+export interface TMDBContentRatings {
+  results: { iso_3166_1: string; rating: string }[];
+}
+
 export interface WatchlistStats {
   totalWatched: number;
   totalWatching: number;

@@ -1,4 +1,4 @@
-import { TMDBMovie, TMDBSeason, TMDBSearchResult, TMDBTVShow, WatchProviders } from '@/types';
+import { TMDBContentRatings, TMDBMovie, TMDBReleaseDates, TMDBSeason, TMDBSearchResult, TMDBTVShow, WatchProviders } from '@/types';
 import { getStoredApiKey } from './apiKey';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -82,6 +82,10 @@ export const tmdb = {
     get<VideosResult>(`/tv/${showId}/season/${season}/videos`, { include_video_language: ALL_VIDEO_LANGS }),
   getTVSeason: (showId: number, season: number) =>
     get<TMDBSeason>(`/tv/${showId}/season/${season}`),
+  getMovieReleaseDates: (id: number) =>
+    get<TMDBReleaseDates>(`/movie/${id}/release_dates`),
+  getTVContentRatings: (id: number) =>
+    get<TMDBContentRatings>(`/tv/${id}/content_ratings`),
   getMovieProviders: (id: number) =>
     get<{ results: Record<string, WatchProviders> }>(`/movie/${id}/watch/providers`),
   getTVProviders: (id: number) =>

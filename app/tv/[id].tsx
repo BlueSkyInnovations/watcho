@@ -14,7 +14,7 @@ import { TrailerModal } from '@/components/TrailerModal';
 import { useSettings } from '@/context/SettingsContext';
 import { useWatchlist } from '@/context/WatchlistContext';
 import { useColors } from '@/hooks/useColors';
-import { useTVDetail, useRecommendations, useVideos, useWatchProviders, useTVSeason } from '@/hooks/useTMDB';
+import { useTVDetail, useRecommendations, useVideos, useWatchProviders, useTVSeason, useContentRating } from '@/hooks/useTMDB';
 import { BACKDROP_URL, POSTER_URL } from '@/lib/tmdb';
 import { TMDBEpisode, WatchStatus } from '@/types';
 
@@ -28,6 +28,7 @@ export default function TVDetailScreen() {
   const { videos } = useVideos('tv', showId);
   const { providers, region } = useWatchProviders('tv', showId);
   const { results: recommendations } = useRecommendations('tv', showId);
+  const certification = useContentRating('tv', showId);
   const { showWhereToWatch, showMoreLikeThis, showReview, showEpisodeGuide } = useSettings();
   const [trailerVisible, setTrailerVisible] = useState(false);
   const [selectedEpisode, setSelectedEpisode] = useState<TMDBEpisode | null>(null);
@@ -136,6 +137,11 @@ export default function TVDetailScreen() {
             <View style={styles.metaRow}>
               {year && <Text style={[styles.meta, { color: colors.textDim }]}>{year}</Text>}
               {seasons && <Text style={[styles.meta, { color: colors.textDim }]}>{t('detail.seasons', { count: seasons })}</Text>}
+              {certification && (
+                <View style={[styles.ratingBadge, { borderColor: colors.textDim }]}>
+                  <Text style={[styles.ratingText, { color: colors.textDim }]}>{certification}</Text>
+                </View>
+              )}
             </View>
             {show.vote_average > 0 && (
               <View style={styles.tmdbRating}>
@@ -404,4 +410,6 @@ const styles = StyleSheet.create({
   episodeNum: { fontSize: 11, fontWeight: '700' },
   episodeName: { fontSize: 13, fontWeight: '600' },
   episodeOverview: { fontSize: 11, lineHeight: 16 },
+  ratingBadge: { borderWidth: 1, borderRadius: 3, paddingHorizontal: 4, paddingVertical: 1 },
+  ratingText: { fontSize: 11, fontWeight: '600', letterSpacing: 0.3 },
 });
