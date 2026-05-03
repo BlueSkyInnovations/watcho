@@ -26,6 +26,7 @@ i18n.use(initReactI18next).init({
   },
   lng: deviceLang,
   fallbackLng: 'en',
+  returnEmptyString: false,
   interpolation: { escapeValue: false },
 });
 
@@ -35,7 +36,7 @@ export { i18n };
 
 function countLeaves(obj: object): number {
   return Object.values(obj).reduce<number>(
-    (sum, v) => sum + (v !== null && typeof v === 'object' ? countLeaves(v) : 1),
+    (sum, v) => sum + (v !== null && typeof v === 'object' ? countLeaves(v) : typeof v === 'string' && v.length > 0 ? 1 : 0),
     0,
   );
 }
