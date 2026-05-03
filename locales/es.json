@@ -11,13 +11,130 @@
     },
     "search": {
         "trendingToday": "Tendencias de hoy",
-        "noResults": "Sin resultados"
+        "noResults": "Sin resultados",
+        "nothingFound": "",
+        "placeholder": ""
     },
     "detail": {
         "episodes": "Episodios",
-        "episodeNoOverview": "No hay resumen disponible para este episodio."
+        "episodeNoOverview": "No hay resumen disponible para este episodio.",
+        "season": "",
+        "watchTrailer": "",
+        "removeFromLists": "",
+        "seasons_one": "",
+        "seasons_many": "",
+        "seasons_other": "",
+        "watchTrailers": "",
+        "yourReview": "",
+        "progress": "",
+        "episode": "",
+        "tvShow": "",
+        "addToList": "",
+        "failedToLoad": "",
+        "moreLikeThis": "",
+        "reviewPlaceholder": "",
+        "whereToWatch": "",
+        "yourRating": ""
     },
     "settings": {
-        "episodeGuide": "Guía de episodios"
+        "episodeGuide": "Guía de episodios",
+        "changeKey": "",
+        "removeAlert": {
+            "title": "",
+            "message": "",
+            "cancel": "",
+            "remove": ""
+        },
+        "appLanguage": "",
+        "language": "",
+        "moreLikeThis": "",
+        "aboutYoutubeDisclaimer": "",
+        "whereToWatch": "",
+        "langEnglish": "",
+        "tmdbApi": "",
+        "aboutSection": "",
+        "light": "",
+        "apiKey": "",
+        "aboutTmdb": "",
+        "langGerman": "",
+        "aboutTmdbDisclaimer": "",
+        "langSpanish": "",
+        "notSet": "",
+        "dark": "",
+        "langSystem": "",
+        "appearance": "",
+        "removeKey": "",
+        "title": "",
+        "aboutYoutube": "",
+        "detailScreens": "",
+        "hint": "",
+        "personalReview": "",
+        "helpTranslate": "",
+        "deviceSetting": ""
+    },
+    "providers": {
+        "attribution": "",
+        "buy": "",
+        "rent": "",
+        "stream": ""
+    },
+    "myLists": {
+        "empty": {
+            "watched": {
+                "subtitle": "",
+                "title": ""
+            },
+            "watchlist": {
+                "subtitle": "",
+                "title": ""
+            },
+            "watching": {
+                "subtitle": "",
+                "title": ""
+            }
+        }
+    },
+    "trailer": {
+        "all": "",
+        "show": "",
+        "official": "",
+        "noVideos": ""
+    },
+    "quickActions": {
+        "nextEpisode": "",
+        "markedToast": "",
+        "continueWatching": ""
+    },
+    "profile": {
+        "avgRating": "",
+        "yourStats": "",
+        "emptyHint": "",
+        "movies": "",
+        "breakdown": "",
+        "topGenres": "",
+        "tvShows": ""
+    },
+    "onboarding": {
+        "step2": "",
+        "errorInvalid": "",
+        "verifyContinue": "",
+        "headline": "",
+        "errorEmpty": "",
+        "enterKey": "",
+        "goToApi": "",
+        "enterKeyBody": "",
+        "step3": "",
+        "step1": "",
+        "back": "",
+        "haveKey": "",
+        "body": "",
+        "createAccount": "",
+        "keyPlaceholder": ""
+    },
+    "sort": {
+        "dateAdded": "",
+        "releaseDate": "",
+        "lastUpdated": "",
+        "title": ""
     }
 }
