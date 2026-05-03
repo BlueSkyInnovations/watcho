@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Alert, Image, Linking, Modal, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { useSettings } from '@/context/SettingsContext';
@@ -88,6 +89,82 @@ function LanguageSheet({ visible, value, onChange, onClose }: LanguageSheetProps
   );
 }
 
+function AboutSection() {
+  const colors = useColors();
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Text style={[styles.sectionLabel, { color: colors.textMuted, marginTop: 28 }]}>
+        {t('settings.aboutSection')}
+      </Text>
+      <View style={[aboutStyles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+
+        {/* ── Blue Sky Innovations copyright ────────────────── */}
+        <View style={aboutStyles.block}>
+          <View style={aboutStyles.logoBubble}>
+            <Image
+              source={require('../assets/logos/BlueSky_194x50_Transparent_Background.png')}
+              style={aboutStyles.blueskyImg}
+              resizeMode="contain"
+            />
+          </View>
+          <Text style={[aboutStyles.copyText, { color: colors.textMuted }]}>
+            © 2026 Blue Sky Innovations GmbH
+          </Text>
+        </View>
+
+        <View style={[aboutStyles.rule, { backgroundColor: colors.border }]} />
+
+        {/* ── TMDB attribution ─────────────────────────────── */}
+        <Pressable
+          style={aboutStyles.block}
+          onPress={() => Linking.openURL('https://www.themoviedb.org')}
+        >
+          <Text style={[aboutStyles.blockLabel, { color: colors.textDim }]}>
+            {t('settings.aboutTmdb')}
+          </Text>
+          <LinearGradient
+            colors={['#90CEA1', '#3CBEC9', '#01B4E4']}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={aboutStyles.tmdbBadge}
+          >
+            <Text style={aboutStyles.tmdbWord}>TMDB</Text>
+          </LinearGradient>
+          <Text style={[aboutStyles.legalText, { color: colors.textMuted }]}>
+            {t('settings.aboutTmdbDisclaimer')}
+          </Text>
+        </Pressable>
+
+        <View style={[aboutStyles.rule, { backgroundColor: colors.border }]} />
+
+        {/* ── YouTube attribution ───────────────────────────── */}
+        <Pressable
+          style={aboutStyles.block}
+          onPress={() => Linking.openURL('https://www.youtube.com')}
+        >
+          <Text style={[aboutStyles.blockLabel, { color: colors.textDim }]}>
+            {t('settings.aboutYoutube')}
+          </Text>
+          <View style={aboutStyles.ytRow}>
+            <Image
+              source={require('../assets/logos/youtube_icon.png')}
+              style={aboutStyles.ytIcon}
+              resizeMode="contain"
+            />
+            <Text style={aboutStyles.ytWord}>YouTube</Text>
+          </View>
+          <Text style={[aboutStyles.legalText, { color: colors.textMuted }]}>
+            {t('settings.aboutYoutubeDisclaimer')}
+          </Text>
+        </Pressable>
+
+      </View>
+    </>
+  );
+}
+
 export default function SettingsScreen() {
   const colors = useColors();
   const { t } = useTranslation();
@@ -96,6 +173,7 @@ export default function SettingsScreen() {
     showWhereToWatch, setShowWhereToWatch,
     showMoreLikeThis, setShowMoreLikeThis,
     showReview, setShowReview,
+    showEpisodeGuide, setShowEpisodeGuide,
     language, setLanguage,
   } = useSettings();
   const router = useRouter();
@@ -176,12 +254,19 @@ export default function SettingsScreen() {
             <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.moreLikeThis')}</Text>
             <Switch value={showMoreLikeThis} onValueChange={setShowMoreLikeThis} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
           </View>
-          <View style={styles.row}>
+          <View style={[styles.row, { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
             <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
               <Ionicons name="create-outline" size={18} color={colors.textDim} />
             </View>
             <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.personalReview')}</Text>
             <Switch value={showReview} onValueChange={setShowReview} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
+          </View>
+          <View style={styles.row}>
+            <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
+              <Ionicons name="list-outline" size={18} color={colors.textDim} />
+            </View>
+            <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.episodeGuide')}</Text>
+            <Switch value={showEpisodeGuide} onValueChange={setShowEpisodeGuide} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
           </View>
         </View>
 
@@ -228,6 +313,9 @@ export default function SettingsScreen() {
             <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
           </Pressable>
         </View>
+
+        <AboutSection />
+
       </ScrollView>
 
       <LanguageSheet
@@ -250,6 +338,27 @@ const styles = StyleSheet.create({
   rowLabel: { flex: 1, fontSize: 15, fontWeight: '500' },
   rowSub: { fontSize: 12, marginTop: 1 },
   hint: { fontSize: 12, lineHeight: 18, textAlign: 'center', marginTop: 16 },
+});
+
+const aboutStyles = StyleSheet.create({
+  card: { borderRadius: 14, borderWidth: 1, overflow: 'hidden' },
+  block: { alignItems: 'center', paddingHorizontal: 24, paddingVertical: 24, gap: 12 },
+  rule: { height: StyleSheet.hairlineWidth },
+  logoBubble: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: 12,
+    paddingHorizontal: 18,
+    paddingVertical: 11,
+  },
+  blueskyImg: { width: 136, height: 35 },
+  copyText: { fontSize: 12, letterSpacing: 0.1 },
+  blockLabel: { fontSize: 10, fontWeight: '700', letterSpacing: 1.2, textTransform: 'uppercase' },
+  tmdbBadge: { paddingHorizontal: 22, paddingVertical: 10, borderRadius: 10 },
+  tmdbWord: { color: '#FFFFFF', fontSize: 20, fontWeight: '900', letterSpacing: 4 },
+  legalText: { fontSize: 11, textAlign: 'center', lineHeight: 16, maxWidth: 270 },
+  ytRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  ytIcon: { width: 42, height: 30 },
+  ytWord: { fontSize: 24, fontWeight: '700', color: '#FF0000', letterSpacing: -0.5 },
 });
 
 const sheetStyles = StyleSheet.create({

@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "layout": "footer",
+  "caption": {
+    "font": "Lato",
+    "color": "#FFFFFF"
+  },
+  "background": {
+    "mode": "gradient",
+    "gradient": {
+      "colors": [
+        "#E07B39",
+        "#0D0D14"
+      ],
+      "direction": "top-bottom"
+    }
+  },
+  "devices": {
+    "iphone": {
+      "input": "./assets/screenshots/iphone",
+      "resolution": "1284x2778"
+    }
+  },
+  "output": "./final",
+  "frames": "./frames"
+}

@@ -14,6 +14,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+import { useSwipeToDismiss } from '@/hooks/useSwipeToDismiss';
 import type { StyleProp, TextStyle } from 'react-native';
 import YoutubePlayer, { YoutubeIframeRef } from 'react-native-youtube-iframe';
 import { useColors } from '@/hooks/useColors';
@@ -130,6 +131,7 @@ export function TrailerModal({
   const { t } = useTranslation();
   const { language } = useSettings();
   const { width } = useWindowDimensions();
+  const { dragY, backdropOpacity, panHandlers, dismiss } = useSwipeToDismiss(visible, onClose);
   const playerRef = useRef<YoutubeIframeRef>(null);
   const [durations, setDurations] = useState<Record<string, number>>({});
   const [activeSeason, setActiveSeason] = useState<SeasonKey>('show');
@@ -180,22 +182,39 @@ export function TrailerModal({
     : displayedVideos;
 
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
-      <Pressable style={styles.backdrop} onPress={onClose}>
-        <Pressable
-          style={[styles.sheet, { backgroundColor: colors.surface, borderColor: colors.border }]}
-          onPress={() => {/* absorb taps so backdrop doesn't close */}}
-        >
-          <View style={[styles.handle, { backgroundColor: colors.border }]} />
+    <Modal visible={visible} transparent animationType="none" onRequestClose={dismiss}>
+      <View style={styles.backdrop}>
+        {/* Animated dark backdrop */}
+        <Animated.View
+          style={[StyleSheet.absoluteFillObject, styles.backdropOverlay, { opacity: backdropOpacity }]}
+          pointerEvents="none"
+        />
+        {/* Tap outside to dismiss */}
+        <Pressable style={StyleSheet.absoluteFillObject} onPress={dismiss} />
 
-          <View style={styles.header}>
-            <Text style={[styles.headerTitle, { color: colors.text }]} numberOfLines={1}>
-              {title}
-            </Text>
-            <Pressable onPress={onClose} hitSlop={12}>
-              <Ionicons name="close" size={22} color={colors.textDim} />
-            </Pressable>
-          </View>
+        <View style={styles.sheetWrapper} pointerEvents="box-none">
+          <Animated.View
+            style={[
+              styles.sheet,
+              { backgroundColor: colors.surface, borderColor: colors.border },
+              { transform: [{ translateY: dragY }] },
+            ]}
+            onStartShouldSetResponder={() => true}
+          >
+            {/* Handle pill — only drag target */}
+            <View {...panHandlers} style={styles.handleZone}>
+              <View style={[styles.handle, { backgroundColor: colors.border }]} />
+            </View>
+
+            {/* Header: title + close button, separate from drag zone */}
+            <View style={styles.header}>
+              <Text style={[styles.headerTitle, { color: colors.text }]} numberOfLines={1}>
+                {title}
+              </Text>
+              <Pressable onPress={dismiss} hitSlop={12}>
+                <Ionicons name="close" size={22} color={colors.textDim} />
+              </Pressable>
+            </View>
 
           {mediaType === 'tv' && seasons.length > 0 && (
             <ScrollView
@@ -350,18 +369,17 @@ export function TrailerModal({
               })
             )}
           </ScrollView>
-        </Pressable>
-      </Pressable>
+          </Animated.View>
+        </View>
+      </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.65)',
-    justifyContent: 'flex-end',
-  },
+  backdrop: { flex: 1 },
+  backdropOverlay: { backgroundColor: 'rgba(0,0,0,0.65)' },
+  sheetWrapper: { flex: 1, justifyContent: 'flex-end' },
   sheet: {
     height: '82%',
     borderTopLeftRadius: 20,
@@ -369,13 +387,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     overflow: 'hidden',
   },
-  handle: {
-    width: 36, height: 4, borderRadius: 2,
-    alignSelf: 'center', marginTop: 10, marginBottom: 2,
-  },
+  handleZone: { alignItems: 'center', paddingTop: 10, paddingBottom: 12 },
+  handle: { width: 36, height: 4, borderRadius: 2 },
   header: {
     flexDirection: 'row', alignItems: 'center',
-    paddingHorizontal: 16, paddingVertical: 10, gap: 12,
+    paddingHorizontal: 16, paddingBottom: 10, gap: 12,
   },
   headerTitle: { flex: 1, fontSize: 16, fontWeight: '700' },
   seasonScroll: {

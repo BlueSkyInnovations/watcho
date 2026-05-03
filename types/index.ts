@@ -77,6 +77,23 @@ export interface WatchProviders {
   buy?: WatchProvider[];
 }
 
+export interface TMDBEpisode {
+  id: number;
+  episode_number: number;
+  name: string;
+  overview: string;
+  still_path: string | null;
+  vote_average: number;
+  air_date: string;
+}
+
+export interface TMDBSeason {
+  id: number;
+  season_number: number;
+  episode_count: number;
+  episodes: TMDBEpisode[];
+}
+
 export interface WatchlistStats {
   totalWatched: number;
   totalWatching: number;

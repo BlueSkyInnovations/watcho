@@ -62,7 +62,9 @@
     "episode": "Episode",
     "tvShow": "TV SHOW",
     "seasons_one": "{{count}} season",
-    "seasons_other": "{{count}} seasons"
+    "seasons_other": "{{count}} seasons",
+    "episodes": "Episodes",
+    "episodeNoOverview": "No summary available for this episode."
   },
   "trailer": {
     "show": "Show",
@@ -86,6 +88,7 @@
     "whereToWatch": "Where to Watch",
     "moreLikeThis": "More like this",
     "personalReview": "Personal Review",
+    "episodeGuide": "Episode Guide",
     "language": "LANGUAGE",
     "appLanguage": "App Language",
     "langSystem": "System",
@@ -104,7 +107,12 @@
       "message": "You will need to enter a new key to use the app.",
       "cancel": "Cancel",
       "remove": "Remove"
-    }
+    },
+    "aboutSection": "ABOUT",
+    "aboutTmdb": "Metadata & imagery",
+    "aboutTmdbDisclaimer": "This app uses the TMDB API but is not endorsed or certified by TMDB.",
+    "aboutYoutube": "Trailers",
+    "aboutYoutubeDisclaimer": "watcho is not affiliated with or endorsed by Google LLC."
   },
   "onboarding": {
     "headline": "One quick setup step",

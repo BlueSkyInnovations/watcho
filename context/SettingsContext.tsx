@@ -6,6 +6,7 @@ interface AppSettings {
   showWhereToWatch: boolean;
   showMoreLikeThis: boolean;
   showReview: boolean;
+  showEpisodeGuide: boolean;
   language: LanguagePref;
 }
 
@@ -13,6 +14,7 @@ interface SettingsContextValue extends AppSettings {
   setShowWhereToWatch: (v: boolean) => void;
   setShowMoreLikeThis: (v: boolean) => void;
   setShowReview: (v: boolean) => void;
+  setShowEpisodeGuide: (v: boolean) => void;
   setLanguage: (v: LanguagePref) => void;
 }
 
@@ -22,6 +24,7 @@ const defaults: AppSettings = {
   showWhereToWatch: true,
   showMoreLikeThis: true,
   showReview: true,
+  showEpisodeGuide: true,
   language: 'system',
 };
 
@@ -30,6 +33,7 @@ const SettingsContext = createContext<SettingsContextValue>({
   setShowWhereToWatch: () => {},
   setShowMoreLikeThis: () => {},
   setShowReview: () => {},
+  setShowEpisodeGuide: () => {},
   setLanguage: () => {},
 });
 
@@ -61,6 +65,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       setShowWhereToWatch: (v) => update({ showWhereToWatch: v }),
       setShowMoreLikeThis: (v) => update({ showMoreLikeThis: v }),
       setShowReview: (v) => update({ showReview: v }),
+      setShowEpisodeGuide: (v) => update({ showEpisodeGuide: v }),
       setLanguage: (v) => update({ language: v }),
     }}>
       {children}

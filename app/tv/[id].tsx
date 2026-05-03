@@ -1,9 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useState } from 'react';
+import { ActivityIndicator, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { EpisodeModal } from '@/components/EpisodeModal';
 import { RatingStars } from '@/components/RatingStars';
 import { RecommendationsRow } from '@/components/RecommendationsRow';
 import { ReviewInput } from '@/components/ReviewInput';
@@ -13,9 +14,9 @@ import { TrailerModal } from '@/components/TrailerModal';
 import { useSettings } from '@/context/SettingsContext';
 import { useWatchlist } from '@/context/WatchlistContext';
 import { useColors } from '@/hooks/useColors';
-import { useTVDetail, useRecommendations, useVideos, useWatchProviders } from '@/hooks/useTMDB';
+import { useTVDetail, useRecommendations, useVideos, useWatchProviders, useTVSeason } from '@/hooks/useTMDB';
 import { BACKDROP_URL, POSTER_URL } from '@/lib/tmdb';
-import { WatchStatus } from '@/types';
+import { TMDBEpisode, WatchStatus } from '@/types';
 
 export default function TVDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -27,11 +28,43 @@ export default function TVDetailScreen() {
   const { videos } = useVideos('tv', showId);
   const { providers, region } = useWatchProviders('tv', showId);
   const { results: recommendations } = useRecommendations('tv', showId);
-  const { showWhereToWatch, showMoreLikeThis, showReview } = useSettings();
+  const { showWhereToWatch, showMoreLikeThis, showReview, showEpisodeGuide } = useSettings();
   const [trailerVisible, setTrailerVisible] = useState(false);
+  const [selectedEpisode, setSelectedEpisode] = useState<TMDBEpisode | null>(null);
   const { getItem, addItem, removeItem, updateStatus, updateRating, updateProgress, updateReview } = useWatchlist();
 
   const tracked = getItem(showId, 'tv');
+  const currentSeason = tracked?.currentSeason ?? 1;
+  const currentEpisode = tracked?.currentEpisode ?? 1;
+
+  const [selectedSeason, setSelectedSeason] = useState(1);
+  const seasonSyncedRef = useRef(false);
+
+  useEffect(() => {
+    if (!seasonSyncedRef.current && tracked?.status === 'watching' && tracked.currentSeason) {
+      seasonSyncedRef.current = true;
+      setSelectedSeason(tracked.currentSeason);
+    }
+  }, [tracked]);
+
+  const { data: seasonData, loading: seasonLoading } = useTVSeason(showId, selectedSeason);
+  const episodeListRef = useRef<FlatList>(null);
+
+  useEffect(() => {
+    if (
+      seasonData?.episodes?.length &&
+      tracked?.status === 'watching' &&
+      selectedSeason === currentSeason &&
+      currentEpisode > 1
+    ) {
+      const idx = currentEpisode - 1;
+      if (idx < seasonData.episodes.length) {
+        setTimeout(() => {
+          episodeListRef.current?.scrollToIndex({ index: idx, animated: false });
+        }, 150);
+      }
+    }
+  }, [seasonData?.episodes]);
 
   if (loading) {
     return (
@@ -53,8 +86,9 @@ export default function TVDetailScreen() {
   const posterUri = POSTER_URL(show.poster_path);
   const year = show.first_air_date?.slice(0, 4);
   const seasons = show.number_of_seasons;
-  const currentSeason = tracked?.currentSeason ?? 1;
-  const currentEpisode = tracked?.currentEpisode ?? 1;
+  const episodeMax = selectedSeason === currentSeason
+    ? (seasonData?.episodes.length ?? 99)
+    : 99;
 
   function handleStatusChange(status: WatchStatus) {
     if (!tracked) {
@@ -160,7 +194,7 @@ export default function TVDetailScreen() {
                   : () => updateProgress(showId, currentSeason, Math.max(1, currentEpisode - 1));
                 const inc = isSeason
                   ? () => updateProgress(showId, Math.min(seasons ?? 99, currentSeason + 1), currentEpisode)
-                  : () => updateProgress(showId, currentSeason, currentEpisode + 1);
+                  : () => updateProgress(showId, currentSeason, Math.min(episodeMax, currentEpisode + 1));
                 return (
                   <View key={key} style={styles.progressControl}>
                     <Text style={[styles.progressLabel, { color: colors.textDim }]}>{t(`detail.${key}`)}</Text>
@@ -177,6 +211,86 @@ export default function TVDetailScreen() {
                 );
               })}
             </View>
+          </View>
+        )}
+
+        {showEpisodeGuide && (seasons ?? 0) > 0 && (
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('detail.episodes')}</Text>
+
+            {(seasons ?? 0) > 1 && (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.pillsScroll}
+                contentContainerStyle={styles.pillsContent}
+              >
+                {Array.from({ length: seasons! }, (_, i) => i + 1).map((s) => (
+                  <Pressable
+                    key={s}
+                    style={[
+                      styles.pill,
+                      selectedSeason === s
+                        ? { backgroundColor: colors.accent }
+                        : { backgroundColor: colors.surfaceHighlight, borderColor: colors.border, borderWidth: 1 },
+                    ]}
+                    onPress={() => setSelectedSeason(s)}
+                  >
+                    <Text style={[styles.pillText, { color: selectedSeason === s ? '#fff' : colors.textDim }]}>
+                      S{s}
+                    </Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            )}
+
+            {seasonLoading ? (
+              <ActivityIndicator size="small" color={colors.accent} style={styles.seasonLoader} />
+            ) : (
+              <FlatList
+                ref={episodeListRef}
+                horizontal
+                data={seasonData?.episodes ?? []}
+                keyExtractor={(ep) => String(ep.id)}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.episodeList}
+                onScrollToIndexFailed={() => {}}
+                renderItem={({ item: ep }) => {
+                  const stillUri = ep.still_path
+                    ? `https://image.tmdb.org/t/p/w300${ep.still_path}`
+                    : null;
+                  const isCurrent =
+                    tracked?.status === 'watching' &&
+                    selectedSeason === currentSeason &&
+                    ep.episode_number === currentEpisode;
+                  return (
+                    <Pressable
+                      onPress={() => setSelectedEpisode(ep)}
+                      style={[
+                        styles.episodeCard,
+                        { backgroundColor: colors.surface },
+                        isCurrent && { borderColor: colors.accent, borderWidth: 2 },
+                      ]}
+                    >
+                      {stillUri ? (
+                        <Image source={{ uri: stillUri }} style={styles.episodeStill} resizeMode="cover" />
+                      ) : (
+                        <View style={[styles.episodeStill, { backgroundColor: colors.surfaceHighlight, alignItems: 'center', justifyContent: 'center' }]}>
+                          <Ionicons name="film-outline" size={20} color={colors.textMuted} />
+                        </View>
+                      )}
+                      <View style={styles.episodeInfo}>
+                        <Text style={[styles.episodeNum, { color: colors.accent }]}>E{ep.episode_number}</Text>
+                        <Text style={[styles.episodeName, { color: colors.text }]} numberOfLines={1}>{ep.name}</Text>
+                        {ep.overview ? (
+                          <Text style={[styles.episodeOverview, { color: colors.textDim }]} numberOfLines={3}>{ep.overview}</Text>
+                        ) : null}
+                      </View>
+                    </Pressable>
+                  );
+                }}
+              />
+            )}
           </View>
         )}
 
@@ -221,6 +335,14 @@ export default function TVDetailScreen() {
       mediaId={showId}
       initialVideos={videos}
       numberOfSeasons={show.number_of_seasons}
+    />
+
+    <EpisodeModal
+      visible={selectedEpisode !== null}
+      onClose={() => setSelectedEpisode(null)}
+      episode={selectedEpisode}
+      seasonNumber={selectedSeason}
+      showTitle={show.name}
     />
     </>
   );
@@ -269,4 +391,17 @@ const styles = StyleSheet.create({
   trailerText: { color: '#fff', fontSize: 15, fontWeight: '700' },
   removeButton: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12, borderRadius: 10, borderWidth: 1, justifyContent: 'center' },
   removeText: { fontSize: 14, fontWeight: '600' },
+  // Episode browser
+  pillsScroll: { marginBottom: 12 },
+  pillsContent: { gap: 8, paddingRight: 4 },
+  pill: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20 },
+  pillText: { fontSize: 13, fontWeight: '600' },
+  seasonLoader: { marginTop: 12 },
+  episodeList: { gap: 12, paddingRight: 4 },
+  episodeCard: { width: 160, borderRadius: 10, overflow: 'hidden' },
+  episodeStill: { width: 160, height: 90 },
+  episodeInfo: { padding: 8, gap: 3 },
+  episodeNum: { fontSize: 11, fontWeight: '700' },
+  episodeName: { fontSize: 13, fontWeight: '600' },
+  episodeOverview: { fontSize: 11, lineHeight: 16 },
 });

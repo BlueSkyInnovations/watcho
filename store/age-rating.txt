@@ -6,7 +6,7 @@ Answer each question as follows:
 
 VIOLENCE
   Cartoon or Fantasy Violence:               NONE
-  Realistic Violence:                        NONE
+  Realistic Violence:                        INFREQUENT/MILD
   Prolonged Graphic or Sadistic Violence:    NONE
 
 SEXUAL CONTENT
@@ -15,21 +15,26 @@ SEXUAL CONTENT
 
 OTHER
   Profanity or Crude Humor:                  NONE
-  Mature / Suggestive Themes:                NONE
-  Horror / Fear Themes:                      NONE
+  Mature / Suggestive Themes:                INFREQUENT/MILD
+  Horror / Fear Themes:                      INFREQUENT/MILD
   Medical / Treatment Information:           NONE
   Alcohol, Tobacco, or Drug Use:             NONE
   Simulated Gambling:                        NONE
   Unrestricted Web Access:                   NO
   Made for Kids (COPPA):                     NO
 
-EXPECTED RESULT: 4+ (lowest possible rating)
+EXPECTED RESULT: 9+
 
 RATIONALE
 ---------
-watcho is a personal tracker app. It contains no user-generated content, no
-social features, and no objectionable content of its own. Movie/TV show
-metadata and trailer thumbnails are fetched from TMDB; trailers are played
-via an embedded YouTube WebView. The app does not allow users to browse
-arbitrary URLs. The "Unrestricted Web Access" question refers to in-app
-browsers, which watcho does not provide.
+watcho is a personal tracker app. It contains no user-generated content and
+no objectionable content of its own. However, users can search for any movie
+or TV show in the TMDB catalogue and play its trailer via an embedded YouTube
+WebView. This means trailers for horror films, R-rated thrillers, and movies
+with mature or suggestive themes are reachable through normal app usage.
+
+The three "Infrequent/Mild" answers reflect that this content is incidental
+(trailers, not full films) and user-initiated (the user searches for the
+title), but still accessible. Graphic Sexual Content stays NONE because
+YouTube age-gates explicit content itself. "Unrestricted Web Access" remains
+NO — the embedded player is not a free-roam browser.

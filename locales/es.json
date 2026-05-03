@@ -12,5 +12,12 @@
     "search": {
         "trendingToday": "Tendencias de hoy",
         "noResults": "Sin resultados"
+    },
+    "detail": {
+        "episodes": "Episodios",
+        "episodeNoOverview": "No hay resumen disponible para este episodio."
+    },
+    "settings": {
+        "episodeGuide": "Guía de episodios"
     }
 }

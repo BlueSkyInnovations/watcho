@@ -62,7 +62,9 @@
     "episode": "Folge",
     "tvShow": "SERIE",
     "seasons_one": "{{count}} Staffel",
-    "seasons_other": "{{count}} Staffeln"
+    "seasons_other": "{{count}} Staffeln",
+    "episodes": "Folgen",
+    "episodeNoOverview": "Für diese Folge ist keine Zusammenfassung verfügbar."
   },
   "trailer": {
     "show": "Serie",
@@ -86,6 +88,7 @@
     "whereToWatch": "Wo schauen",
     "moreLikeThis": "Ähnliche Titel",
     "personalReview": "Persönliche Rezension",
+    "episodeGuide": "Episodenführer",
     "language": "SPRACHE",
     "appLanguage": "App-Sprache",
     "langSystem": "System",
@@ -104,7 +107,12 @@
       "message": "Du benötigst einen neuen Schlüssel, um die App zu nutzen.",
       "cancel": "Abbrechen",
       "remove": "Entfernen"
-    }
+    },
+    "aboutSection": "ÜBER",
+    "aboutTmdb": "Metadaten & Bilder",
+    "aboutTmdbDisclaimer": "Diese App verwendet die TMDB API, wird jedoch von TMDB weder empfohlen noch zertifiziert.",
+    "aboutYoutube": "Trailer",
+    "aboutYoutubeDisclaimer": "watcho ist weder mit Google LLC verbunden noch von Google LLC empfohlen."
   },
   "onboarding": {
     "headline": "Kurze Einrichtung",

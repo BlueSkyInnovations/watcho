@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { tmdb } from '@/lib/tmdb';
-import { TMDBMovie, TMDBSearchResult, TMDBTVShow, WatchProviders } from '@/types';
+import { TMDBMovie, TMDBSeason, TMDBSearchResult, TMDBTVShow, WatchProviders } from '@/types';
 import type { MediaType } from '@/types';
 import type { TMDBVideo } from '@/lib/tmdb';
 
@@ -139,4 +139,21 @@ export function useTVDetail(id: number) {
   }, [id]);
 
   return { show, loading, error };
+}
+
+export function useTVSeason(showId: number, season: number) {
+  const [data, setData] = useState<TMDBSeason | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!showId || season < 1) return;
+    setLoading(true);
+    setData(null);
+    tmdb.getTVSeason(showId, season)
+      .then(setData)
+      .catch(() => setData(null))
+      .finally(() => setLoading(false));
+  }, [showId, season]);
+
+  return { data, loading };
 }

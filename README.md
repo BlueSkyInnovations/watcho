@@ -31,7 +31,8 @@ Open any movie or TV show and you get:
 - **Where to Watch** — streaming, rental and purchase availability for your region, sourced from JustWatch via TMDB
 - **Personal review** — a private text note saved with the title
 - **More like this** — a horizontal row of recommendations
-- **Progress tracking** (TV shows only) — season and episode steppers that update as you watch
+- **Progress tracking** (TV shows only) — season and episode steppers bounded by actual season/episode counts
+- **Episode Guide** (TV shows only) — browse all episodes by season, with stills, title and plot summary; tap any card for full episode details; when you're actively watching, the current episode is highlighted and scrolled into view automatically
 
 Each of these sections can be individually toggled on or off in Settings.
 
@@ -119,7 +120,7 @@ app/
 
 components/       Reusable UI components
 context/          WatchlistContext, SettingsContext, ThemeContext
-hooks/            useColors, useTMDB, useQuickActions
+hooks/            useColors, useTMDB, useQuickActions, useSwipeToDismiss
 lib/              tmdb.ts, apiKey.ts, i18n.ts, storage.ts
 locales/          en.json, de.json, es.json  (translation files)
 types/            Shared TypeScript types

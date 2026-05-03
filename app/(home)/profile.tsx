@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { StatusColors } from '@/constants/Colors';
@@ -32,6 +33,27 @@ export default function ProfileScreen() {
   const movieCount = items.filter((i) => i.mediaType === 'movie' && (i.status === 'watched' || i.status === 'watching')).length;
   const tvCount = items.filter((i) => i.mediaType === 'tv' && (i.status === 'watched' || i.status === 'watching')).length;
 
+  const genreAnims = useRef<Animated.Value[]>([]);
+  const animationTriggered = useRef(false);
+
+  useEffect(() => {
+    if (stats.topGenres.length > 0 && !animationTriggered.current) {
+      animationTriggered.current = true;
+      genreAnims.current = stats.topGenres.map(() => new Animated.Value(0));
+      Animated.stagger(
+        70,
+        genreAnims.current.map((v) =>
+          Animated.timing(v, {
+            toValue: 1,
+            duration: 550,
+            easing: Easing.out(Easing.cubic),
+            useNativeDriver: false,
+          })
+        )
+      ).start();
+    }
+  }, [stats.topGenres.length]);
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
@@ -47,16 +69,6 @@ export default function ProfileScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('profile.breakdown')}</Text>
-              <View style={styles.statusTags}>
-                <View style={styles.statusTag}>
-                  <View style={[styles.statusDot, { backgroundColor: StatusColors.watching }]} />
-                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>{t('status.watching')}</Text>
-                </View>
-                <View style={styles.statusTag}>
-                  <View style={[styles.statusDot, { backgroundColor: StatusColors.watched }]} />
-                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>{t('status.watched')}</Text>
-                </View>
-              </View>
             </View>
             <View style={[styles.breakdownRow, { backgroundColor: colors.surface }]}>
               <View style={styles.breakdownItem}>
@@ -88,27 +100,23 @@ export default function ProfileScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('profile.topGenres')}</Text>
-              <View style={styles.statusTags}>
-                <View style={styles.statusTag}>
-                  <View style={[styles.statusDot, { backgroundColor: StatusColors.watching }]} />
-                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>{t('status.watching')}</Text>
-                </View>
-                <View style={styles.statusTag}>
-                  <View style={[styles.statusDot, { backgroundColor: StatusColors.watched }]} />
-                  <Text style={[styles.statusTagText, { color: colors.textMuted }]}>{t('status.watched')}</Text>
-                </View>
-              </View>
             </View>
-            {stats.topGenres.map((g, i) => (
-              <View key={g.name} style={styles.genreRow}>
-                <Text style={[styles.genreRank, { color: colors.textMuted }]}>#{i + 1}</Text>
-                <Text style={[styles.genreName, { color: colors.text }]}>{g.name}</Text>
-                <View style={[styles.genreBarBg, { backgroundColor: colors.surfaceHighlight }]}>
-                  <View style={[styles.genreBarFill, { width: `${(g.count / stats.topGenres[0].count) * 100}%`, backgroundColor: colors.accent }]} />
+            {stats.topGenres.map((g, i) => {
+              const pct = (g.count / stats.topGenres[0].count) * 100;
+              const animWidth = genreAnims.current[i]
+                ? genreAnims.current[i].interpolate({ inputRange: [0, 1], outputRange: ['0%', `${pct}%`] })
+                : `${pct}%`;
+              return (
+                <View key={g.name} style={styles.genreRow}>
+                  <Text style={[styles.genreRank, { color: colors.textMuted }]}>#{i + 1}</Text>
+                  <Text style={[styles.genreName, { color: colors.text }]}>{g.name}</Text>
+                  <View style={[styles.genreBarBg, { backgroundColor: colors.surfaceHighlight }]}>
+                    <Animated.View style={[styles.genreBarFill, { width: animWidth, backgroundColor: colors.accent }]} />
+                  </View>
+                  <Text style={[styles.genreCount, { color: colors.textDim }]}>{g.count}</Text>
                 </View>
-                <Text style={[styles.genreCount, { color: colors.textDim }]}>{g.count}</Text>
-              </View>
-            ))}
+              );
+            })}
           </View>
         )}
 
@@ -133,12 +141,8 @@ const styles = StyleSheet.create({
   statValue: { fontSize: 22, fontWeight: '700' },
   statLabel: { fontSize: 11, fontWeight: '500' },
   section: { marginBottom: 24 },
-  sectionHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 14 },
-  sectionTitle: { fontSize: 17, fontWeight: '700', marginRight: 10 },
-  statusTags: { flexDirection: 'row', gap: 10, flex: 1, justifyContent: 'flex-end' },
-  statusTag: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  statusDot: { width: 6, height: 6, borderRadius: 3 },
-  statusTagText: { fontSize: 11 },
+  sectionHeader: { marginBottom: 14 },
+  sectionTitle: { fontSize: 17, fontWeight: '700' },
   breakdownRow: { flexDirection: 'row', borderRadius: 12, padding: 16, alignItems: 'center' },
   breakdownItem: { flex: 1, alignItems: 'center', gap: 6 },
   breakdownValue: { fontSize: 20, fontWeight: '700' },

@@ -23,7 +23,7 @@ Work through these sections in order. All text is in `store/en-US/listing.txt` a
 - [ ] **Primary Category**: Entertainment
 - [ ] **Secondary Category**: Productivity
 - [ ] **Content Rights**: "This app does not contain, show, or access third-party content" — leave unchecked; it does use TMDB data under their API terms
-- [ ] **Age Rating**: complete the questionnaire using `store/age-rating.txt` → result: **4+**
+- [ ] **Age Rating**: complete the questionnaire using `store/age-rating.txt` → result: **9+**
 - [ ] **Privacy Policy URL**: `https://blueskyinnovations.github.io/watcho/privacy-policy.html`
 
 ---
