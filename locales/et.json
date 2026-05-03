@@ -1,0 +1,139 @@
+{
+    "providers": {
+        "attribution": "Andmed teenusest JustWatch · {{region}}",
+        "buy": "Osta",
+        "rent": "Renditeenus",
+        "stream": "Voogedastus"
+    },
+    "myLists": {
+        "empty": {
+            "watched": {
+                "subtitle": "Peale vaatamist märgi olekuks „Vaadatud“ ja näed teda siin.",
+                "title": "Sa pole midagi veel vaadanud"
+            },
+            "watchlist": {
+                "subtitle": "Otsi filme või telesarju ja lisa nad oma loendisse.",
+                "title": "Sinu jälgimisloend on tühi"
+            },
+            "watching": {
+                "subtitle": "Edenemise jälgimiseks märgi olekuks „Vaatamas“ ja näed teda siin.",
+                "title": "Sa pole vaatamas mitte midagi"
+            }
+        }
+    },
+    "search": {
+        "noResults": "Tulemusi pole",
+        "nothingFound": "Otsingule „{{query}}“ ei leidu vastust",
+        "placeholder": "Otsi filme ja telesaateid…",
+        "trendingToday": "Täna populaarsust kogumas"
+    },
+    "trailer": {
+        "all": "Kõik",
+        "show": "Näita",
+        "official": "Ametlik",
+        "noVideos": "Selle valiku kohta pole saadaval videoid."
+    },
+    "settings": {
+        "changeKey": "Muuda võtit",
+        "appLanguage": "Rakenduse keel",
+        "language": "KEEL",
+        "langEnglish": "inglise keel",
+        "tmdbApi": "TMDB API",
+        "light": "Hele kujundus",
+        "apiKey": "API võti",
+        "langGerman": "saksa keel",
+        "langSpanish": "hispaania keel",
+        "notSet": "Seadistamata",
+        "dark": "Tume kujundus",
+        "langSystem": "Süsteemi keel",
+        "appearance": "VÄLIMUS",
+        "removeKey": "Eemalda võti",
+        "title": "Seadistused",
+        "helpTranslate": "Aita meil rakendust tõlkida Weblate'i teenuse abil",
+        "deviceSetting": "Kasuta süsteemi seadistusi",
+        "removeAlert": {
+            "title": "",
+            "message": "",
+            "cancel": "",
+            "remove": ""
+        },
+        "moreLikeThis": "",
+        "aboutYoutubeDisclaimer": "",
+        "whereToWatch": "",
+        "aboutSection": "",
+        "aboutTmdb": "",
+        "aboutTmdbDisclaimer": "",
+        "episodeGuide": "",
+        "aboutYoutube": "",
+        "detailScreens": "",
+        "hint": "",
+        "personalReview": ""
+    },
+    "detail": {
+        "watchTrailer": "Vaata treilerit",
+        "failedToLoad": "Laadimine ei õnnestunud",
+        "season": "",
+        "removeFromLists": "",
+        "episodeNoOverview": "",
+        "seasons_one": "",
+        "seasons_other": "",
+        "watchTrailers": "",
+        "yourReview": "",
+        "progress": "",
+        "episode": "",
+        "episodes": "",
+        "tvShow": "",
+        "addToList": "",
+        "moreLikeThis": "",
+        "reviewPlaceholder": "",
+        "whereToWatch": "",
+        "yourRating": ""
+    },
+    "profile": {
+        "avgRating": "Keskmine hinnang",
+        "yourStats": "Sinu statistika",
+        "emptyHint": "Oma statistika siin nägemiseks halla lisama filme ja telesaateid.",
+        "movies": "Filmid",
+        "breakdown": "Jagunemine",
+        "topGenres": "Populaarsemad žanrid",
+        "tvShows": "Telesaated"
+    },
+    "tabs": {
+        "search": "Otsi",
+        "myLists": "Minu loendid",
+        "profile": "Profiil"
+    },
+    "status": {
+        "watchlist": "Vaatamise ootel",
+        "watched": "Vaadatud",
+        "watching": "Vaatamas"
+    },
+    "sort": {
+        "dateAdded": "Lisamise kuupäev",
+        "releaseDate": "Avaldamise kuupäev",
+        "lastUpdated": "Viimati uuendatud",
+        "title": "Järjestus"
+    },
+    "quickActions": {
+        "nextEpisode": "",
+        "markedToast": "",
+        "continueWatching": ""
+    },
+    "onboarding": {
+        "step2": "",
+        "errorInvalid": "",
+        "verifyContinue": "",
+        "headline": "",
+        "errorEmpty": "",
+        "enterKey": "",
+        "goToApi": "",
+        "enterKeyBody": "",
+        "step3": "",
+        "step1": "",
+        "back": "",
+        "haveKey": "",
+        "body": "",
+        "createAccount": "",
+        "keyPlaceholder": ""
+    }
+}
