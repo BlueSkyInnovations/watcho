@@ -41,7 +41,7 @@ export default function MyListsScreen() {
   const { items } = useWatchlist();
   const colors = useColors();
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<WatchStatus>('watchlist');
+  const [activeTab, setActiveTab] = useState<WatchStatus>('watching');
   const [tabPrefs, setTabPrefs] = useState<AllTabPrefs>(DEFAULT_PREFS);
   const [sheetVisible, setSheetVisible] = useState(false);
 
