@@ -39,7 +39,8 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-quick-actions"
+      "expo-quick-actions",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

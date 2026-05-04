@@ -117,7 +117,7 @@
   },
   "onboarding": {
     "headline": "One quick setup step",
-    "body": "watcho uses The Movie Database (TMDB) for all movie and TV show data. TMDB offers a free personal API key — you'll need one to use this app.",
+    "body": "watcho uses the TMDB API for movie and TV data. You need a free personal API key — this is a one-time developer credential, not a sign-in for this app.",
     "step1": "Create a free account at themoviedb.org",
     "step2": "Go to Settings → API and request an API key (choose \"Personal use\")",
     "step3": "Copy the key labelled API Key (v3 auth) and paste it here",

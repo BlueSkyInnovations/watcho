@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as WebBrowser from 'expo-web-browser';
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
-  Linking,
   Platform,
   Pressable,
   StyleSheet,
@@ -74,15 +74,15 @@ export default function OnboardingScreen() {
 
           <Pressable
             style={[styles.primaryButton, { backgroundColor: colors.accent }]}
-            onPress={() => Linking.openURL(TMDB_SIGNUP_URL)}
+            onPress={() => WebBrowser.openBrowserAsync(TMDB_SIGNUP_URL)}
           >
-            <Ionicons name="open-outline" size={16} color="#fff" />
+            <Ionicons name="globe-outline" size={16} color="#fff" />
             <Text style={styles.primaryButtonText}>{t('onboarding.createAccount')}</Text>
           </Pressable>
 
           <Pressable
             style={[styles.primaryButton, { backgroundColor: colors.accent }]}
-            onPress={() => Linking.openURL(TMDB_API_URL)}
+            onPress={() => WebBrowser.openBrowserAsync(TMDB_API_URL)}
           >
             <Ionicons name="key-outline" size={16} color="#fff" />
             <Text style={styles.primaryButtonText}>{t('onboarding.goToApi')}</Text>
