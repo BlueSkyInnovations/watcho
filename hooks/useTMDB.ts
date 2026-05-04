@@ -178,12 +178,14 @@ export function useTVSeason(showId: number, season: number) {
 
   useEffect(() => {
     if (!showId || season < 1) return;
+    let cancelled = false;
     setLoading(true);
     setData(null);
     tmdb.getTVSeason(showId, season)
-      .then(setData)
-      .catch(() => setData(null))
-      .finally(() => setLoading(false));
+      .then((d) => { if (!cancelled) setData(d); })
+      .catch(() => { if (!cancelled) setData(null); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
   }, [showId, season]);
 
   return { data, loading };
