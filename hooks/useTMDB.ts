@@ -3,6 +3,15 @@ import { tmdb } from '@/lib/tmdb';
 import { TMDBMovie, TMDBSeason, TMDBSearchResult, TMDBTVShow, WatchProviders } from '@/types';
 import type { MediaType } from '@/types';
 import type { TMDBVideo } from '@/lib/tmdb';
+import { useSettings } from '@/context/SettingsContext';
+import { resolveLanguage } from '@/lib/i18n';
+
+const LANG_TO_REGION: Record<string, string> = {
+  en: 'US',
+  de: 'DE',
+  es: 'ES',
+  et: 'EE',
+};
 
 export function useSearch(query: string) {
   const [results, setResults] = useState<TMDBSearchResult[]>([]);
@@ -143,9 +152,11 @@ export function useTVDetail(id: number) {
 
 export function useContentRating(mediaType: MediaType, id: number) {
   const [rating, setRating] = useState<string | null>(null);
+  const { language } = useSettings();
 
   useEffect(() => {
-    const region = getDeviceRegion();
+    const resolved = resolveLanguage(language);
+    const region = LANG_TO_REGION[resolved] ?? getDeviceRegion();
 
     if (mediaType === 'movie') {
       tmdb.getMovieReleaseDates(id)
@@ -167,7 +178,7 @@ export function useContentRating(mediaType: MediaType, id: number) {
         })
         .catch(() => {});
     }
-  }, [mediaType, id]);
+  }, [mediaType, id, language]);
 
   return rating;
 }
