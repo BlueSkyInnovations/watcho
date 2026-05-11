@@ -253,4 +253,11 @@ Every user prompt, categorised by type, with a summary of the work done and its 
 **Activity:** Added `expo-document-picker`, `expo-file-system`, `expo-sharing`. Created `lib/backup.ts` with `exportWatchlist` (writes JSON to cache, triggers iOS Share Sheet), `readBackupFile`, `parseBackupJson`, and `mergeWatchlists` (supports `replace`, `merge_keep_existing`, `merge_keep_backup`, `merge_keep_newest`). Created `components/ImportModal.tsx` — bottom-sheet modal with mode selector (Replace All / Merge), conflict-resolution picker for merge mode, and a destructive-action warning when Replace is chosen. Extended `WatchlistContext` with `replaceItems`. Added `DATA` section to `settings.tsx` (Export + Import rows). Added Linking listener in `_layout.tsx` to catch incoming `file://` URLs (e.g. sharing a backup from Files or another app) and surface the ImportModal at the root level. Registered `CFBundleDocumentTypes` (public.json) in `app.json` so iOS opens watcho when the user taps a `.json` backup file. Added `expo-document-picker` to plugins. Localized all new `settings.data.*` keys: full EN + DE translations; ES + ET stubs for Weblate. Updated README with backup/restore section.  
 **Outcome:** Commit `e94da4a` — version bumped to 1.1.0, tag `v1.1.0` pushed.
 
+### 9.2 — Build failure: ExpoAppDelegate not found
+**Time:** 2026-05-11  
+**Type:** bug  
+**Prompt:** EAS build failed: `cannot find 'ExpoAppDelegate' in scope` in the Xcode build log.  
+**Activity:** Root cause: adding `expo-document-picker` to the `plugins` array causes the plugin to patch `AppDelegate.swift` to subclass `ExpoAppDelegate`, which was removed in Expo SDK 54's new architecture. Fix: removed `expo-document-picker` from `plugins`. The JS picker API (`DocumentPicker.getDocumentAsync`) works without a plugin entry; iOS file-type registration is handled separately via `CFBundleDocumentTypes` in `infoPlist`.  
+**Outcome:** Commit `bdc9b3c` — new build triggered.
+
 *Log maintained continuously from 2026-05-04. Entries marked with ~ have approximate times inferred from session context; all others are anchored to git commit timestamps.*
