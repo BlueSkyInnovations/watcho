@@ -59,6 +59,14 @@ Light, Dark, and System (follows the device setting) themes. The accent colour i
 
 The app ships with **English** and **German** fully translated. **Estonian** and **Spanish** are partially available, contributed via Weblate. Device language is detected automatically on first launch; you can override it in Settings. The language picker shows a completion percentage for any language that isn't fully translated yet. The TMDB content language (titles, overviews) follows the same selection. Community translations are managed on [Weblate](https://hosted.weblate.org/engage/watcho/).
 
+### Backup and restore
+
+Settings › Data lets you export your entire watchlist as a JSON file and share it via the iOS Share Sheet (AirDrop, email, Files, WhatsApp — anything). To restore, tap **Import Backup** and pick the file, or share a `.json` backup file directly to watcho from any other app.
+
+Import offers two modes:
+- **Replace all** — wipes your current watchlist and loads the backup
+- **Merge** — adds items from the backup that you don't already have, and for items that exist in both you choose whether to keep yours, the backup's version, or whichever is newer
+
 ### iOS Quick Actions
 
 On iOS, long-pressing the app icon exposes two shortcuts:
@@ -117,17 +125,17 @@ app/
   movie/[id].tsx  Movie detail screen
   tv/[id].tsx     TV show detail screen
   onboarding.tsx  First-launch API key setup
-  settings.tsx    Theme, toggles, language, API key
+  settings.tsx    Theme, toggles, language, API key, backup/restore
 
 components/       Reusable UI components
 context/          WatchlistContext, SettingsContext, ThemeContext
 hooks/            useColors, useTMDB, useQuickActions, useSwipeToDismiss
-lib/              tmdb.ts, apiKey.ts, i18n.ts, storage.ts
+lib/              tmdb.ts, apiKey.ts, i18n.ts, storage.ts, backup.ts
 locales/          en.json, de.json, es.json  (translation files)
 types/            Shared TypeScript types
 ```
 
-All user data lives in AsyncStorage under namespaced keys (`watcho_watchlist_v1`, `watcho_settings`, etc.). There is no network call that sends user data anywhere.
+All user data lives in AsyncStorage under namespaced keys (`watcho_watchlist_v1`, `watcho_settings`, etc.). There is no network call that sends user data anywhere. Backups are plain JSON files you control entirely — the TMDB API key is intentionally excluded from exports.
 
 ---
 

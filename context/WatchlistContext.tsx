@@ -80,6 +80,7 @@ interface WatchlistContextValue {
   updateRating: (id: number, mediaType: MediaType, rating: number) => void;
   updateProgress: (id: number, season: number, episode: number) => void;
   updateReview: (id: number, mediaType: MediaType, review: string) => void;
+  replaceItems: (items: MediaItem[]) => void;
   stats: WatchlistStats;
 }
 
@@ -129,6 +130,10 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'UPDATE_REVIEW', id, mediaType, review });
   }, []);
 
+  const replaceItems = useCallback((newItems: MediaItem[]) => {
+    dispatch({ type: 'LOAD', items: newItems });
+  }, []);
+
   const stats: WatchlistStats = React.useMemo(() => {
     const watched = state.items.filter((i) => i.status === 'watched');
     const watching = state.items.filter((i) => i.status === 'watching');
@@ -161,7 +166,7 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <WatchlistContext.Provider
-      value={{ items: state.items, loaded: state.loaded, getItem, addItem, removeItem, updateStatus, updateRating, updateProgress, updateReview, stats }}
+      value={{ items: state.items, loaded: state.loaded, getItem, addItem, removeItem, updateStatus, updateRating, updateProgress, updateReview, replaceItems, stats }}
     >
       {children}
     </WatchlistContext.Provider>

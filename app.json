@@ -2,7 +2,7 @@
   "expo": {
     "name": "watcho",
     "slug": "watcho",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "watcho",
@@ -21,7 +21,15 @@
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true,
           "NSAllowsArbitraryLoadsInWebContent": true
-        }
+        },
+        "CFBundleDocumentTypes": [
+          {
+            "CFBundleTypeName": "watcho Backup",
+            "CFBundleTypeRole": "Viewer",
+            "LSItemContentTypes": ["public.json"],
+            "CFBundleTypeExtensions": ["json"]
+          }
+        ]
       }
     },
     "android": {
@@ -40,7 +48,8 @@
       "expo-router",
       "expo-font",
       "expo-quick-actions",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-document-picker"
     ],
     "experiments": {
       "typedRoutes": true

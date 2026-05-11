@@ -1,15 +1,19 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
+import * as DocumentPicker from 'expo-document-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Alert, Image, Linking, Modal, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { ImportModal } from '@/components/ImportModal';
 import { useSettings } from '@/context/SettingsContext';
 import { ThemePreference, useTheme } from '@/context/ThemeContext';
+import { useWatchlist } from '@/context/WatchlistContext';
 import { useColors } from '@/hooks/useColors';
 import { translationCoverage, type LanguagePref, type SupportedLang } from '@/lib/i18n';
 import { clearApiKey, getStoredApiKey } from '@/lib/apiKey';
+import { exportWatchlist, readBackupFile, mergeWatchlists, type BackupFile, type MergeStrategy } from '@/lib/backup';
 
 interface ThemeOption {
   value: ThemePreference;
@@ -177,9 +181,11 @@ export default function SettingsScreen() {
     showEpisodeGuide, setShowEpisodeGuide,
     language, setLanguage,
   } = useSettings();
+  const { items, replaceItems } = useWatchlist();
   const router = useRouter();
   const [keyPreview, setKeyPreview] = useState('');
   const [langSheetVisible, setLangSheetVisible] = useState(false);
+  const [pendingBackup, setPendingBackup] = useState<BackupFile | null>(null);
 
   const currentLangLabel = t(LANG_OPTIONS.find((o) => o.value === language)?.labelKey ?? 'settings.langSystem');
 
@@ -188,6 +194,36 @@ export default function SettingsScreen() {
       setKeyPreview(k ? `${k.slice(0, 6)}••••••••••••••••` : t('settings.notSet'));
     });
   }, []);
+
+  async function handleExport() {
+    try {
+      await exportWatchlist(items);
+    } catch {
+      Alert.alert(t('settings.data.exportError'));
+    }
+  }
+
+  async function handleImport() {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/json',
+        copyToCacheDirectory: true,
+      });
+      if (result.canceled) return;
+      const backup = await readBackupFile(result.assets[0].uri);
+      setPendingBackup(backup);
+    } catch {
+      Alert.alert(t('settings.data.invalidFile'));
+    }
+  }
+
+  function handleImportConfirm(strategy: MergeStrategy) {
+    if (!pendingBackup) return;
+    const merged = mergeWatchlists(items, pendingBackup.watchlist, strategy);
+    replaceItems(merged);
+    setPendingBackup(null);
+    Alert.alert(t('settings.data.importSuccess', { count: merged.length }));
+  }
 
   function handleRemoveKey() {
     Alert.alert(
@@ -300,6 +336,34 @@ export default function SettingsScreen() {
 
         <Text style={[styles.hint, { color: colors.textMuted }]}>{t('settings.hint')}</Text>
 
+        {/* Data */}
+        <Text style={[styles.sectionLabel, { color: colors.textMuted, marginTop: 28 }]}>{t('settings.data.section')}</Text>
+        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <Pressable
+            style={[styles.row, { borderBottomWidth: 1, borderBottomColor: colors.border }]}
+            onPress={handleExport}
+          >
+            <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
+              <Ionicons name="share-outline" size={18} color={colors.textDim} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.data.export')}</Text>
+              <Text style={[styles.rowSub, { color: colors.textMuted }]}>{t('settings.data.exportSub')}</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
+          </Pressable>
+          <Pressable style={styles.row} onPress={handleImport}>
+            <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
+              <Ionicons name="download-outline" size={18} color={colors.textDim} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.data.import')}</Text>
+              <Text style={[styles.rowSub, { color: colors.textMuted }]}>{t('settings.data.importSub')}</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
+          </Pressable>
+        </View>
+
         {/* Language — at the bottom, rarely changed */}
         <Text style={[styles.sectionLabel, { color: colors.textMuted, marginTop: 28 }]}>{t('settings.language')}</Text>
         <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
@@ -325,6 +389,15 @@ export default function SettingsScreen() {
         onChange={setLanguage}
         onClose={() => setLangSheetVisible(false)}
       />
+
+      {pendingBackup && (
+        <ImportModal
+          backup={pendingBackup}
+          existingCount={items.length}
+          onConfirm={handleImportConfirm}
+          onClose={() => setPendingBackup(null)}
+        />
+      )}
     </SafeAreaView>
   );
 }

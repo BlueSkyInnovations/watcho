@@ -37,6 +37,30 @@
         "yourRating": ""
     },
     "settings": {
+        "data": {
+            "section": "",
+            "export": "",
+            "exportSub": "",
+            "import": "",
+            "importSub": "",
+            "exportError": "",
+            "importTitle": "",
+            "importMeta": "",
+            "importMode": "",
+            "replaceAll": "",
+            "replaceAllDesc": "",
+            "merge": "",
+            "mergeDesc": "",
+            "conflictLabel": "",
+            "keepExisting": "",
+            "keepBackup": "",
+            "keepNewest": "",
+            "replaceWarning": "",
+            "importConfirm": "",
+            "cancel": "",
+            "importSuccess": "",
+            "invalidFile": ""
+        },
         "episodeGuide": "Guía de episodios",
         "changeKey": "",
         "removeAlert": {

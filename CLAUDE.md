@@ -27,6 +27,13 @@ React Native / Expo app for tracking movies and TV shows. All user data is store
 - `lib/youtube.ts` — YouTube trailer utilities
 - `types/index.ts` — `MediaItem`, `TMDBMovie`, `TMDBTVShow`, `WatchStatus`, etc.
 
+## Dev Log
+- `DEV_LOG.md` is a living log of every meaningful prompt, decision, bug, and experiment — updated automatically each session without being asked.
+- Add entries as work happens; do not wait until the end of a session or until the user asks.
+- Use the established format: session number, entry number, time, type, prompt (user's words or close paraphrase), activity (concise), outcome (commit hash if applicable).
+- Types: `requirement` · `bug` · `idea` · `examination` · `experience` · `decision`
+- Commit messages must follow Conventional Commits (`feat`, `fix`, `docs`, `chore`, `refactor`, `perf`, `ci`, `style`, `test`).
+
 ## Rules
 - Use `useColors()` everywhere for colors. Never import `constants/Colors` directly.
 - Apply colors inline: `[styles.foo, { color: colors.text }]` — no hardcoded color values.
