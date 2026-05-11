@@ -89,3 +89,14 @@ Work through these sections in order. All text is in `store/en-US/listing.txt` a
 
 - [ ] Set release date or click **Release** manually
 - [ ] Monitor for any follow-up questions from Apple Review (email notification)
+
+---
+
+## Version 1.1 — Update submission
+
+- [ ] **Version**: 1.1.0 *(already set in `app.json` and `package.json`)*
+- [ ] Select the new EAS build (triggered by `v1.1.0` tag)
+- [ ] **What's New**: paste v1.1 block from `store/en-US/listing.txt` (English) and `store/de-DE/listing.txt` (German)
+- [ ] **Description** (optional): Apple allows description updates with a new version — the Backup & Restore section has been added to both listings
+- [ ] **Promotional Text**: no change needed (update without new version is still possible)
+- [ ] Submit for review

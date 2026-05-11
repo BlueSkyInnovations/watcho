@@ -70,15 +70,18 @@ CUSTOMISE YOUR EXPERIENCE
 IOS QUICK ACTIONS
 Long-press the app icon to jump to your current show or advance its episode counter — without even opening the app.
 
+BACKUP & RESTORE
+Export your entire watchlist as a JSON file and share it anywhere via the iOS Share Sheet — AirDrop, Files, email, WhatsApp, or any other app. To restore, pick a backup file from the document picker or share it directly to watcho from any other app. Choose between Replace All (start fresh from the backup) or Merge — with three conflict options for titles that exist in both: Keep Mine, Keep Backup, or Keep Newest.
+
 PRIVATE BY DESIGN
-Everything stays on your device. No server, no sync, no cloud. Your lists, ratings, and reviews are stored locally and never leave your phone.
+Everything stays on your device. No server, no sync, no cloud. Your lists, ratings, and reviews are stored locally and never leave your phone. Exported backups are plain JSON files you control entirely — the app never touches them after the share sheet closes.
 
 Content data is provided by The Movie Database (TMDB), a free community-maintained database. A free personal TMDB API key is required — the app walks you through getting one on first launch.
 
 
-WHAT'S NEW  (v1.0)
+WHAT'S NEW  (v1.1)
 ----------
-Welcome to watcho — your personal movie and TV show tracker. No account, no ads, no subscription. Everything stays on your device.
+Backup & Restore — export your entire watchlist as a JSON file and share it anywhere via the iOS Share Sheet (AirDrop, Files, email, WhatsApp). Import a backup via the document picker or share a file directly to watcho from any other app. Import mode: Replace All for a clean swap, or Merge with three conflict options — Keep Mine, Keep Backup, or Keep Newest.
 
 
 SUPPORT URL

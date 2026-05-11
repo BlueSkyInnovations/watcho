@@ -66,15 +66,18 @@ ANPASSEN
 IOS SCHNELLAKTIONEN
 Halte das App-Symbol gedrückt, um direkt zur aktuellen Serie zu springen oder den Episodenzähler weiterzuschalten – ohne die App zu öffnen.
 
+BACKUP & WIEDERHERSTELLEN
+Exportiere deine gesamte Merkliste als JSON-Datei und teile sie per iOS-Teilen-Funktion – AirDrop, Dateien, E-Mail, WhatsApp oder eine andere App. Zum Wiederherstellen wähle eine Backup-Datei über den Dokumenten-Picker oder teile sie direkt mit watcho aus einer anderen App. Wähle zwischen Alles ersetzen (frischer Start aus dem Backup) oder Zusammenführen – mit drei Konfliktoptionen für Titel, die in beiden vorhanden sind: Meine behalten, Backup behalten oder Neueste behalten.
+
 PRIVATSPHÄRE ZUERST
-Alles bleibt auf deinem Gerät. Kein Server, keine Synchronisation, keine Cloud. Deine Listen, Bewertungen und Rezensionen werden lokal gespeichert und verlassen dein Gerät nie.
+Alles bleibt auf deinem Gerät. Kein Server, keine Synchronisation, keine Cloud. Deine Listen, Bewertungen und Rezensionen werden lokal gespeichert und verlassen dein Gerät nie. Exportierte Backups sind einfache JSON-Dateien, die du vollständig selbst kontrollierst – die App berührt sie nach dem Teilen nicht mehr.
 
 Inhaltsdaten werden von The Movie Database (TMDB) bereitgestellt, einer kostenlosen, community-gepflegten Datenbank. Ein kostenloser persönlicher TMDB API-Schlüssel ist erforderlich – die App führt dich beim ersten Start durch die Einrichtung.
 
 
-NEUE FUNKTIONEN  (v1.0)
+NEUE FUNKTIONEN  (v1.1)
 ---------------
-Willkommen bei watcho – deinem persönlichen Film- und Serien-Tracker. Kein Konto, keine Werbung, kein Abo. Alles bleibt auf deinem Gerät.
+Backup & Wiederherstellen – exportiere deine gesamte Merkliste als JSON-Datei und teile sie per iOS-Teilen-Funktion (AirDrop, Dateien, E-Mail, WhatsApp). Importiere ein Backup über den Dokumenten-Picker oder teile eine Datei direkt mit watcho. Importmodus: Alles ersetzen für einen vollständigen Austausch oder Zusammenführen mit drei Konfliktoptionen – Meine behalten, Backup behalten oder Neueste behalten.
 
 
 SUPPORT-URL
