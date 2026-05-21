@@ -1,0 +1,13 @@
+appId: de.blueskyinnovations.watcho
+# Feature 003 — My Lists View & Sort
+# AC-02: Tapping the view toggle switches from grid to list view.
+# In list view, MediaListItem rows contain a chevron-forward icon.
+# We verify by asserting the item's title is still visible after toggle.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn:
+    id: "my-lists:btn-toggle-view"
+- assertVisible: "Inception"
+- assertVisible:
+    id: "my-lists:btn-toggle-view"

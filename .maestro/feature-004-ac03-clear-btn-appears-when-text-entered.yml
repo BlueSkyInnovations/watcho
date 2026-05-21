@@ -1,0 +1,13 @@
+appId: de.blueskyinnovations.watcho
+# Feature 004 — Search
+# AC-03: The clear (×) button appears once text is entered in the search field.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- assertNotVisible:
+    id: "search-bar:btn-clear"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Inception"
+- assertVisible:
+    id: "search-bar:btn-clear"

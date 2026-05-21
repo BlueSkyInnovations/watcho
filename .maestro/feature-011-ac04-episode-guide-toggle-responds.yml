@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 011 — Settings: Feature Toggles
+# AC-04: The "Episode Guide" switch is visible and responds to taps.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- assertVisible:
+    id: "settings:switch-episode-guide"
+- tapOn:
+    id: "settings:switch-episode-guide"
+- assertVisible:
+    id: "settings:switch-episode-guide"

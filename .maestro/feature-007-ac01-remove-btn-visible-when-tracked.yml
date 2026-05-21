@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 007 — Movie Detail: Remove
+# AC-01: The "Remove from lists" button is visible when the movie is tracked.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "movie-detail:btn-remove"
+    direction: DOWN
+- assertVisible:
+    id: "movie-detail:btn-remove"

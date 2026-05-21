@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 015 — Import Watchlist
+# AC-01: The "Import Backup" row is visible in the Data section.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-import"
+    direction: DOWN
+- assertVisible:
+    id: "settings:btn-import"
+- assertVisible: "Import Backup"

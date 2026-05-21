@@ -1,0 +1,16 @@
+# Helper: add "Inception" (2010) to the Watching list.
+# Depends on: onboarded.yml already run (app is on My Lists screen).
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Inception"
+- assertVisible: "Inception"
+- tapOn: "Inception"
+- assertVisible:
+    id: "status-selector:btn-watching"
+- tapOn:
+    id: "status-selector:btn-watching"
+- tapOn:
+    id: "movie-detail:back-btn"
+- assertVisible:
+    id: "my-lists:tab-watching"

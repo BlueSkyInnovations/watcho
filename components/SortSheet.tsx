@@ -39,6 +39,7 @@ export function SortSheet({ visible, value, onChange, onClose }: SortSheetProps)
             return (
               <Pressable
                 key={opt.value}
+                testID={`sort-sheet:option-${opt.value.replace(/_/g, '-')}`}
                 style={[
                   styles.row,
                   index < SORT_OPTIONS.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },

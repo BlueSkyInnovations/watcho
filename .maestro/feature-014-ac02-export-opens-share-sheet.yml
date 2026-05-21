@@ -1,0 +1,16 @@
+appId: de.blueskyinnovations.watcho
+# Feature 014 — Export Watchlist
+# AC-02: Tapping Export triggers the iOS Share Sheet (system UI).
+# The share sheet is a native iOS component; Maestro verifies it appears
+# by looking for the "Cancel" action that is always present in UIActivityViewController.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-export"
+    direction: DOWN
+- tapOn:
+    id: "settings:btn-export"
+- assertVisible: "Cancel"
+- tapOn: "Cancel"

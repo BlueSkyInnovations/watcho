@@ -1,0 +1,11 @@
+appId: de.blueskyinnovations.watcho
+# Feature 003 — My Lists View & Sort
+# AC-03: Tapping the view toggle a second time switches back to grid view.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn:
+    id: "my-lists:btn-toggle-view"
+- tapOn:
+    id: "my-lists:btn-toggle-view"
+- assertVisible: "Inception"

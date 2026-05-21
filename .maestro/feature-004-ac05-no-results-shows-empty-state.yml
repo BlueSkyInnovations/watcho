@@ -1,0 +1,10 @@
+appId: de.blueskyinnovations.watcho
+# Feature 004 — Search
+# AC-05: A query that returns no results shows the "No results" empty state.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "xyzxyzxyzqqqqqnoshow12345"
+- assertVisible: "No results"

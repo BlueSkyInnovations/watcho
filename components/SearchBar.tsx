@@ -16,6 +16,7 @@ export function SearchBar({ value, onChangeText, placeholder }: SearchBarProps) 
     <View style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       <Ionicons name="search" size={18} color={colors.textDim} style={styles.icon} />
       <TextInput
+        testID="search-bar:input"
         style={[styles.input, { color: colors.text }]}
         value={value}
         onChangeText={onChangeText}
@@ -27,7 +28,7 @@ export function SearchBar({ value, onChangeText, placeholder }: SearchBarProps) 
         clearButtonMode="while-editing"
       />
       {value.length > 0 && (
-        <Pressable onPress={() => onChangeText('')} style={styles.clear} hitSlop={8}>
+        <Pressable testID="search-bar:btn-clear" onPress={() => onChangeText('')} style={styles.clear} hitSlop={8}>
           <Ionicons name="close-circle" size={18} color={colors.textDim} />
         </Pressable>
       )}

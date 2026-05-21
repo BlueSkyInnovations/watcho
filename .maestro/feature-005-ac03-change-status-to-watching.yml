@@ -1,0 +1,19 @@
+appId: de.blueskyinnovations.watcho
+# Feature 005 — Movie Detail: Add to List / Status
+# AC-03: Tapping the Watching button changes the movie's status to Watching.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Inception"
+- tapOn: "Inception"
+- tapOn:
+    id: "status-selector:btn-watching"
+- assertVisible:
+    id: "movie-detail:btn-remove"
+- tapOn:
+    id: "movie-detail:back-btn"
+- assertVisible:
+    id: "my-lists:tab-watching"
+- assertVisible: "Inception"

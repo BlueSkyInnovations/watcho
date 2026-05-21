@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 011 — Settings: Feature Toggles
+# AC-03: The "Personal Review" switch is visible and responds to taps.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- assertVisible:
+    id: "settings:switch-review"
+- tapOn:
+    id: "settings:switch-review"
+- assertVisible:
+    id: "settings:switch-review"

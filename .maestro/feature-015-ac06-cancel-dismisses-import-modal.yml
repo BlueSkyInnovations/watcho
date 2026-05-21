@@ -1,0 +1,15 @@
+appId: de.blueskyinnovations.watcho
+# Feature 015 — Import Watchlist
+# AC-06: Tapping Cancel on ImportModal dismisses it without importing anything.
+# PREREQUISITE: ImportModal open (see AC-02 prerequisite).
+---
+- runFlow: _setup/onboarded.yml
+- openLink: "watcho://import"
+- assertVisible:
+    id: "import-modal:btn-cancel"
+- tapOn:
+    id: "import-modal:btn-cancel"
+- assertNotVisible:
+    id: "import-modal:btn-cancel"
+- assertNotVisible:
+    id: "import-modal:btn-confirm"

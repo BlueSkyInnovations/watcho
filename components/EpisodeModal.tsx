@@ -63,7 +63,7 @@ export function EpisodeModal({ visible, onClose, episode, seasonNumber, showTitl
                   {episode?.name}
                 </Text>
               </View>
-              <Pressable onPress={dismiss} hitSlop={12} style={styles.closeBtn}>
+              <Pressable testID="episode-modal:btn-close" onPress={dismiss} hitSlop={12} style={styles.closeBtn}>
                 <Ionicons name="close" size={22} color={colors.textDim} />
               </Pressable>
             </View>

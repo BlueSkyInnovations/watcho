@@ -1,0 +1,14 @@
+appId: de.blueskyinnovations.watcho
+# Feature 013 — Settings: Language
+# AC-02: Tapping the language row opens the language sheet.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-language"
+    direction: DOWN
+- tapOn:
+    id: "settings:btn-language"
+- assertVisible: "App Language"
+- assertVisible:
+    id: "lang-sheet:option-en"

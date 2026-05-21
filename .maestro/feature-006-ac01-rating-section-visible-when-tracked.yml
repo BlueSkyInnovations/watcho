@@ -1,0 +1,14 @@
+appId: de.blueskyinnovations.watcho
+# Feature 006 — Movie Detail: Rating & Review
+# AC-01: The rating section is visible once a movie has been added to any list.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "rating-stars:star-1"
+    direction: DOWN
+- assertVisible:
+    id: "rating-stars:star-1"
+- assertVisible:
+    id: "rating-stars:star-5"

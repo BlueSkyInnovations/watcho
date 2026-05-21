@@ -70,6 +70,7 @@ export function ImportModal({ backup, existingCount, onConfirm, onClose }: Props
 
             {/* Replace option */}
             <Pressable
+              testID="import-modal:btn-mode-replace"
               style={[
                 styles.optionRow,
                 { borderColor: colors.border },
@@ -92,6 +93,7 @@ export function ImportModal({ backup, existingCount, onConfirm, onClose }: Props
 
             {/* Merge option */}
             <Pressable
+              testID="import-modal:btn-mode-merge"
               style={[
                 styles.optionRow,
                 { borderColor: colors.border, marginTop: 8 },
@@ -123,6 +125,7 @@ export function ImportModal({ backup, existingCount, onConfirm, onClose }: Props
                   return (
                     <Pressable
                       key={opt.value}
+                      testID={`import-modal:btn-conflict-${opt.value.replace(/_/g, '-')}`}
                       style={[
                         styles.conflictRow,
                         { borderColor: colors.border },
@@ -146,7 +149,7 @@ export function ImportModal({ backup, existingCount, onConfirm, onClose }: Props
 
             {/* Destructive warning for replace */}
             {mode === 'replace' && existingCount > 0 && (
-              <View style={[styles.warning, { backgroundColor: colors.accentDim, borderColor: colors.accent }]}>
+              <View testID="import-modal:warning" style={[styles.warning, { backgroundColor: colors.accentDim, borderColor: colors.accent }]}>
                 <Ionicons name="warning-outline" size={15} color={colors.accent} />
                 <Text style={[styles.warningText, { color: colors.accent }]}>
                   {t('settings.data.replaceWarning', { count: existingCount })}
@@ -158,12 +161,14 @@ export function ImportModal({ backup, existingCount, onConfirm, onClose }: Props
           {/* Action buttons */}
           <View style={[styles.buttonRow, { borderTopColor: colors.border }]}>
             <Pressable
+              testID="import-modal:btn-cancel"
               style={[styles.btn, { borderColor: colors.border, backgroundColor: colors.surfaceHighlight }]}
               onPress={onClose}
             >
               <Text style={[styles.btnText, { color: colors.text }]}>{t('settings.data.cancel')}</Text>
             </Pressable>
             <Pressable
+              testID="import-modal:btn-confirm"
               style={[styles.btn, styles.btnPrimary, { backgroundColor: colors.accent }]}
               onPress={handleConfirm}
             >

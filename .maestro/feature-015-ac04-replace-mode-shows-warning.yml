@@ -1,0 +1,17 @@
+appId: de.blueskyinnovations.watcho
+# Feature 015 — Import Watchlist
+# AC-04: Selecting "Replace All" in ImportModal shows a destructive warning
+#        when existing items are present.
+# PREREQUISITE: ImportModal open with a backup file and at least 1 existing item.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- openLink: "watcho://import"
+- assertVisible:
+    id: "import-modal:btn-mode-replace"
+- tapOn:
+    id: "import-modal:btn-mode-replace"
+- assertVisible:
+    id: "import-modal:warning"
+- tapOn:
+    id: "import-modal:btn-cancel"

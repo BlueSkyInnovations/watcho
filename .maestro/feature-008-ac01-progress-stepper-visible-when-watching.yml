@@ -1,0 +1,22 @@
+appId: de.blueskyinnovations.watcho
+# Feature 008 — TV Progress Tracking
+# AC-01: The season/episode stepper section is visible when a TV show has Watching status.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:season-plus"
+    direction: DOWN
+- assertVisible:
+    id: "tv-detail:season-minus"
+- assertVisible:
+    id: "tv-detail:season-value"
+- assertVisible:
+    id: "tv-detail:season-plus"
+- assertVisible:
+    id: "tv-detail:episode-minus"
+- assertVisible:
+    id: "tv-detail:episode-value"
+- assertVisible:
+    id: "tv-detail:episode-plus"

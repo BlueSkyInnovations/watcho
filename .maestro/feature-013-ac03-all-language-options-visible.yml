@@ -1,0 +1,21 @@
+appId: de.blueskyinnovations.watcho
+# Feature 013 — Settings: Language
+# AC-03: All five language options are visible in the language sheet.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-language"
+    direction: DOWN
+- tapOn:
+    id: "settings:btn-language"
+- assertVisible:
+    id: "lang-sheet:option-system"
+- assertVisible:
+    id: "lang-sheet:option-en"
+- assertVisible:
+    id: "lang-sheet:option-de"
+- assertVisible:
+    id: "lang-sheet:option-es"
+- assertVisible:
+    id: "lang-sheet:option-et"

@@ -1,0 +1,14 @@
+appId: de.blueskyinnovations.watcho
+# Feature 005 — Movie Detail: Add to List / Status
+# AC-01: The movie detail screen shows the title and metadata.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Inception"
+- tapOn: "Inception"
+- assertVisible: "Inception"
+- assertVisible: "2010"
+- assertVisible:
+    id: "status-selector:btn-watchlist"

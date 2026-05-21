@@ -26,6 +26,7 @@ export function ReviewInput({ value, onSave }: Props) {
 
   return (
     <TextInput
+      testID="review-input:input"
       style={[styles.input, {
         backgroundColor: colors.surface,
         borderColor: colors.border,

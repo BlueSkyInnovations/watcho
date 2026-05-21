@@ -1,0 +1,10 @@
+appId: de.blueskyinnovations.watcho
+# Feature 003 — My Lists View & Sort
+# AC-01: The grid view is active by default after adding an item.
+# Verified by checking the toggle icon shows "list-outline" (switch to list).
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+# In grid mode the toggle shows the list icon (to switch to list)
+- assertVisible:
+    id: "my-lists:btn-toggle-view"

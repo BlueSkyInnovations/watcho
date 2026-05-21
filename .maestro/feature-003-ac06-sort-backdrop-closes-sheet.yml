@@ -1,0 +1,11 @@
+appId: de.blueskyinnovations.watcho
+# Feature 003 — My Lists View & Sort
+# AC-06: Tapping the backdrop (outside the sort sheet) closes it without changing sort.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn:
+    id: "my-lists:btn-sort"
+- assertVisible: "Sort by"
+- tapOn:
+    point: "50%, 10%"
+- assertNotVisible: "Sort by"

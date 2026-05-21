@@ -1,0 +1,16 @@
+appId: de.blueskyinnovations.watcho
+# Feature 001 — Onboarding
+# AC-02: Tapping "I already have a key" reveals the key-entry step.
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: "onboarding:btn-have-key"
+- tapOn:
+    id: "onboarding:btn-have-key"
+- assertVisible:
+    id: "onboarding:input-api-key"
+- assertVisible:
+    id: "onboarding:btn-submit"
+- assertVisible:
+    id: "onboarding:btn-back"

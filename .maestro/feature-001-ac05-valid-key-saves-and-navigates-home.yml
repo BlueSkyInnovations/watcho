@@ -1,0 +1,21 @@
+appId: de.blueskyinnovations.watcho
+# Feature 001 — Onboarding
+# AC-05: A valid API key is accepted, saved, and the app navigates to My Lists.
+# Run: maestro test --env TMDB_API_KEY=<your_key> feature-001-ac05-*.yml
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "onboarding:btn-have-key"
+- tapOn:
+    id: "onboarding:input-api-key"
+- inputText: ${TMDB_API_KEY}
+- pressKey: back
+- tapOn:
+    id: "onboarding:btn-submit"
+- assertVisible:
+    id: "my-lists:tab-watching"
+- assertVisible:
+    id: "my-lists:tab-watchlist"
+- assertVisible:
+    id: "my-lists:tab-watched"

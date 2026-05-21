@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 004 — Search
+# AC-02: Typing a query hides the trending section and shows search results.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Inception"
+- assertNotVisible:
+    id: "search:trending-heading"
+- assertVisible: "Inception"

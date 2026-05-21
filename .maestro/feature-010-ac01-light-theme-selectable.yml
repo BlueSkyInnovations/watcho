@@ -1,0 +1,11 @@
+appId: de.blueskyinnovations.watcho
+# Feature 010 — Settings: Appearance
+# AC-01: The Light theme option is visible and can be tapped.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- assertVisible:
+    id: "settings:btn-theme-light"
+- tapOn:
+    id: "settings:btn-theme-light"
+- assertVisible: "Light"

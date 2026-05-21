@@ -62,6 +62,7 @@ function LanguageSheet({ visible, value, onChange, onClose }: LanguageSheetProps
             return (
               <Pressable
                 key={opt.value}
+                testID={`lang-sheet:option-${opt.value}`}
                 style={[
                   sheetStyles.row,
                   index < LANG_OPTIONS.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
@@ -261,6 +262,7 @@ export default function SettingsScreen() {
             return (
               <Pressable
                 key={opt.value}
+                testID={`settings:btn-theme-${opt.value}`}
                 style={[styles.row, index < THEME_OPTIONS.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border }]}
                 onPress={() => setPreference(opt.value)}
               >
@@ -282,28 +284,28 @@ export default function SettingsScreen() {
               <Ionicons name="tv-outline" size={18} color={colors.textDim} />
             </View>
             <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.whereToWatch')}</Text>
-            <Switch value={showWhereToWatch} onValueChange={setShowWhereToWatch} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
+            <Switch testID="settings:switch-where-to-watch" value={showWhereToWatch} onValueChange={setShowWhereToWatch} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
           </View>
           <View style={[styles.row, { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
             <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
               <Ionicons name="albums-outline" size={18} color={colors.textDim} />
             </View>
             <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.moreLikeThis')}</Text>
-            <Switch value={showMoreLikeThis} onValueChange={setShowMoreLikeThis} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
+            <Switch testID="settings:switch-more-like-this" value={showMoreLikeThis} onValueChange={setShowMoreLikeThis} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
           </View>
           <View style={[styles.row, { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
             <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
               <Ionicons name="create-outline" size={18} color={colors.textDim} />
             </View>
             <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.personalReview')}</Text>
-            <Switch value={showReview} onValueChange={setShowReview} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
+            <Switch testID="settings:switch-review" value={showReview} onValueChange={setShowReview} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
           </View>
           <View style={styles.row}>
             <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
               <Ionicons name="list-outline" size={18} color={colors.textDim} />
             </View>
             <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.episodeGuide')}</Text>
-            <Switch value={showEpisodeGuide} onValueChange={setShowEpisodeGuide} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
+            <Switch testID="settings:switch-episode-guide" value={showEpisodeGuide} onValueChange={setShowEpisodeGuide} trackColor={{ false: colors.border, true: colors.accent }} thumbColor="#fff" />
           </View>
         </View>
 
@@ -319,14 +321,14 @@ export default function SettingsScreen() {
               <Text style={[styles.rowSub, { color: colors.textMuted }]}>{keyPreview}</Text>
             </View>
           </View>
-          <Pressable style={styles.row} onPress={() => router.push('/onboarding')}>
+          <Pressable testID="settings:btn-change-key" style={styles.row} onPress={() => router.push('/onboarding')}>
             <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
               <Ionicons name="pencil-outline" size={18} color={colors.textDim} />
             </View>
             <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.changeKey')}</Text>
             <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
           </Pressable>
-          <Pressable style={[styles.row, { borderTopWidth: 1, borderTopColor: colors.border }]} onPress={handleRemoveKey}>
+          <Pressable testID="settings:btn-remove-key" style={[styles.row, { borderTopWidth: 1, borderTopColor: colors.border }]} onPress={handleRemoveKey}>
             <View style={[styles.iconWrap, { backgroundColor: colors.accentDim }]}>
               <Ionicons name="trash-outline" size={18} color={colors.accent} />
             </View>
@@ -340,6 +342,7 @@ export default function SettingsScreen() {
         <Text style={[styles.sectionLabel, { color: colors.textMuted, marginTop: 28 }]}>{t('settings.data.section')}</Text>
         <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <Pressable
+            testID="settings:btn-export"
             style={[styles.row, { borderBottomWidth: 1, borderBottomColor: colors.border }]}
             onPress={handleExport}
           >
@@ -352,7 +355,7 @@ export default function SettingsScreen() {
             </View>
             <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
           </Pressable>
-          <Pressable style={styles.row} onPress={handleImport}>
+          <Pressable testID="settings:btn-import" style={styles.row} onPress={handleImport}>
             <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
               <Ionicons name="download-outline" size={18} color={colors.textDim} />
             </View>
@@ -367,7 +370,7 @@ export default function SettingsScreen() {
         {/* Language — at the bottom, rarely changed */}
         <Text style={[styles.sectionLabel, { color: colors.textMuted, marginTop: 28 }]}>{t('settings.language')}</Text>
         <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <Pressable style={styles.row} onPress={() => setLangSheetVisible(true)}>
+          <Pressable testID="settings:btn-language" style={styles.row} onPress={() => setLangSheetVisible(true)}>
             <View style={[styles.iconWrap, { backgroundColor: colors.surfaceHighlight }]}>
               <Ionicons name="language-outline" size={18} color={colors.textDim} />
             </View>

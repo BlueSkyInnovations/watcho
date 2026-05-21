@@ -1,0 +1,19 @@
+appId: de.blueskyinnovations.watcho
+# Feature 005 — Movie Detail: Add to List / Status
+# AC-04: Tapping the Watched button changes the movie's status to Watched.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Inception"
+- tapOn: "Inception"
+- tapOn:
+    id: "status-selector:btn-watched"
+- assertVisible:
+    id: "movie-detail:btn-remove"
+- tapOn:
+    id: "movie-detail:back-btn"
+- tapOn:
+    id: "my-lists:tab-watched"
+- assertVisible: "Inception"

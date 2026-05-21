@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 011 — Settings: Feature Toggles
+# AC-01: The "Where to Watch" switch is visible and responds to taps.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- assertVisible:
+    id: "settings:switch-where-to-watch"
+- tapOn:
+    id: "settings:switch-where-to-watch"
+- assertVisible:
+    id: "settings:switch-where-to-watch"

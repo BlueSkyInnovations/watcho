@@ -12,6 +12,8 @@ React Native / Expo app for tracking movies and TV shows. All user data is store
 - `npx expo start --ios` / `--android` — launch simulator directly
 - `npm test` — Jest watch mode
 - `npm run lint` — ESLint
+- `maestro test --env TMDB_API_KEY=<key> .maestro/` — run full Maestro E2E suite
+- `maestro test --env TMDB_API_KEY=<key> .maestro/feature-001-*.yml` — run a single feature
 
 ## Structure
 - `app/(home)/` — Expo Router group for 3 tabs: index (My Lists), search, profile
@@ -26,6 +28,8 @@ React Native / Expo app for tracking movies and TV shows. All user data is store
 - `lib/storage.ts` — watchlist persistence helpers (`watcho_watchlist_v1`)
 - `lib/youtube.ts` — YouTube trailer utilities
 - `types/index.ts` — `MediaItem`, `TMDBMovie`, `TMDBTVShow`, `WatchStatus`, etc.
+- `.maestro/` — Maestro E2E flows (one file per acceptance criterion); `_setup/` contains reusable helpers
+- `components/TESTID_CONVENTIONS.md` — testID naming rules and full ID reference for all screens/components
 
 ## Dev Log
 - `DEV_LOG.md` is a living log of every meaningful prompt, decision, bug, and experiment — updated automatically each session without being asked.

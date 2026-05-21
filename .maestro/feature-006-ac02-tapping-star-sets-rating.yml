@@ -1,0 +1,17 @@
+appId: de.blueskyinnovations.watcho
+# Feature 006 — Movie Detail: Rating & Review
+# AC-02: Tapping star 4 sets the user rating to 4.
+# After rating, the Remove button remains visible, confirming the item is still tracked.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "rating-stars:star-4"
+    direction: DOWN
+- tapOn:
+    id: "rating-stars:star-4"
+- assertVisible:
+    id: "rating-stars:star-4"
+- assertVisible:
+    id: "movie-detail:btn-remove"

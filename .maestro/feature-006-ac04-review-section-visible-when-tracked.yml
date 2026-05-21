@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 006 — Movie Detail: Rating & Review
+# AC-04: The review input is visible once a movie has been tracked (and review toggle is on).
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "review-input:input"
+    direction: DOWN
+- assertVisible:
+    id: "review-input:input"

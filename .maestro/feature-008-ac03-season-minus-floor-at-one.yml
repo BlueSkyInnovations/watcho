@@ -1,0 +1,14 @@
+appId: de.blueskyinnovations.watcho
+# Feature 008 — TV Progress Tracking
+# AC-03: Tapping the season (-) button cannot decrement below season 1.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:season-minus"
+    direction: DOWN
+- tapOn:
+    id: "tv-detail:season-minus"
+# Season should remain at 1 (floor)
+- assertVisible: "1"

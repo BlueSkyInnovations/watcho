@@ -1,0 +1,27 @@
+appId: de.blueskyinnovations.watcho
+# Feature 011 — Settings: Feature Toggles
+# AC-05: Turning off "Personal Review" hides the review input on the movie detail screen.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+# Confirm review input is visible when toggle is on (default)
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "review-input:input"
+    direction: DOWN
+- assertVisible:
+    id: "review-input:input"
+- tapOn:
+    id: "movie-detail:back-btn"
+# Navigate to Settings and turn off the Personal Review toggle
+- runFlow: _setup/navigate-to-settings.yml
+- tapOn:
+    id: "settings:switch-review"
+- tapOn: "My Lists"
+# Re-open Inception and confirm review input is gone
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "movie-detail:btn-remove"
+    direction: DOWN
+- assertNotVisible:
+    id: "review-input:input"

@@ -16,7 +16,7 @@ function TrendingSection() {
   if (loading) return <ActivityIndicator color={colors.accent} style={{ marginTop: 40 }} />;
   return (
     <>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('search.trendingToday')}</Text>
+      <Text testID="search:trending-heading" style={[styles.sectionTitle, { color: colors.text }]}>{t('search.trendingToday')}</Text>
       <FlatList<TMDBSearchResult>
         data={results}
         numColumns={2}

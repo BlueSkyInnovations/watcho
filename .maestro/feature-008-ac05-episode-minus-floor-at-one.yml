@@ -1,0 +1,14 @@
+appId: de.blueskyinnovations.watcho
+# Feature 008 — TV Progress Tracking
+# AC-05: Tapping the episode (-) button cannot decrement below episode 1.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:episode-minus"
+    direction: DOWN
+- tapOn:
+    id: "tv-detail:episode-minus"
+# Episode should remain at 1 (floor)
+- assertVisible: "1"

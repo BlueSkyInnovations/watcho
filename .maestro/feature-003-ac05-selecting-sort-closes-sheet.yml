@@ -1,0 +1,13 @@
+appId: de.blueskyinnovations.watcho
+# Feature 003 — My Lists View & Sort
+# AC-05: Tapping a sort option closes the sheet and applies the sort.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn:
+    id: "my-lists:btn-sort"
+- assertVisible: "Sort by"
+- tapOn:
+    id: "sort-sheet:option-release-date"
+- assertNotVisible: "Sort by"
+- assertVisible:
+    id: "my-lists:tab-watching"

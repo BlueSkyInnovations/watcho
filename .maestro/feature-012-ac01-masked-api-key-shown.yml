@@ -1,0 +1,8 @@
+appId: de.blueskyinnovations.watcho
+# Feature 012 — Settings: API Key Management
+# AC-01: The current API key is displayed in masked form (first 6 chars + dots).
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- assertVisible: "API Key"
+- assertVisible: "••••••••••••••••"

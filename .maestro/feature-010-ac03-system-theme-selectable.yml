@@ -1,0 +1,11 @@
+appId: de.blueskyinnovations.watcho
+# Feature 010 — Settings: Appearance
+# AC-03: The System (Use Device Setting) theme option is visible and can be tapped.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- assertVisible:
+    id: "settings:btn-theme-system"
+- tapOn:
+    id: "settings:btn-theme-system"
+- assertVisible: "Use Device Setting"

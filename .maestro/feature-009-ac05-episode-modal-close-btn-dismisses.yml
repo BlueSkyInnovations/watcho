@@ -1,0 +1,20 @@
+appId: de.blueskyinnovations.watcho
+# Feature 009 — TV Episode Guide
+# AC-05: Tapping the close button on the EpisodeModal dismisses it.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:episode-card-1"
+    direction: DOWN
+- tapOn:
+    id: "tv-detail:episode-card-1"
+- assertVisible:
+    id: "episode-modal:btn-close"
+- tapOn:
+    id: "episode-modal:btn-close"
+- assertNotVisible:
+    id: "episode-modal:btn-close"
+- assertVisible:
+    id: "tv-detail:episode-card-1"

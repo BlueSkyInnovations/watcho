@@ -57,7 +57,7 @@ export default function TabLayout() {
           title: t('tabs.profile'),
           tabBarIcon: ({ focused, color }) => <TabIcon name="stats-chart" focused={focused} color={color} />,
           headerRight: () => (
-            <Pressable onPress={() => router.push('/settings')} hitSlop={10} style={{ marginRight: 4 }}>
+            <Pressable testID="profile:btn-settings" onPress={() => router.push('/settings')} hitSlop={10} style={{ marginRight: 4 }}>
               <Ionicons name="settings-outline" size={22} color={colors.textDim} />
             </Pressable>
           ),

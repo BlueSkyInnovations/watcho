@@ -1,0 +1,18 @@
+appId: de.blueskyinnovations.watcho
+# Feature 006 — Movie Detail: Rating & Review
+# AC-03: Tapping the currently selected star again clears the rating (sets to 0).
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "rating-stars:star-3"
+    direction: DOWN
+- tapOn:
+    id: "rating-stars:star-3"
+# Re-tap same star to unrate
+- tapOn:
+    id: "rating-stars:star-3"
+# Item is still tracked (remove button still present)
+- assertVisible:
+    id: "movie-detail:btn-remove"

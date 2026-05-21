@@ -121,7 +121,7 @@ export default function TVDetailScreen() {
           <View style={[styles.backdropImage, { backgroundColor: colors.surface }]} />
         )}
         <LinearGradient colors={['transparent', colors.background]} style={styles.gradient} />
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable testID="tv-detail:back-btn" style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={22} color="#fff" />
         </Pressable>
       </View>
@@ -166,6 +166,7 @@ export default function TVDetailScreen() {
 
         {videos.length > 0 && (
           <Pressable
+            testID="tv-detail:btn-trailer"
             style={[styles.trailerButton, { backgroundColor: colors.accent }]}
             onPress={() => setTrailerVisible(true)}
           >
@@ -205,11 +206,11 @@ export default function TVDetailScreen() {
                   <View key={key} style={styles.progressControl}>
                     <Text style={[styles.progressLabel, { color: colors.textDim }]}>{t(`detail.${key}`)}</Text>
                     <View style={[styles.stepper, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-                      <Pressable style={styles.stepBtn} onPress={dec}>
+                      <Pressable testID={`tv-detail:${key}-minus`} style={styles.stepBtn} onPress={dec}>
                         <Ionicons name="remove" size={18} color={colors.text} />
                       </Pressable>
-                      <Text style={[styles.stepValue, { color: colors.text }]}>{val}</Text>
-                      <Pressable style={styles.stepBtn} onPress={inc}>
+                      <Text testID={`tv-detail:${key}-value`} style={[styles.stepValue, { color: colors.text }]}>{val}</Text>
+                      <Pressable testID={`tv-detail:${key}-plus`} style={styles.stepBtn} onPress={inc}>
                         <Ionicons name="add" size={18} color={colors.text} />
                       </Pressable>
                     </View>
@@ -234,6 +235,7 @@ export default function TVDetailScreen() {
                 {Array.from({ length: seasons! }, (_, i) => i + 1).map((s) => (
                   <Pressable
                     key={s}
+                    testID={`tv-detail:season-pill-${s}`}
                     style={[
                       styles.pill,
                       selectedSeason === s
@@ -271,6 +273,7 @@ export default function TVDetailScreen() {
                     ep.episode_number === currentEpisode;
                   return (
                     <Pressable
+                      testID={`tv-detail:episode-card-${ep.episode_number}`}
                       onPress={() => setSelectedEpisode(ep)}
                       style={[
                         styles.episodeCard,
@@ -318,7 +321,7 @@ export default function TVDetailScreen() {
         )}
 
         {tracked && (
-          <Pressable style={[styles.removeButton, { borderColor: colors.accentDim }]} onPress={() => removeItem(showId, 'tv')}>
+          <Pressable testID="tv-detail:btn-remove" style={[styles.removeButton, { borderColor: colors.accentDim }]} onPress={() => removeItem(showId, 'tv')}>
             <Ionicons name="trash-outline" size={16} color={colors.accent} />
             <Text style={[styles.removeText, { color: colors.accent }]}>{t('detail.removeFromLists')}</Text>
           </Pressable>

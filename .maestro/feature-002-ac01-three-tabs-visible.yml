@@ -1,0 +1,11 @@
+appId: de.blueskyinnovations.watcho
+# Feature 002 — My Lists Tab Navigation
+# AC-01: All three tabs (Watchlist, Watching, Watched) are visible on My Lists.
+---
+- runFlow: _setup/onboarded.yml
+- assertVisible:
+    id: "my-lists:tab-watchlist"
+- assertVisible:
+    id: "my-lists:tab-watching"
+- assertVisible:
+    id: "my-lists:tab-watched"

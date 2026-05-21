@@ -84,7 +84,7 @@ export default function MovieDetailScreen() {
           <View style={[styles.backdropImage, { backgroundColor: colors.surface }]} />
         )}
         <LinearGradient colors={['transparent', colors.background]} style={styles.gradient} />
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable testID="movie-detail:back-btn" style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={22} color="#fff" />
         </Pressable>
       </View>
@@ -126,6 +126,7 @@ export default function MovieDetailScreen() {
 
         {videos.length > 0 && (
           <Pressable
+            testID="movie-detail:btn-trailer"
             style={[styles.trailerButton, { backgroundColor: colors.accent }]}
             onPress={() => setTrailerVisible(true)}
           >
@@ -166,7 +167,7 @@ export default function MovieDetailScreen() {
         )}
 
         {tracked && (
-          <Pressable style={[styles.removeButton, { borderColor: colors.accentDim }]} onPress={() => removeItem(movieId, 'movie')}>
+          <Pressable testID="movie-detail:btn-remove" style={[styles.removeButton, { borderColor: colors.accentDim }]} onPress={() => removeItem(movieId, 'movie')}>
             <Ionicons name="trash-outline" size={16} color={colors.accent} />
             <Text style={[styles.removeText, { color: colors.accent }]}>{t('detail.removeFromLists')}</Text>
           </Pressable>

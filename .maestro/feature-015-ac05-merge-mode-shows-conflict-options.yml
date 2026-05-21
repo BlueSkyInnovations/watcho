@@ -1,0 +1,19 @@
+appId: de.blueskyinnovations.watcho
+# Feature 015 — Import Watchlist
+# AC-05: Selecting "Merge" in ImportModal reveals the conflict-resolution options.
+# PREREQUISITE: ImportModal open (see AC-02 prerequisite).
+---
+- runFlow: _setup/onboarded.yml
+- openLink: "watcho://import"
+- assertVisible:
+    id: "import-modal:btn-mode-merge"
+- tapOn:
+    id: "import-modal:btn-mode-merge"
+- assertVisible:
+    id: "import-modal:btn-conflict-keep-existing"
+- assertVisible:
+    id: "import-modal:btn-conflict-keep-backup"
+- assertVisible:
+    id: "import-modal:btn-conflict-keep-newest"
+- tapOn:
+    id: "import-modal:btn-cancel"

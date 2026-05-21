@@ -1,0 +1,17 @@
+appId: de.blueskyinnovations.watcho
+# Feature 004 — Search
+# AC-04: Tapping the clear button empties the query and restores the trending section.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Inception"
+- assertVisible:
+    id: "search-bar:btn-clear"
+- tapOn:
+    id: "search-bar:btn-clear"
+- assertVisible:
+    id: "search:trending-heading"
+- assertNotVisible:
+    id: "search-bar:btn-clear"

@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 009 — TV Episode Guide
+# AC-01: Episode cards are visible in the Episode Guide section.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:episode-card-1"
+    direction: DOWN
+- assertVisible:
+    id: "tv-detail:episode-card-1"

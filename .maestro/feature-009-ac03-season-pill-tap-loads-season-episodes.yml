@@ -1,0 +1,14 @@
+appId: de.blueskyinnovations.watcho
+# Feature 009 — TV Episode Guide
+# AC-03: Tapping a different season pill loads that season's episode cards.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:season-pill-2"
+    direction: DOWN
+- tapOn:
+    id: "tv-detail:season-pill-2"
+- assertVisible:
+    id: "tv-detail:episode-card-1"

@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 011 — Settings: Feature Toggles
+# AC-02: The "More Like This" switch is visible and responds to taps.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- assertVisible:
+    id: "settings:switch-more-like-this"
+- tapOn:
+    id: "settings:switch-more-like-this"
+- assertVisible:
+    id: "settings:switch-more-like-this"

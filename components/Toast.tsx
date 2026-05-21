@@ -41,6 +41,7 @@ export function Toast({ message, onHide }: Props) {
 
   return (
     <Animated.View
+      testID="toast:container"
       style={[
         styles.container,
         {

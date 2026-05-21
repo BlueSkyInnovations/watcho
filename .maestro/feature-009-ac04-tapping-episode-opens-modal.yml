@@ -1,0 +1,15 @@
+appId: de.blueskyinnovations.watcho
+# Feature 009 — TV Episode Guide
+# AC-04: Tapping an episode card opens the EpisodeModal with episode details.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:episode-card-1"
+    direction: DOWN
+- tapOn:
+    id: "tv-detail:episode-card-1"
+- assertVisible:
+    id: "episode-modal:btn-close"
+- assertVisible: "Breaking Bad"

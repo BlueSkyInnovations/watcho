@@ -1,0 +1,15 @@
+appId: de.blueskyinnovations.watcho
+# Feature 004 — Search
+# AC-06: Tapping a search result card navigates to the movie/TV detail screen.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Inception"
+- assertVisible: "Inception"
+- tapOn: "Inception"
+- assertVisible:
+    id: "status-selector:btn-watchlist"
+- assertVisible:
+    id: "movie-detail:back-btn"

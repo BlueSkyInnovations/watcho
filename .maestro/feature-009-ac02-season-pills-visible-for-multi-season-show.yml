@@ -1,0 +1,15 @@
+appId: de.blueskyinnovations.watcho
+# Feature 009 — TV Episode Guide
+# AC-02: Season selector pills (S1, S2 …) are visible for a multi-season show.
+# Breaking Bad has 5 seasons.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:season-pill-1"
+    direction: DOWN
+- assertVisible:
+    id: "tv-detail:season-pill-1"
+- assertVisible:
+    id: "tv-detail:season-pill-2"

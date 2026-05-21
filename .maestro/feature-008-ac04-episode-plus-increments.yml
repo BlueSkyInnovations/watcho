@@ -1,0 +1,13 @@
+appId: de.blueskyinnovations.watcho
+# Feature 008 — TV Progress Tracking
+# AC-04: Tapping the episode (+) button increments the episode number.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:episode-plus"
+    direction: DOWN
+- tapOn:
+    id: "tv-detail:episode-plus"
+- assertVisible: "2"

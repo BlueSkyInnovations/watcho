@@ -1,0 +1,8 @@
+appId: de.blueskyinnovations.watcho
+# Feature 004 — Search
+# AC-01: The "Trending Today" section is visible when the search input is empty.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn: "Search"
+- assertVisible:
+    id: "search:trending-heading"

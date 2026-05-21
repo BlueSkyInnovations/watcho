@@ -1,0 +1,13 @@
+appId: de.blueskyinnovations.watcho
+# Feature 005 — Movie Detail: Add to List / Status
+# AC-05: The selected status persists when navigating away and back to the detail screen.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+# Navigate back to Inception detail via My Lists
+- tapOn: "Inception"
+# Status selector should show Watching as the current status (highlighted)
+- assertVisible:
+    id: "status-selector:btn-watching"
+- assertVisible:
+    id: "movie-detail:btn-remove"

@@ -1,0 +1,24 @@
+appId: de.blueskyinnovations.watcho
+# Feature 006 — Movie Detail: Rating & Review
+# AC-05: Review text is persisted after the input loses focus.
+# After typing, blur by tapping elsewhere, navigate back and re-open to confirm text saved.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "review-input:input"
+    direction: DOWN
+- tapOn:
+    id: "review-input:input"
+- inputText: "A masterpiece of science fiction."
+# Tap outside the input to trigger blur and save
+- tapOn: "Your Review"
+- tapOn:
+    id: "movie-detail:back-btn"
+# Re-open detail to confirm text was saved
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "review-input:input"
+    direction: DOWN
+- assertVisible: "A masterpiece of science fiction."

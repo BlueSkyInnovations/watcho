@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 001 — Onboarding
+# AC-01: App shows onboarding screen when no API key is stored.
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: "onboarding:btn-have-key"
+- assertVisible:
+    id: "onboarding:btn-create-account"
+- assertVisible:
+    id: "onboarding:btn-go-to-api"

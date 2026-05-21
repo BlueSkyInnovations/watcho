@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 014 — Export Watchlist
+# AC-01: The "Export Watchlist" row is visible in the Data section.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-export"
+    direction: DOWN
+- assertVisible:
+    id: "settings:btn-export"
+- assertVisible: "Export Watchlist"

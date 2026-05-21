@@ -260,4 +260,15 @@ Every user prompt, categorised by type, with a summary of the work done and its 
 **Activity:** Root cause: adding `expo-document-picker` to the `plugins` array causes the plugin to patch `AppDelegate.swift` to subclass `ExpoAppDelegate`, which was removed in Expo SDK 54's new architecture. Fix: removed `expo-document-picker` from `plugins`. The JS picker API (`DocumentPicker.getDocumentAsync`) works without a plugin entry; iOS file-type registration is handled separately via `CFBundleDocumentTypes` in `infoPlist`.  
 **Outcome:** Commit `bdc9b3c` — new build triggered.
 
+---
+
+## Session 10 — 2026-05-21
+
+### 10.1 — Maestro E2E test suite with testID conventions
+**Time:** 2026-05-21  
+**Type:** requirement  
+**Prompt:** Analyse the repository and generate Maestro flows in `.maestro/feature-{id}-*.yml` with one flow per acceptance criterion; create testId conventions first in `components/`.  
+**Activity:** Full codebase audit (all screens, components, contexts, hooks, locales, commit history). Defined testID naming convention (`{namespace}:{element}[:{qualifier}]`) and documented it in `components/TESTID_CONVENTIONS.md`. Added `testID` props to all 14 interactive components and screens: `SearchBar`, `StatusSelector`, `RatingStars`, `SortSheet`, `ReviewInput`, `ImportModal`, `EpisodeModal`, `Toast`, `onboarding.tsx`, `(home)/index.tsx`, `(home)/_layout.tsx`, `(home)/search.tsx`, `settings.tsx`, `movie/[id].tsx`, `tv/[id].tsx`. Created `.maestro/_setup/` with 4 reusable helper flows (`onboarded.yml`, `navigate-to-settings.yml`, `add-inception-watching.yml`, `add-breaking-bad-watching.yml`). Generated 70 feature flows across 15 features: 001 Onboarding (5 ACs), 002 My Lists Tabs (6 ACs), 003 View & Sort (6 ACs), 004 Search (6 ACs), 005 Movie Status (5 ACs), 006 Rating & Review (5 ACs), 007 Remove (3 ACs), 008 TV Progress (5 ACs), 009 Episode Guide (5 ACs), 010 Appearance (4 ACs), 011 Feature Toggles (5 ACs), 012 API Key (3 ACs), 013 Language (4 ACs), 014 Export (2 ACs), 015 Import (6 ACs).  
+**Outcome:** No functional code change — testID props and Maestro files only. Run with `maestro test --env TMDB_API_KEY=<key> .maestro/`.
+
 *Log maintained continuously from 2026-05-04. Entries marked with ~ have approximate times inferred from session context; all others are anchored to git commit timestamps.*

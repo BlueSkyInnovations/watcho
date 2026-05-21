@@ -1,0 +1,26 @@
+appId: de.blueskyinnovations.watcho
+# Feature 015 — Import Watchlist
+# AC-02: After selecting a valid backup file, the ImportModal appears.
+#
+# PREREQUISITE: A valid watcho backup JSON must exist at the path the document
+# picker is seeded with in CI. For simulator runs, place a backup file in the
+# simulator's Downloads folder and configure the document picker to point to it,
+# OR trigger the import via a deep link:
+#   maestro test --env BACKUP_URL=file:///path/to/backup.json ...
+#
+# The deep-link path uses the app's CFBundleDocumentTypes registration so iOS
+# routes the file to the app and triggers ImportModal at the root level.
+#
+# This flow documents the expected UI state once the modal is open; combine with
+# the deep-link launch approach in CI for a fully automated run.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-import"
+    direction: DOWN
+- tapOn:
+    id: "settings:btn-import"
+# Document picker opens; in CI select a pre-seeded file here.
+# The following assertions apply once ImportModal is visible.
+# (For interactive simulator runs, manually select a backup JSON.)

@@ -1,0 +1,12 @@
+appId: de.blueskyinnovations.watcho
+# Feature 013 — Settings: Language
+# AC-01: The current language label is shown as a subtitle on the language row.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-language"
+    direction: DOWN
+- assertVisible:
+    id: "settings:btn-language"
+- assertVisible: "App Language"

@@ -16,6 +16,7 @@ export function RatingStars({ value = 0, onChange, size = 28, readonly = false }
       {[1, 2, 3, 4, 5].map((star) => (
         <Pressable
           key={star}
+          testID={`rating-stars:star-${star}`}
           onPress={() => !readonly && onChange?.(star === value ? 0 : star)}
           disabled={readonly}
           hitSlop={6}

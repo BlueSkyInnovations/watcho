@@ -73,6 +73,7 @@ export default function OnboardingScreen() {
           </View>
 
           <Pressable
+            testID="onboarding:btn-create-account"
             style={[styles.primaryButton, { backgroundColor: colors.accent }]}
             onPress={() => WebBrowser.openBrowserAsync(TMDB_SIGNUP_URL)}
           >
@@ -81,6 +82,7 @@ export default function OnboardingScreen() {
           </Pressable>
 
           <Pressable
+            testID="onboarding:btn-go-to-api"
             style={[styles.primaryButton, { backgroundColor: colors.accent }]}
             onPress={() => WebBrowser.openBrowserAsync(TMDB_API_URL)}
           >
@@ -89,6 +91,7 @@ export default function OnboardingScreen() {
           </Pressable>
 
           <Pressable
+            testID="onboarding:btn-have-key"
             style={[styles.secondaryButton, { borderColor: colors.border }]}
             onPress={() => { setStep('enter-key'); setTimeout(() => inputRef.current?.focus(), 100); }}
           >
@@ -102,7 +105,7 @@ export default function OnboardingScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.center}>
-        <Pressable style={styles.backRow} onPress={() => setStep('intro')}>
+        <Pressable testID="onboarding:btn-back" style={styles.backRow} onPress={() => setStep('intro')}>
           <Ionicons name="chevron-back" size={18} color={colors.textDim} />
           <Text style={[styles.backText, { color: colors.textDim }]}>{t('onboarding.back')}</Text>
         </Pressable>
@@ -114,6 +117,7 @@ export default function OnboardingScreen() {
 
         <TextInput
           ref={inputRef}
+          testID="onboarding:input-api-key"
           style={[styles.input, { backgroundColor: colors.surface, borderColor: error ? colors.accent : colors.border, color: colors.text }]}
           value={apiKey}
           onChangeText={(text) => { setApiKey(text); setError(null); }}
@@ -126,13 +130,14 @@ export default function OnboardingScreen() {
         />
 
         {error && (
-          <View style={styles.errorRow}>
+          <View testID="onboarding:error-message" style={styles.errorRow}>
             <Ionicons name="alert-circle-outline" size={15} color={colors.accent} />
             <Text style={[styles.errorText, { color: colors.accent }]}>{error}</Text>
           </View>
         )}
 
         <Pressable
+          testID="onboarding:btn-submit"
           style={[styles.primaryButton, { backgroundColor: colors.accent, opacity: validating ? 0.7 : 1 }]}
           onPress={handleSave}
           disabled={validating}

@@ -1,0 +1,15 @@
+appId: de.blueskyinnovations.watcho
+# Feature 007 — Movie Detail: Remove
+# AC-02: Tapping "Remove from lists" removes the item without a confirmation alert.
+# After removal the status selector shows no active status and the remove button is gone.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- tapOn: "Inception"
+- scrollUntilVisible:
+    id: "movie-detail:btn-remove"
+    direction: DOWN
+- tapOn:
+    id: "movie-detail:btn-remove"
+- assertNotVisible:
+    id: "movie-detail:btn-remove"

@@ -21,6 +21,7 @@ export function StatusSelector({ value, onChange }: StatusSelectorProps) {
         return (
           <Pressable
             key={s}
+            testID={`status-selector:btn-${s}`}
             style={[
               styles.button,
               { backgroundColor: colors.surface, borderColor: colors.border },

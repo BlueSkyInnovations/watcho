@@ -1,0 +1,16 @@
+appId: de.blueskyinnovations.watcho
+# Feature 012 — Settings: API Key Management
+# AC-03: Tapping "Remove Key" shows a destructive confirmation alert.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-remove-key"
+    direction: DOWN
+- tapOn:
+    id: "settings:btn-remove-key"
+- assertVisible: "Remove API Key"
+- assertVisible: "Cancel"
+- tapOn: "Cancel"
+- assertVisible:
+    id: "settings:btn-remove-key"

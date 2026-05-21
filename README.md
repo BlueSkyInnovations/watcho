@@ -128,11 +128,14 @@ app/
   settings.tsx    Theme, toggles, language, API key, backup/restore
 
 components/       Reusable UI components
+  TESTID_CONVENTIONS.md  testID naming rules and full ID reference
 context/          WatchlistContext, SettingsContext, ThemeContext
 hooks/            useColors, useTMDB, useQuickActions, useSwipeToDismiss
 lib/              tmdb.ts, apiKey.ts, i18n.ts, storage.ts, backup.ts
 locales/          en.json, de.json, es.json  (translation files)
 types/            Shared TypeScript types
+.maestro/         Maestro E2E flows — one file per acceptance criterion
+  _setup/         Reusable helper flows (onboarding, navigation, fixtures)
 ```
 
 All user data lives in AsyncStorage under namespaced keys (`watcho_watchlist_v1`, `watcho_settings`, etc.). There is no network call that sends user data anywhere. Backups are plain JSON files you control entirely — the TMDB API key is intentionally excluded from exports.
@@ -175,6 +178,24 @@ Community translators can start a new language directly on [Weblate](https://hos
 2. Add an entry to `LANG_OPTIONS` in `app/settings.tsx` with the display name key
 3. Add the display name string to `locales/en.json` and `locales/de.json`
 
+### End-to-end tests (Maestro)
+
+The `.maestro/` directory contains a [Maestro](https://maestro.mobile.dev/) E2E test suite. There is one flow file per acceptance criterion, named `feature-{id}-ac{n}-{slug}.yml`. Reusable setup helpers live in `.maestro/_setup/`.
+
+**Prerequisites:** [Install the Maestro CLI](https://maestro.mobile.dev/getting-started/installing-maestro) and have an Android emulator or iOS simulator running with a development build of the app.
+
+```bash
+# Run the full suite
+maestro test --env TMDB_API_KEY=<your_key> .maestro/
+
+# Run a single feature
+maestro test --env TMDB_API_KEY=<your_key> .maestro/feature-001-*.yml
+```
+
+The flows use `testID` props wired to every interactive element. See `components/TESTID_CONVENTIONS.md` for the full naming convention and ID reference.
+
+**Note for Android emulator sessions:** ADB must be connected before running — see the memory note in `.maestro/_setup/onboarded.yml` for the setup commands needed each session.
+
 ### Commands
 
 | Command | What it does |
@@ -184,6 +205,7 @@ Community translators can start a new language directly on [Weblate](https://hos
 | `npm run android` | Launch Android emulator |
 | `npm test` | Jest watch mode |
 | `npm run lint` | ESLint |
+| `maestro test --env TMDB_API_KEY=<key> .maestro/` | Run full E2E suite |
 
 ---
 

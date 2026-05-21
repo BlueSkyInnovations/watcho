@@ -1,0 +1,14 @@
+# Helper: launch fresh app and complete onboarding with test API key.
+# Requires TMDB_API_KEY env var: maestro test --env TMDB_API_KEY=<your_key>
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "onboarding:btn-have-key"
+- tapOn:
+    id: "onboarding:input-api-key"
+- inputText: ${TMDB_API_KEY}
+- pressKey: back
+- tapOn:
+    id: "onboarding:btn-submit"
+- assertVisible:
+    id: "my-lists:tab-watching"

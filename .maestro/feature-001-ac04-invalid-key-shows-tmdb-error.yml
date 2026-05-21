@@ -1,0 +1,17 @@
+appId: de.blueskyinnovations.watcho
+# Feature 001 — Onboarding
+# AC-04: An invalid API key shows a TMDB rejection error after validation.
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "onboarding:btn-have-key"
+- tapOn:
+    id: "onboarding:input-api-key"
+- inputText: "invalid_test_key_that_will_fail_00000"
+- pressKey: back
+- tapOn:
+    id: "onboarding:btn-submit"
+- assertVisible:
+    id: "onboarding:error-message"
+- assertVisible: "Key not recognised by TMDB."

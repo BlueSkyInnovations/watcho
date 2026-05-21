@@ -1,0 +1,16 @@
+# Helper: add "Breaking Bad" to the Watching list.
+# Depends on: onboarded.yml already run (app is on My Lists screen).
+- tapOn: "Search"
+- tapOn:
+    id: "search-bar:input"
+- inputText: "Breaking Bad"
+- assertVisible: "Breaking Bad"
+- tapOn: "Breaking Bad"
+- assertVisible:
+    id: "status-selector:btn-watching"
+- tapOn:
+    id: "status-selector:btn-watching"
+- tapOn:
+    id: "tv-detail:back-btn"
+- assertVisible:
+    id: "my-lists:tab-watching"

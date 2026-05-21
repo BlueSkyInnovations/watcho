@@ -97,6 +97,7 @@ export default function MyListsScreen() {
           return (
             <Pressable
               key={tab}
+              testID={`my-lists:tab-${tab}`}
               style={[styles.tab, active && { borderBottomColor: StatusColors[tab] }]}
               onPress={() => setActiveTab(tab)}
             >
@@ -104,7 +105,7 @@ export default function MyListsScreen() {
                 {t(`status.${tab}`)}
               </Text>
               {count > 0 && (
-                <View style={[styles.count, { backgroundColor: active ? StatusColors[tab] : colors.surfaceHighlight }]}>
+                <View testID={`my-lists:count-${tab}`} style={[styles.count, { backgroundColor: active ? StatusColors[tab] : colors.surfaceHighlight }]}>
                   <Text style={styles.countText}>{count}</Text>
                 </View>
               )}
@@ -113,14 +114,14 @@ export default function MyListsScreen() {
         })}
 
         <View style={styles.actions}>
-          <Pressable onPress={toggleViewMode} hitSlop={8} style={styles.actionButton}>
+          <Pressable testID="my-lists:btn-toggle-view" onPress={toggleViewMode} hitSlop={8} style={styles.actionButton}>
             <Ionicons
               name={isGrid ? 'list-outline' : 'grid-outline'}
               size={20}
               color={colors.textDim}
             />
           </Pressable>
-          <Pressable onPress={() => setSheetVisible(true)} hitSlop={8} style={styles.actionButton}>
+          <Pressable testID="my-lists:btn-sort" onPress={() => setSheetVisible(true)} hitSlop={8} style={styles.actionButton}>
             <Ionicons name="swap-vertical-outline" size={20} color={colors.textDim} />
           </Pressable>
         </View>

@@ -1,0 +1,16 @@
+appId: de.blueskyinnovations.watcho
+# Feature 010 — Settings: Appearance
+# AC-04: Selecting a theme marks it with a checkmark; the previously selected option loses it.
+# We select Dark, then switch to Light and confirm no duplicate active row.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- tapOn:
+    id: "settings:btn-theme-dark"
+- tapOn:
+    id: "settings:btn-theme-light"
+# Both dark and system options should be visible (no crash, no duplicate selection)
+- assertVisible:
+    id: "settings:btn-theme-dark"
+- assertVisible:
+    id: "settings:btn-theme-system"

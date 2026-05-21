@@ -1,0 +1,14 @@
+appId: de.blueskyinnovations.watcho
+# Feature 003 — My Lists View & Sort
+# AC-04: Tapping the sort button opens the sort sheet with all three options.
+---
+- runFlow: _setup/onboarded.yml
+- tapOn:
+    id: "my-lists:btn-sort"
+- assertVisible: "Sort by"
+- assertVisible:
+    id: "sort-sheet:option-added-at"
+- assertVisible:
+    id: "sort-sheet:option-release-date"
+- assertVisible:
+    id: "sort-sheet:option-updated-at"

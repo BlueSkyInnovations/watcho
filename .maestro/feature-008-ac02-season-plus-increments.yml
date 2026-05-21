@@ -1,0 +1,15 @@
+appId: de.blueskyinnovations.watcho
+# Feature 008 — TV Progress Tracking
+# AC-02: Tapping the season (+) button increments the season number.
+# Default is season 1; after one tap, the value shows 2.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-breaking-bad-watching.yml
+- tapOn: "Breaking Bad"
+- scrollUntilVisible:
+    id: "tv-detail:season-plus"
+    direction: DOWN
+- assertVisible: "1"
+- tapOn:
+    id: "tv-detail:season-plus"
+- assertVisible: "2"

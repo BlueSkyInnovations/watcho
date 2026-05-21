@@ -1,0 +1,10 @@
+appId: de.blueskyinnovations.watcho
+# Feature 012 — Settings: API Key Management
+# AC-02: Tapping "Change Key" navigates to the onboarding screen.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- tapOn:
+    id: "settings:btn-change-key"
+- assertVisible:
+    id: "onboarding:btn-have-key"

@@ -1,0 +1,13 @@
+appId: de.blueskyinnovations.watcho
+# Feature 001 — Onboarding
+# AC-03: Submitting an empty API key shows a validation error message.
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "onboarding:btn-have-key"
+- tapOn:
+    id: "onboarding:btn-submit"
+- assertVisible:
+    id: "onboarding:error-message"
+- assertVisible: "Please enter your API key."

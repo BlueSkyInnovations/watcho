@@ -1,0 +1,17 @@
+appId: de.blueskyinnovations.watcho
+# Feature 013 — Settings: Language
+# AC-04: Tapping a language option closes the sheet and returns to Settings.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/navigate-to-settings.yml
+- scrollUntilVisible:
+    id: "settings:btn-language"
+    direction: DOWN
+- tapOn:
+    id: "settings:btn-language"
+- tapOn:
+    id: "lang-sheet:option-en"
+- assertNotVisible:
+    id: "lang-sheet:option-de"
+- assertVisible:
+    id: "settings:btn-language"

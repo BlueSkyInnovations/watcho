@@ -1,0 +1,19 @@
+appId: de.blueskyinnovations.watcho
+# Feature 015 — Import Watchlist
+# AC-03: ImportModal shows both Replace All and Merge mode options.
+#
+# PREREQUISITE: ImportModal must be open. In CI, trigger via:
+#   maestro test --launch-arguments "watcho://import?url=<encoded-file-url>"
+# This flow is most useful as a component-level check driven by a deep link or
+# a fixture that seeds the pendingBackup state.
+---
+- runFlow: _setup/onboarded.yml
+- openLink: "watcho://import"
+- assertVisible:
+    id: "import-modal:btn-mode-replace"
+- assertVisible:
+    id: "import-modal:btn-mode-merge"
+- assertVisible:
+    id: "import-modal:btn-cancel"
+- assertVisible:
+    id: "import-modal:btn-confirm"

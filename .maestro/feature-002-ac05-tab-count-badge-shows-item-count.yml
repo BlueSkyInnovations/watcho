@@ -1,0 +1,8 @@
+appId: de.blueskyinnovations.watcho
+# Feature 002 — My Lists Tab Navigation
+# AC-05: After adding an item the count badge appears on the corresponding tab.
+---
+- runFlow: _setup/onboarded.yml
+- runFlow: _setup/add-inception-watching.yml
+- assertVisible:
+    id: "my-lists:count-watching"
