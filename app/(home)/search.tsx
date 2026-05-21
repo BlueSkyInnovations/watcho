@@ -49,6 +49,7 @@ export default function SearchScreen() {
         contentContainerStyle={styles.grid}
         renderItem={({ item }) => <MediaCard item={item} style={styles.gridItem} />}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
         ListHeaderComponent={query.trim() === '' ? <TrendingSection /> : null}
         ListEmptyComponent={
           query.trim() && !loading

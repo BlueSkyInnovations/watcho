@@ -285,6 +285,13 @@ Every user prompt, categorised by type, with a summary of the work done and its 
 **Activity:** (1) Gradle 8.14.3 download from `services.gradle.org` blocked by network; downloaded via WSL wget, manually populated wrapper cache at `~/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/`. (2) Android SDK not installed; downloaded cmdline-tools via WSL and installed `platform-tools`, `platforms;android-36`, `build-tools;36.0.0`, `ndk;27.1.12297006` via sdkmanager; created `android/local.properties` (gitignored). (3) All four `_setup/*.yml` Maestro helpers missing `appId`/`---` config headers; added headers to all four files and updated CLAUDE.md suite command to use `Get-ChildItem .maestro/feature-*.yml` to exclude helpers from the recursive scan.  
 **Outcome:** Build succeeds; emulator runs the app; Maestro suite command fixed.
 
+### 10.5 — Fix keyboard consuming MediaCard tap on search screen
+**Time:** 2026-05-21  
+**Type:** bug  
+**Prompt:** MediaCard tap still does not work after accessible/timing fixes.  
+**Activity:** Root cause: `FlatList` in `search.tsx` had no `keyboardShouldPersistTaps` prop (default `"never"`). After `inputText` the soft keyboard is open; React Native's default behavior consumes the first tap to dismiss the keyboard, so the card's `onPress` never fires — the test sees the tap land but no navigation occurs. Fixed by adding `keyboardShouldPersistTaps="handled"` to the outer FlatList. Also a real UX bug: users had to tap search results twice in production.  
+**Outcome:** Commit pending.
+
 ### 10.4 — Fix MediaCard accessibility and search-result timing in Maestro flows
 **Time:** 2026-05-21  
 **Type:** bug  
