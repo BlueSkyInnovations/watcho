@@ -11,8 +11,16 @@ appId: de.blueskyinnovations.watcho
     id: "media-card:Inception"
 - tapOn:
     id: "media-card:Inception"
+- scrollUntilVisible:
+    element:
+      id: "status-selector:btn-watched"
+    direction: DOWN
 - tapOn:
     id: "status-selector:btn-watched"
+- scrollUntilVisible:
+    element:
+      id: "movie-detail:btn-remove"
+    direction: DOWN
 - assertVisible:
     id: "movie-detail:btn-remove"
 - tapOn:

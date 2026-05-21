@@ -285,6 +285,13 @@ Every user prompt, categorised by type, with a summary of the work done and its 
 **Activity:** (1) Gradle 8.14.3 download from `services.gradle.org` blocked by network; downloaded via WSL wget, manually populated wrapper cache at `~/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/`. (2) Android SDK not installed; downloaded cmdline-tools via WSL and installed `platform-tools`, `platforms;android-36`, `build-tools;36.0.0`, `ndk;27.1.12297006` via sdkmanager; created `android/local.properties` (gitignored). (3) All four `_setup/*.yml` Maestro helpers missing `appId`/`---` config headers; added headers to all four files and updated CLAUDE.md suite command to use `Get-ChildItem .maestro/feature-*.yml` to exclude helpers from the recursive scan.  
 **Outcome:** Build succeeds; emulator runs the app; Maestro suite command fixed.
 
+### 10.6 — Add scrollUntilVisible guards for all below-fold detail-screen elements
+**Time:** 2026-05-21  
+**Type:** bug  
+**Prompt:** Test still fails: "Assertion is false: id: status-selector:btn-watchlist is visible" — the Add to List section is below the fold and needs scrolling.  
+**Activity:** Audited all Maestro flows against the movie/TV detail screen layout (backdrop 260px → title → genres → overview → optional trailer → optional Where to Watch → StatusSelector → RatingStars → ReviewInput[default on] → btn-remove). Every flow that navigates to the detail screen and then asserts or taps a below-fold element was missing a `scrollUntilVisible` guard. Added scroll guards to 10 flows: `_setup/add-inception-watching.yml`, `_setup/add-breaking-bad-watching.yml`, `feature-004-ac06`, `feature-005-ac01` through `ac05`, `feature-006-ac02`, `feature-006-ac03`. Also added a second scroll step in feature-005-ac02/ac03/ac04/ac05 and feature-006-ac02/ac03 for `movie-detail:btn-remove`, which is below the rating and review sections that appear once an item is tracked.  
+**Outcome:** Commit pending.
+
 ### 10.5 — Fix keyboard consuming MediaCard tap on search screen
 **Time:** 2026-05-21  
 **Type:** bug  

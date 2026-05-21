@@ -10,8 +10,10 @@ appId: de.blueskyinnovations.watcho
     id: "media-card:Breaking Bad"
 - tapOn:
     id: "media-card:Breaking Bad"
-- assertVisible:
-    id: "status-selector:btn-watching"
+- scrollUntilVisible:
+    element:
+      id: "status-selector:btn-watching"
+    direction: DOWN
 - tapOn:
     id: "status-selector:btn-watching"
 - tapOn:

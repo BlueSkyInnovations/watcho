@@ -13,5 +13,9 @@ appId: de.blueskyinnovations.watcho
     id: "media-card:Inception"
 - assertVisible: "Inception"
 - assertVisible: "2010"
+- scrollUntilVisible:
+    element:
+      id: "status-selector:btn-watchlist"
+    direction: DOWN
 - assertVisible:
     id: "status-selector:btn-watchlist"

@@ -5,9 +5,18 @@ appId: de.blueskyinnovations.watcho
 - runFlow: _setup/onboarded.yml
 - runFlow: _setup/add-inception-watching.yml
 # Navigate back to Inception detail via My Lists
-- tapOn: "Inception"
+- tapOn:
+    id: "media-card:Inception"
+- scrollUntilVisible:
+    element:
+      id: "status-selector:btn-watching"
+    direction: DOWN
 # Status selector should show Watching as the current status (highlighted)
 - assertVisible:
     id: "status-selector:btn-watching"
+- scrollUntilVisible:
+    element:
+      id: "movie-detail:btn-remove"
+    direction: DOWN
 - assertVisible:
     id: "movie-detail:btn-remove"
