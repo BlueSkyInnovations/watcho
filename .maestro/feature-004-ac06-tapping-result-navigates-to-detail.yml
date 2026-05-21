@@ -7,8 +7,10 @@ appId: de.blueskyinnovations.watcho
 - tapOn:
     id: "search-bar:input"
 - inputText: "Inception"
-- assertVisible: "Inception"
-- tapOn: "Inception"
+- assertVisible:
+    id: "media-card:Inception"
+- tapOn:
+    id: "media-card:Inception"
 - assertVisible:
     id: "status-selector:btn-watchlist"
 - assertVisible:

@@ -1,11 +1,15 @@
+appId: de.blueskyinnovations.watcho
 # Helper: add "Breaking Bad" to the Watching list.
 # Depends on: onboarded.yml already run (app is on My Lists screen).
+---
 - tapOn: "Search"
 - tapOn:
     id: "search-bar:input"
 - inputText: "Breaking Bad"
-- assertVisible: "Breaking Bad"
-- tapOn: "Breaking Bad"
+- assertVisible:
+    id: "media-card:Breaking Bad"
+- tapOn:
+    id: "media-card:Breaking Bad"
 - assertVisible:
     id: "status-selector:btn-watching"
 - tapOn:

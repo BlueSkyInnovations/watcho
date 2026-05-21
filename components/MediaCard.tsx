@@ -36,7 +36,7 @@ export function MediaCard({ item, mediaType, statusBadge, onPress, style }: Medi
   const posterUri = POSTER_URL(poster);
 
   return (
-    <Pressable style={[styles.card, style]} onPress={handlePress}>
+    <Pressable testID={`media-card:${title}`} accessible={true} style={[styles.card, style]} onPress={handlePress}>
       <View style={[styles.posterContainer, { backgroundColor: colors.surface }]}>
         {posterUri ? (
           <Image source={{ uri: posterUri }} style={styles.poster} resizeMode="cover" />

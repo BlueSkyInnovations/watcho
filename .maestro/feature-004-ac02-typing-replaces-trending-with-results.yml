@@ -9,4 +9,5 @@ appId: de.blueskyinnovations.watcho
 - inputText: "Inception"
 - assertNotVisible:
     id: "search:trending-heading"
-- assertVisible: "Inception"
+- assertVisible:
+    id: "media-card:Inception"

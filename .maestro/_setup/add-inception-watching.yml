@@ -1,11 +1,15 @@
+appId: de.blueskyinnovations.watcho
 # Helper: add "Inception" (2010) to the Watching list.
 # Depends on: onboarded.yml already run (app is on My Lists screen).
+---
 - tapOn: "Search"
 - tapOn:
     id: "search-bar:input"
 - inputText: "Inception"
-- assertVisible: "Inception"
-- tapOn: "Inception"
+- assertVisible:
+    id: "media-card:Inception"
+- tapOn:
+    id: "media-card:Inception"
 - assertVisible:
     id: "status-selector:btn-watching"
 - tapOn:

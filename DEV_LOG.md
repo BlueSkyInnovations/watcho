@@ -271,4 +271,25 @@ Every user prompt, categorised by type, with a summary of the work done and its 
 **Activity:** Full codebase audit (all screens, components, contexts, hooks, locales, commit history). Defined testID naming convention (`{namespace}:{element}[:{qualifier}]`) and documented it in `components/TESTID_CONVENTIONS.md`. Added `testID` props to all 14 interactive components and screens: `SearchBar`, `StatusSelector`, `RatingStars`, `SortSheet`, `ReviewInput`, `ImportModal`, `EpisodeModal`, `Toast`, `onboarding.tsx`, `(home)/index.tsx`, `(home)/_layout.tsx`, `(home)/search.tsx`, `settings.tsx`, `movie/[id].tsx`, `tv/[id].tsx`. Created `.maestro/_setup/` with 4 reusable helper flows (`onboarded.yml`, `navigate-to-settings.yml`, `add-inception-watching.yml`, `add-breaking-bad-watching.yml`). Generated 70 feature flows across 15 features: 001 Onboarding (5 ACs), 002 My Lists Tabs (6 ACs), 003 View & Sort (6 ACs), 004 Search (6 ACs), 005 Movie Status (5 ACs), 006 Rating & Review (5 ACs), 007 Remove (3 ACs), 008 TV Progress (5 ACs), 009 Episode Guide (5 ACs), 010 Appearance (4 ACs), 011 Feature Toggles (5 ACs), 012 API Key (3 ACs), 013 Language (4 ACs), 014 Export (2 ACs), 015 Import (6 ACs).  
 **Outcome:** No functional code change — testID props and Maestro files only. Run with `maestro test --env TMDB_API_KEY=<key> .maestro/`.
 
+### 10.3 — Fix Maestro flows: MediaCard testID + scrollUntilVisible element wrapper
+**Time:** 2026-05-21  
+**Type:** bug  
+**Prompt:** Tapping search results in Maestro tests doesn't work — dynamic result cards have no testID so Maestro resolves "Inception" to the search bar input (same text) instead of the card.  
+**Activity:** (1) Added `testID={`media-card:${title}`}` to `MediaCard`'s `Pressable` root. (2) Replaced all 29 `tapOn: "Inception"` / `tapOn: "Breaking Bad"` occurrences across 27 flow files with `tapOn: { id: "media-card:Inception" }` / `{ id: "media-card:Breaking Bad" }`. (3) Fixed all 28 `scrollUntilVisible` blocks that used `id:` directly instead of wrapping under the required `element:` key (regression from initial generation). Updated TESTID_CONVENTIONS.md to document the `media-card:{title}` dynamic pattern. Root cause of both issues: initial E2E flow generation did not account for the `scrollUntilVisible` schema or the search-bar/result-card text ambiguity.  
+**Outcome:** All 74 Maestro flows parse cleanly and card taps are now deterministic.
+
+### 10.2 — Android emulator build and Maestro suite setup
+**Time:** 2026-05-21  
+**Type:** bug  
+**Prompt:** `npx expo run:android` fails — Gradle download blocked, Android SDK missing, Maestro `_setup` flows fail with "Config Section Required".  
+**Activity:** (1) Gradle 8.14.3 download from `services.gradle.org` blocked by network; downloaded via WSL wget, manually populated wrapper cache at `~/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/`. (2) Android SDK not installed; downloaded cmdline-tools via WSL and installed `platform-tools`, `platforms;android-36`, `build-tools;36.0.0`, `ndk;27.1.12297006` via sdkmanager; created `android/local.properties` (gitignored). (3) All four `_setup/*.yml` Maestro helpers missing `appId`/`---` config headers; added headers to all four files and updated CLAUDE.md suite command to use `Get-ChildItem .maestro/feature-*.yml` to exclude helpers from the recursive scan.  
+**Outcome:** Build succeeds; emulator runs the app; Maestro suite command fixed.
+
+### 10.4 — Fix MediaCard accessibility and search-result timing in Maestro flows
+**Time:** 2026-05-21  
+**Type:** bug  
+**Prompt:** When watching the Maestro test run, the media card does not seem to be tapped — `tapOn: { id: "media-card:Inception" }` fires but has no effect.  
+**Activity:** Two root causes identified. (1) Timing: after `inputText: "Inception"`, the 400 ms debounce plus TMDB network latency means the result card has not yet rendered when `tapOn` fires. The existing `assertVisible: "Inception"` passed immediately on the search bar's own text value — never waiting for the card. Fixed by replacing all 6 search-screen `assertVisible: "Inception"` / `assertVisible: "Breaking Bad"` instances with `assertVisible: { id: "media-card:Inception" }` etc. in `_setup/add-inception-watching.yml`, `_setup/add-breaking-bad-watching.yml`, `feature-004-ac02`, `feature-004-ac06`, and inserted the guard before the tap in `feature-005-ac01` through `feature-005-ac04`. (2) Accessibility tree: `Pressable` with nested `View`/`Image`/`Text` children is "flattened" on Android without `accessible={true}`, making its accessibility node unreliable for Maestro's id selector. Fixed by adding `accessible={true}` to `MediaCard`'s `Pressable`.  
+**Outcome:** Commit pending — MediaCard tap now waits for card presence and is reliably discoverable in the Android accessibility tree.
+
 *Log maintained continuously from 2026-05-04. Entries marked with ~ have approximate times inferred from session context; all others are anchored to git commit timestamps.*
