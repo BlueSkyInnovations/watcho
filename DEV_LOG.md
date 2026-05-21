@@ -285,6 +285,13 @@ Every user prompt, categorised by type, with a summary of the work done and its 
 **Activity:** (1) Gradle 8.14.3 download from `services.gradle.org` blocked by network; downloaded via WSL wget, manually populated wrapper cache at `~/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/`. (2) Android SDK not installed; downloaded cmdline-tools via WSL and installed `platform-tools`, `platforms;android-36`, `build-tools;36.0.0`, `ndk;27.1.12297006` via sdkmanager; created `android/local.properties` (gitignored). (3) All four `_setup/*.yml` Maestro helpers missing `appId`/`---` config headers; added headers to all four files and updated CLAUDE.md suite command to use `Get-ChildItem .maestro/feature-*.yml` to exclude helpers from the recursive scan.  
 **Outcome:** Build succeeds; emulator runs the app; Maestro suite command fixed.
 
+### 10.7 — Full Maestro flow audit: replace back-btn taps with pressKey + fix post-navigation tab routing
+**Time:** 2026-05-21  
+**Type:** bug  
+**Prompt:** Verify all test cases according to our learnings — scroll guards, keyboard handling, back-button behaviour.  
+**Activity:** Audited all 74 flows. Found two systematic issues. (1) `tapOn: { id: "movie-detail:back-btn" }` / `tv-detail:back-btn` after any downward scroll fails on Android because the button is inside the ScrollView and its coordinates are off-screen once the user has scrolled — replaced with `pressKey: Back` in all 8 affected flows. (2) feature-005-ac02/ac03/ac04 navigate to the detail screen from the Search tab (via `tapOn: "Search"` then `tapOn: "media-card:Inception"`); pressing Back returns to Search, not My Lists, so subsequent `tapOn: my-lists:tab-*` and `assertVisible: "Inception"` fail because those elements are on the inactive My Lists tab — added `tapOn: "My Lists"` after each `pressKey: Back` to explicitly switch to the My Lists bottom tab. Setup flows (`add-inception-watching`, `add-breaking-bad-watching`) also had this path and were fixed the same way, ensuring all downstream flows that depend on them start on My Lists Watching tab. Confirmed all remaining flows (001–004, 006-ac01/04, 007-ac01/02, 008–009, 010, 011-ac01–04, 012, 013, 014, 015) are structurally correct: text assertions match en.json, all below-fold elements have scroll guards, no back-btn off-screen taps remain.  
+**Outcome:** Commit pending.
+
 ### 10.6 — Add scrollUntilVisible guards for all below-fold detail-screen elements
 **Time:** 2026-05-21  
 **Type:** bug  

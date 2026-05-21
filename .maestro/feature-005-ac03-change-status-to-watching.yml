@@ -23,8 +23,8 @@ appId: de.blueskyinnovations.watcho
     direction: DOWN
 - assertVisible:
     id: "movie-detail:btn-remove"
-- tapOn:
-    id: "movie-detail:back-btn"
+- pressKey: Back
+- tapOn: "My Lists"
 - assertVisible:
     id: "my-lists:tab-watching"
 - assertVisible: "Inception"

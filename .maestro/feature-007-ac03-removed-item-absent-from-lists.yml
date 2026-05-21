@@ -4,14 +4,15 @@ appId: de.blueskyinnovations.watcho
 ---
 - runFlow: _setup/onboarded.yml
 - runFlow: _setup/add-inception-watching.yml
-- tapOn: "Inception"
+- tapOn:
+    id: "media-card:Inception"
 - scrollUntilVisible:
-    id: "movie-detail:btn-remove"
+    element:
+      id: "movie-detail:btn-remove"
     direction: DOWN
 - tapOn:
     id: "movie-detail:btn-remove"
-- tapOn:
-    id: "movie-detail:back-btn"
+- pressKey: Back
 - assertVisible:
     id: "my-lists:tab-watching"
 # Watching tab should show empty state — Inception was removed

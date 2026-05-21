@@ -16,7 +16,7 @@ appId: de.blueskyinnovations.watcho
     direction: DOWN
 - tapOn:
     id: "status-selector:btn-watching"
-- tapOn:
-    id: "movie-detail:back-btn"
+- pressKey: Back
+- tapOn: "My Lists"
 - assertVisible:
     id: "my-lists:tab-watching"
