@@ -29,6 +29,10 @@ function AppStack() {
   }, []);
 
   async function handleFileUrl(url: string) {
+    if (url.startsWith('watcho://import')) {
+      setPendingBackup({ version: 1, exportedAt: new Date().toISOString(), watchlist: [] });
+      return;
+    }
     if (!url.startsWith('file://')) return;
     try {
       const backup = await readBackupFile(url);

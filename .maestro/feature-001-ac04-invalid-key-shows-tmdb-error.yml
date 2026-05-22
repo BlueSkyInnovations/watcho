@@ -9,7 +9,7 @@ appId: de.blueskyinnovations.watcho
 - tapOn:
     id: "onboarding:input-api-key"
 - inputText: "invalid_test_key_that_will_fail_00000"
-- pressKey: back
+- hideKeyboard
 - tapOn:
     id: "onboarding:btn-submit"
 - assertVisible:

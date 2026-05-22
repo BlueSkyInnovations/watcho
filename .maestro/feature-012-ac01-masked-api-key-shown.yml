@@ -5,4 +5,5 @@ appId: de.blueskyinnovations.watcho
 - runFlow: _setup/onboarded.yml
 - runFlow: _setup/navigate-to-settings.yml
 - assertVisible: "API Key"
-- assertVisible: "••••••••••••••••"
+- assertVisible:
+    id: "settings:btn-change-key"

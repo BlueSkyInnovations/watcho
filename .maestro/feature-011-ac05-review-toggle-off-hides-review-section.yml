@@ -18,6 +18,7 @@ appId: de.blueskyinnovations.watcho
 - runFlow: _setup/navigate-to-settings.yml
 - tapOn:
     id: "settings:switch-review"
+- pressKey: Back
 - tapOn: "My Lists"
 # Re-open Inception and confirm review input is gone
 - tapOn:
