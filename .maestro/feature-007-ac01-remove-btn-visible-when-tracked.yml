@@ -4,9 +4,11 @@ appId: de.blueskyinnovations.watcho
 ---
 - runFlow: _setup/onboarded.yml
 - runFlow: _setup/add-inception-watching.yml
-- tapOn: "Inception"
+- tapOn:
+    id: "media-card:Inception"
 - scrollUntilVisible:
-    id: "movie-detail:btn-remove"
+    element:
+      id: "movie-detail:btn-remove"
     direction: DOWN
 - assertVisible:
     id: "movie-detail:btn-remove"

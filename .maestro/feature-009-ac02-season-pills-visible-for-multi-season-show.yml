@@ -5,9 +5,11 @@ appId: de.blueskyinnovations.watcho
 ---
 - runFlow: _setup/onboarded.yml
 - runFlow: _setup/add-breaking-bad-watching.yml
-- tapOn: "Breaking Bad"
+- tapOn:
+    id: "media-card:Breaking Bad"
 - scrollUntilVisible:
-    id: "tv-detail:season-pill-1"
+    element:
+      id: "tv-detail:season-pill-1"
     direction: DOWN
 - assertVisible:
     id: "tv-detail:season-pill-1"

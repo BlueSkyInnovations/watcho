@@ -13,6 +13,7 @@ web-build/
 .env.local
 
 # Native
+android/local.properties
 *.orig.*
 *.jks
 *.p8

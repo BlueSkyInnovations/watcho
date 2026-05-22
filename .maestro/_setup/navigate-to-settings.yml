@@ -1,4 +1,6 @@
+appId: de.blueskyinnovations.watcho
 # Helper: navigate to Settings from any tab by going through Profile.
+---
 - tapOn: "Profile"
 - tapOn:
     id: "profile:btn-settings"

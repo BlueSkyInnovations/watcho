@@ -70,6 +70,16 @@ Colons are the only separator. No spaces, no camelCase, no underscores.
 |---|---|
 | `profile:btn-settings` | Settings gear icon Pressable in Profile tab header |
 
+### `media-card`
+Dynamic — testID is generated from the item's title at render time.
+
+| Pattern | Element |
+|---|---|
+| `media-card:{title}` | The tappable `Pressable` root of `MediaCard` |
+
+Examples: `media-card:Inception`, `media-card:Breaking Bad`.  
+Use this in flows instead of `tapOn: "Title"` to avoid ambiguity with the search bar input, which also displays the typed text.
+
 ### `search-bar`
 | ID | Element |
 |---|---|

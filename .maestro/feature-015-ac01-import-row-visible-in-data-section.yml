@@ -5,7 +5,8 @@ appId: de.blueskyinnovations.watcho
 - runFlow: _setup/onboarded.yml
 - runFlow: _setup/navigate-to-settings.yml
 - scrollUntilVisible:
-    id: "settings:btn-import"
+    element:
+      id: "settings:btn-import"
     direction: DOWN
 - assertVisible:
     id: "settings:btn-import"

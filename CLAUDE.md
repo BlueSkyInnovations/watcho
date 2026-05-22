@@ -12,7 +12,7 @@ React Native / Expo app for tracking movies and TV shows. All user data is store
 - `npx expo start --ios` / `--android` — launch simulator directly
 - `npm test` — Jest watch mode
 - `npm run lint` — ESLint
-- `maestro test --env TMDB_API_KEY=<key> .maestro/` — run full Maestro E2E suite
+- `maestro test --env TMDB_API_KEY=<key> $(Get-ChildItem .maestro/feature-*.yml)` — run full Maestro E2E suite (PowerShell; excludes `_setup/` helpers)
 - `maestro test --env TMDB_API_KEY=<key> .maestro/feature-001-*.yml` — run a single feature
 
 ## Structure

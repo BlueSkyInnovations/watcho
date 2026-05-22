@@ -10,7 +10,6 @@ appId: de.blueskyinnovations.watcho
 - tapOn:
     id: "onboarding:input-api-key"
 - inputText: ${TMDB_API_KEY}
-- pressKey: back
 - tapOn:
     id: "onboarding:btn-submit"
 - assertVisible:

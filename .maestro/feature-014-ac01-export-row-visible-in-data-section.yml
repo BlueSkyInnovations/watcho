@@ -5,7 +5,8 @@ appId: de.blueskyinnovations.watcho
 - runFlow: _setup/onboarded.yml
 - runFlow: _setup/navigate-to-settings.yml
 - scrollUntilVisible:
-    id: "settings:btn-export"
+    element:
+      id: "settings:btn-export"
     direction: DOWN
 - assertVisible:
     id: "settings:btn-export"
