@@ -90,7 +90,7 @@
         "episodeGuide": "",
         "aboutYoutube": "",
         "detailScreens": "",
-        "hint": "",
+        "hint": "Iga kasutaja sisestab oma tasuta TMDB API-võtme.\nSaad selle veebilehelt themoviedb.org → Seadistused → API.",
         "personalReview": "",
         "langEstonian": "eesti keel"
     },
@@ -102,7 +102,7 @@
         "episodeNoOverview": "Selle osa kohta ei leidu kokkuvõtet.",
         "seasons_one": "{{count}} hooaeg",
         "seasons_other": "{{count}} hooaega",
-        "watchTrailers": "",
+        "watchTrailers": "Vaata treilereid ({{count}})",
         "yourReview": "Sinu arvustus",
         "progress": "Edenemine",
         "episode": "Osa",
@@ -111,7 +111,7 @@
         "addToList": "Lisa loendisse",
         "moreLikeThis": "Veel sarnast sisu",
         "reviewPlaceholder": "Märgi üles oma arvamus…",
-        "whereToWatch": "",
+        "whereToWatch": "Kus saad vaadata",
         "yourRating": "Sinu hinnang"
     },
     "profile": {
